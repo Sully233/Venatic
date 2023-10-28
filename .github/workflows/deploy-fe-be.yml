@@ -51,9 +51,9 @@ jobs:
           cd backend
           npm ci
           zip -r publish.zip ./*
-          cd ..
       - name: Deploy to AWS Lambda
         run: |
+          cd backend
           aws lambda update-function-code --function-name venatic-api-serverless --zip-file fileb://publish.zip --region ${{ secrets.AWS_REGION }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
