@@ -32,3 +32,28 @@ jobs:
 
       - name: Sync build artifacts to S3
         run: aws s3 sync ./my-app/build s3://${{ secrets.AWS_PRODUCTION_BUCKET_NAME }} --delete
+
+  deploy_backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "19.8.1"
+
+      - name: Install dependencies and bundle code
+        env:
+          CI: true
+        run: |
+          cd backend
+          npm ci
+          zip -r publish.zip ./*
+      - name: Deploy to AWS Lambda
+        run: |
+          aws lambda update-function-code --function-name venatic-api-serverless --zip-file fileb://publish.zip --region ${{ secrets.AWS_REGION }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

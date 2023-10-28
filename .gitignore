@@ -91,6 +91,9 @@ dist
 # vuepress build output
 .vuepress/dist
 
+#zip
+*.zip
+
 # Serverless directories
 .serverless/
 
