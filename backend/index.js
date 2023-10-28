@@ -1,6 +1,7 @@
-import express from "express";
-import helmet from "helmet";
-import serverless from "serverless-http";
+const express = require('express');
+const helmet = require('helmet');
+const serverless = require('serverless-http');
+const mongoose = require('mongoose');
 
 const app = express();
 const PORT = 8080;
@@ -10,7 +11,7 @@ app.use(express.json());
 
 app.get('/tshirt', (req, res) => {
     res.status(200).send({
-        tshirt: 'LARGE'
+        tshirt: 'LARGE',
     });
 });
 
@@ -22,5 +23,4 @@ app.post('/tshirt/:id', (req, res) => {
 
 // app.listen(PORT, () => console.log('Server is alive on port ' + PORT));
 
-
-export const handler = serverless(app)
+exports.handler = serverless(app);
