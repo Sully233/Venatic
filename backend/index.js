@@ -4,7 +4,7 @@ const serverless = require('serverless-http');
 const mongoose = require('mongoose');
 
 const app = express();
-const PORT = 3000;
+const PORT = 80;
 
 app.use(helmet());
 app.use(express.json());
@@ -12,6 +12,12 @@ app.use(express.json());
 app.get('/tshirt', (req, res) => {
     res.status(200).send({
         tshirt: 'LARGE',
+    });
+});
+
+app.get('/tshirtsmall', (req, res) => {
+    res.status(200).send({
+        tshirt: 'SMALL',
     });
 });
 
