@@ -4,7 +4,7 @@ const serverless = require('serverless-http');
 const mongoose = require('mongoose');
 
 const app = express();
-const PORT = 8080;
+const PORT = 3000;
 
 app.use(helmet());
 app.use(express.json());
@@ -21,6 +21,5 @@ app.post('/tshirt/:id', (req, res) => {
     res.json(`${id} and ${logo}`);
 });
 
-// app.listen(PORT, () => console.log('Server is alive on port ' + PORT));
+app.listen(PORT, () => console.log('Server is alive on port ' + PORT));
 
-exports.handler = serverless(app);
