@@ -17,7 +17,7 @@ app.get('/tshirt', (req, res) => {
 
 app.get('/tshirtsmall', (req, res) => {
     res.status(200).send({
-        tshirt: 'SMALL',
+        tshirt: process.env.TSHIRT_SIZE_SMALL,
     });
 });
 
