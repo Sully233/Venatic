@@ -1,8 +1,10 @@
 const express = require('express');
 const dotenv = require('dotenv').config()
 const helmet = require('helmet');
-const mongoose = require('mongoose');
 const {errorHandler} = require('./middleware/errorMiddleware')
+const connectDB = require('./config/db')
+
+connectDB()
 
 const app = express();
 const PORT = process.env.PORT;
