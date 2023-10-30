@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
 
-    res.status(200).json({message: 'Post Goals'})
+    res.status(200).json({message: 'post Goals'})
 
 })
 
