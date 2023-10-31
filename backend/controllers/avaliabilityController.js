@@ -54,7 +54,7 @@ const setAvailability = asyncHandler(async (req, res) => {
     
     if (start >= end) {
         res.status(400);
-        throw new Error('End time must be after start time');
+        throw new Error('End time must be after start time.');
     }
 
     const availabilities = [];
