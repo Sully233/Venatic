@@ -81,6 +81,35 @@ const setAvailability = asyncHandler(async (req, res) => {
 });
 
 
+const deleteAvailability = asyncHandler(async (req, res) => {
+    const { date, firstName, lastName } = req.query;
+
+    if (!date || !firstName || !lastName) {
+        res.status(400);
+        throw new Error('Date, first name, and last name are required');
+    }
+
+    const startDate = new Date(`${date}T00:00:00.000Z`);
+    const endDate = new Date(`${date}T23:59:59.999Z`);
+
+    const result = await Availability.deleteMany({
+        'contractor.firstName': firstName,
+        'contractor.lastName': lastName,
+        'availability.date': {
+            $gte: startDate,
+            $lte: endDate,
+        },
+    });
+
+    if (result.deletedCount === 0) {
+        res.status(404);
+        throw new Error('No availabilities found for the specified person on the specified date');
+    }
+
+    res.status(200).json({ message: 'Availability successfully deleted' });
+});
+
+
 module.exports = {
-    setAvailability, getOpenTimeSlots
+    setAvailability, getOpenTimeSlots, deleteAvailability
 };
