@@ -19,6 +19,7 @@ app.use(helmet());
 
 app.use('/api/goals', require('./routes/goalRoutes'))
 
+app.use('/api/availabilities', require('./routes/availabilityRoutes'))
 
 
 
