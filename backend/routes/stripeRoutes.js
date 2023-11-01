@@ -4,7 +4,7 @@ const { stripeWebhook } = require('../controllers/stripeController')
 
 
 
-router.post('/', stripeWebhook)
+router.post('/' ,stripeWebhook);
 
 
 
