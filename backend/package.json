@@ -16,6 +16,6 @@
     "express-async-handler": "^1.2.0",
     "helmet": "^7.0.0",
     "mongoose": "^7.6.3",
-    "serverless-http": "^3.2.0"
+    "stripe": "^14.2.0"
   }
 }

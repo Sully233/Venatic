@@ -5,9 +5,9 @@ const { setAvailability, getOpenTimeSlots, deleteAvailability } = require('../co
 
 router.get('/', getOpenTimeSlots)
 
-router.post('/', setAvailability )
+router.post('/superuseradmin/setavailability', setAvailability )
 
-router.delete('/', deleteAvailability)
+router.delete('/superuseradmin/removeavailability', deleteAvailability)
 
 
 

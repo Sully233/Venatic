@@ -3,6 +3,8 @@ const asyncHandler = require('express-async-handler');
 const Availability = require('../models/availabilityModel')
 
 
+
+
 const getOpenTimeSlots = asyncHandler(async (req, res) => {
     const { date } = req.query;
   

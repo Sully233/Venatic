@@ -21,6 +21,9 @@ app.use('/api/goals', require('./routes/goalRoutes'))
 
 app.use('/api/availabilities', require('./routes/availabilityRoutes'))
 
+app.use('/api/booking', require('./routes/bookingRoutes'))
+
+app.use('/api/webhook', require('./routes/stripeRoutes'))
 
 
 app.use(errorHandler)
