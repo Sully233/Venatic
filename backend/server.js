@@ -10,8 +10,11 @@ connectDB()
 
 const app = express();
 const PORT = process.env.PORT;
-
 const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET
+
+app.use(express.json())
+app.use(express.urlencoded({extended: false}))
+
 
 app.post('/api/webhook', express.raw({type: 'application/json'}), async (request, response) => {
     const sig = request.headers['stripe-signature'];
