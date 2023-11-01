@@ -12,8 +12,7 @@ const app = express();
 const PORT = process.env.PORT;
 const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET
 
-app.use(express.json())
-app.use(express.urlencoded({extended: false}))
+app.use(helmet());
 
 
 app.post('/api/webhook', express.raw({type: 'application/json'}), async (request, response) => {
@@ -57,11 +56,11 @@ app.post('/api/webhook', express.raw({type: 'application/json'}), async (request
 });
   
 
-//Security
-app.use(helmet());
 
 
 
+app.use(express.json())
+app.use(express.urlencoded({extended: false}))
 
 
 app.use('/api/goals', require('./routes/goalRoutes'))
