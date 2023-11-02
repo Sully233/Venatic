@@ -7,14 +7,14 @@ const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET
 
 
 const stripeBookingAllocation = asyncHandler(async (req, res) => {
-    const sig = request.headers['stripe-signature'];
+    const sig = req.headers['stripe-signature'];
     let event;
   
     try {
-      event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+      event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
     } catch (err) {
       console.log(err.message)
-      response.status(400).send(`Webhook Error: ${err.message}`);
+      res.status(400).send(`Webhook Error: ${err.message}`);
       return;
     }
   
@@ -34,7 +34,7 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
             }
           } catch (err) {
             console.log('Error updating booking:', err);
-            response.status(500).send('Internal Server Error');
+            res.status(500).send('Internal Server Error');
             return;
           }
           break;
@@ -42,7 +42,7 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
 
     }
   
-    response.send();
+    res.send();
 
 })
 
