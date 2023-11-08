@@ -38,10 +38,13 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
             return;
           }
           break;
+        
 
 
     }
   
+
+
     res.send();
 
 })

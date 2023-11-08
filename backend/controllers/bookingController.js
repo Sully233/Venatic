@@ -3,22 +3,24 @@ const Availability = require('../models/availabilityModel');
 const Booking = require('../models/bookingModel');
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const client = require('twilio')(process.env.TWILLO_ACCOUNTSID, process.env.TWILLO_AUTH_TOKEN)
 
 
 const getBookingsOnDate = asyncHandler(async (req, res) => {
     const { date } = req.query;
-    
+     
     if (!date) {
       res.status(400);
       throw new Error('Please provide a date');
     }
   
-    const startDate = new Date(date);
-    startDate.setHours(0, 0, 0, 0);
-  
-    const endDate = new Date(date);
-    endDate.setHours(23, 59, 59, 999);
-  
+    const startDate = new Date(new Date(date).toISOString());
+    startDate.setUTCHours(0, 0, 0, 0);
+    
+    const endDate = new Date(new Date(date).toISOString());
+    endDate.setUTCHours(23, 59, 59, 999);
+    
+    console.log(startDate)
     const bookings = await Booking.find({
       'bookingTime.start': { $gte: startDate, $lte: endDate }
     }).sort({ 'bookingTime.start': 1 });
@@ -28,6 +30,7 @@ const getBookingsOnDate = asyncHandler(async (req, res) => {
 
 
   const createBooking = asyncHandler(async (req, res) => {
+
     const {
       firstName,
       lastName,
@@ -40,6 +43,7 @@ const getBookingsOnDate = asyncHandler(async (req, res) => {
       description,
       notes
     } = req.body;
+
 
     if (!firstName || !lastName || !contactNumber || !email || !bookingStartTime || !bookingEndTime || !price || !description) {
       res.status(400);
@@ -88,6 +92,8 @@ const getBookingsOnDate = asyncHandler(async (req, res) => {
     }
     
 
+
+
     const newBooking = await Booking.create({
       customer: { firstName, lastName, contactNumber, email },
       bookingTime: { start: bookingStart, end: bookingEnd },
@@ -99,6 +105,13 @@ const getBookingsOnDate = asyncHandler(async (req, res) => {
     });
 
 
+    // client.messages.create({
+    //   body: `Hi ${firstName} ${lastName},\n\nThanks for your booking with Venatic.\nWe've got your booking and we're processing it now.\n\nThanks :)`,
+    //   from: process.env.TEXT_SEND_NUMBER,
+    //   to: `+61${contactNumber}`  // Assuming this is the correct number format for Twilio
+    // })
+    // .then(message => console.log(message.sid))
+    // .catch(error => console.error(error));
 
 
     const session = await stripe.checkout.sessions.create({
@@ -117,6 +130,7 @@ const getBookingsOnDate = asyncHandler(async (req, res) => {
       mode: 'payment',
       success_url: 'https://yourdomain.com/success?sessionId={CHECKOUT_SESSION_ID}',
       cancel_url: 'https://yourdomain.com/cancel',
+      customer_email: email, // Pre-fill the email in the checkout session
       metadata: {
         bookingId: newBooking._id.toString(),
       },
