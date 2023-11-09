@@ -5,6 +5,21 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
 const client = require('twilio')(process.env.TWILLO_ACCOUNTSID, process.env.TWILLO_AUTH_TOKEN);
 
+const nodemailer = require('nodemailer')
+
+
+const transporter = nodemailer.createTransport({
+
+  host: process.env.EMAIL_HOST,
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD
+  }
+})
+
+
 const stripeBookingAllocation = asyncHandler(async (req, res) => {
   const sig = req.headers['stripe-signature'];
   let event;
@@ -58,6 +73,23 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
                                   `We've received your payment and your booking is confirmed.\n\n` +
                                   `Thanks :)`;
 
+              const mailOptions = {
+                from: "info@skimify.ai",
+                to: booking.customer.email,
+                subject: "Your Skimify Account Has Been Created!",
+                text: `Hi ${booking.customer.firstName} ${booking.customer.lastName}, \n Thanks for creating an account. Thanks, Skimify (a divison of Venatic)`
+              }
+                                  
+              transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                  console.log("Error:", error)
+                }
+                else {
+                  console.log("Email sent",info.response)
+                }
+          
+              });
+
               client.messages.create({
                   body: messageBody,
                   from: process.env.TEXT_SEND_NUMBER,
@@ -65,6 +97,8 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
               })
               .then(message => console.log(`Notification sent with SID: ${message.sid}`))
               .catch(error => console.error(`Notification failed with error: ${error}`));
+
+
           } else {
               console.log('Booking not found');
           }

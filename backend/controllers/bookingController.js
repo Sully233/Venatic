@@ -105,6 +105,8 @@ const getBookingsOnDate = asyncHandler(async (req, res) => {
       },
     });
   
+
+
     res.status(201).json({ url: session.url });
 
   });
@@ -133,6 +135,9 @@ const getBookingsOnDate = asyncHandler(async (req, res) => {
   
     // Delete the found booking
     await Booking.deleteOne({ _id: booking._id });
+
+
+    
   
     res.status(200).json({ message: 'Booking deleted successfully' });
   });
