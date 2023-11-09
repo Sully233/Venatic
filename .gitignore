@@ -82,7 +82,7 @@ typings/
 .nuxt
 dist
 
-DS_Store
+DS_Store.
 
 build
 # Gatsby files
