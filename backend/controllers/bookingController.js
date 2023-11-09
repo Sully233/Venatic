@@ -91,9 +91,6 @@ const getBookingsOnDate = asyncHandler(async (req, res) => {
       }
     }
     
-
-
-
     const newBooking = await Booking.create({
       customer: { firstName, lastName, contactNumber, email },
       bookingTime: { start: bookingStart, end: bookingEnd },
@@ -103,15 +100,6 @@ const getBookingsOnDate = asyncHandler(async (req, res) => {
       notes,
       allocatedPerson,
     });
-
-
-    // client.messages.create({
-    //   body: `Hi ${firstName} ${lastName},\n\nThanks for your booking with Venatic.\nWe've got your booking and we're processing it now.\n\nThanks :)`,
-    //   from: process.env.TEXT_SEND_NUMBER,
-    //   to: `+61${contactNumber}`  // Assuming this is the correct number format for Twilio
-    // })
-    // .then(message => console.log(message.sid))
-    // .catch(error => console.error(error));
 
 
     const session = await stripe.checkout.sessions.create({
@@ -141,7 +129,33 @@ const getBookingsOnDate = asyncHandler(async (req, res) => {
   });
 
   
+  const deleteBooking = asyncHandler(async (req, res) => {
+    const { date, startTime, endTime, contactNumber } = req.body;
+  
+    // Parse the date and times into Date objects
+    const bookingDate = new Date(date);
+    const bookingStartTime = new Date(startTime);
+    const bookingEndTime = new Date(endTime);
+  
+    // Find the booking by date, start time, end time, and contact number
+    const booking = await Booking.findOne({
+      'bookingTime.start': bookingStartTime,
+      'bookingTime.end': bookingEndTime,
+      'customer.contactNumber': contactNumber,
+    });
+  
+    // If no booking is found, return an error response
+    if (!booking) {
+      res.status(404).json({ message: 'Booking not found' });
+      return;
+    }
+  
+    // Delete the found booking
+    await Booking.deleteOne({ _id: booking._id });
+  
+    res.status(200).json({ message: 'Booking deleted successfully' });
+  });
 
 module.exports = {
-    createBooking, getBookingsOnDate
+    createBooking, getBookingsOnDate, deleteBooking
 };
