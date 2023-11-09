@@ -1,10 +1,18 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Hero from "./components/Hero";
-import './index.css'; 
+import Booking from "./components/Booking";
+import "./index.css";
 
 function App() {
   return (
-    <Hero/>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Hero />} />
+        <Route path="/booking" element={<Booking />} />
+        // Other routes...
+      </Routes>
+    </Router>
   );
 }
 
