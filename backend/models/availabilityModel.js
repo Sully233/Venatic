@@ -10,6 +10,10 @@ const availabilitySchema = mongoose.Schema({
       type: String,
       required: [true, 'Please add the last name of the contractor']
     },
+    phoneNumber: {
+      type: String,
+      required: [true, 'Please add the last name of the contractor']
+    },
   },
   availability: [{
     date: {

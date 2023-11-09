@@ -71,25 +71,6 @@ const getBookingsOnDate = asyncHandler(async (req, res) => {
     }
   
     let allocatedPerson = { firstName: 'UNALLOCATED', lastName: 'UNALLOCATED' };
-  
-    for (let currentTime = new Date(bookingStart); currentTime < bookingEnd; currentTime.setHours(currentTime.getHours() + 1)) {
-      const nextTime = new Date(currentTime);
-      nextTime.setHours(currentTime.getHours() + 1);
-  
-      const availability = await Availability.findOne({
-        'availability.startTime': currentTime,
-        'availability.endTime': nextTime
-      });
-  
-      if (availability) {
-        allocatedPerson = availability.contractor;
-        await Availability.updateOne(
-          { _id: availability._id },
-          { $pull: { availability: { startTime: currentTime, endTime: nextTime } } }
-        );
-        break;
-      }
-    }
     
     const newBooking = await Booking.create({
       customer: { firstName, lastName, contactNumber, email },
