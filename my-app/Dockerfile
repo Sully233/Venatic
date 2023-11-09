@@ -1,9 +1,9 @@
-FROM node:slim
+FROM node:slim as builder
 WORKDIR /app
-COPY . /app
+COPY package.json .
 RUN npm install
 RUN npm install -g serve
+COPY . .
 RUN npm run build
-COPY . /app
 EXPOSE 80
-CMD ["serve", "-l", "80", "-s","build"]
+CMD ["serve", "-s", "build"]
