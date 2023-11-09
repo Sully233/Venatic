@@ -1,7 +1,7 @@
 # Venatic
 
-Backend Server
-https://test-1-env.eba-vydmpd5x.ap-southeast-2.elasticbeanstalk.com/
+Live Frontend:
+https://venatic.me/
 
-Frontend 
-http://venatic.s3-website-ap-southeast-2.amazonaws.com/
+Live Backend 
+https://api.venatic.me/
