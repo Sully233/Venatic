@@ -33,8 +33,6 @@ jobs:
       - name: Sync build artifacts to S3
         run: aws s3 sync ./my-app/build s3://${{ secrets.AWS_PRODUCTION_BUCKET_NAME }} --delete
 
-
-
   deploy_backend:
     runs-on: ubuntu-22.04
     steps:
@@ -54,7 +52,7 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: ${{ secrets.APPLICATION_NAME }}
           environment_name: ${{ secrets.ENVIRONMENT_NAME }}
-          version_label: ${{ github.sha }}
+          version_label: ${{ github.sha }}-backend
           existing_bucket_name: ${{ secrets.BUCKET_NAME }}
           region: ${{ secrets.AWS_REGION }}
           deployment_package: deploy.zip
@@ -78,7 +76,7 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: ${{ secrets.APPLICATION_NAME }}
           environment_name: ${{ secrets.ENVIRONMENT_NAME }}
-          version_label: ${{ github.sha }}
+          version_label: ${{ github.sha }}-frontend
           existing_bucket_name: ${{ secrets.BUCKET_NAME }}
           region: ${{ secrets.AWS_REGION }}
           deployment_package: deploy_frontend.zip
