@@ -2,8 +2,9 @@ FROM node:slim as builder
 WORKDIR /app
 COPY package.json .
 RUN npm install
-RUN npm install -g serve
 COPY . .
 RUN npm run build
+
+FROM nginx 
 EXPOSE 80
-CMD ["serve", "-s", "build"]
+COPY --from=builder /app/build /usr/share/nginx/html
