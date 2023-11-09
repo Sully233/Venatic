@@ -33,29 +33,6 @@ jobs:
       - name: Sync build artifacts to S3
         run: aws s3 sync ./my-app/build s3://${{ secrets.AWS_PRODUCTION_BUCKET_NAME }} --delete
 
-  deploy_frontend2:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-
-      - name: Generate deployment package
-        run: cd my-app; zip -r deploy.zip . -x "node_modules/*"; mv ./deploy.zip ..; echo ${{ github.event.workflow_run.conclusion == 'success' }}
-
-      - name: View package
-        run: zipinfo -1 deploy.zip
-
-      - name: Deploy to EB
-        uses: einaregilsson/beanstalk-deploy@v21
-        with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: ${{ secrets.FRONTEND_APPLICATION_NAME }}
-          environment_name: ${{ secrets.FRONTEND_ENVIRONMENT_NAME }}
-          version_label: ${{ github.sha }}
-          existing_bucket_name: ${{ secrets.FRONTEND_BUCKET_NAME }}
-          region: ${{ secrets.AWS_REGION }}
-          deployment_package: deploy.zip
 
   deploy_backend:
     runs-on: ubuntu-22.04
