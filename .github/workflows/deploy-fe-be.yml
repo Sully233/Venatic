@@ -66,10 +66,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Generate deployment package
-        run: cd my-app;npm ci; npm run build; zip -r deploy.zip .; mv ./deploy.zip ..; echo ${{ github.event.workflow_run.conclusion == 'success' }}
+        run: cd my-app;npm ci; npm run build; zip -r deploy_frontend.zip .; mv ./deploy_frontend.zip ..; echo ${{ github.event.workflow_run.conclusion == 'success' }}
 
       - name: View package
-        run: zipinfo -1 deploy.zip
+        run: zipinfo -1 deploy_frontend.zip
 
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v21
@@ -81,4 +81,4 @@ jobs:
           version_label: ${{ github.sha }}
           existing_bucket_name: ${{ secrets.BUCKET_NAME }}
           region: ${{ secrets.AWS_REGION }}
-          deployment_package: deploy.zip
+          deployment_package: deploy_frontend.zip
