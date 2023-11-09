@@ -41,9 +41,9 @@ const getOpenTimeSlots = asyncHandler(async (req, res) => {
 
 
 const setAvailability = asyncHandler(async (req, res) => {
-    const { firstName, lastName, date, startTime, endTime } = req.body;
+    const { firstName, lastName, phoneNumber, date, startTime, endTime } = req.body;
 
-    if (!firstName || !lastName || !date || !startTime || !endTime) {
+    if (!firstName || !lastName || !phoneNumber || !date || !startTime || !endTime) {
         res.status(400);
         throw new Error('Please add all fields');
     }
@@ -66,7 +66,7 @@ const setAvailability = asyncHandler(async (req, res) => {
         nextTime.setHours(currentTime.getHours() + 1);
 
         availabilities.push({
-            contractor: { firstName, lastName },
+            contractor: { firstName, lastName, phoneNumber },
             availability: [{
                 date,
                 startTime: currentTime,
@@ -83,19 +83,18 @@ const setAvailability = asyncHandler(async (req, res) => {
 
 
 const deleteAvailability = asyncHandler(async (req, res) => {
-    const { date, firstName, lastName } = req.query;
+    const { date, phoneNumber } = req.query;
 
-    if (!date || !firstName || !lastName) {
+    if (!date || !phoneNumber) {
         res.status(400);
-        throw new Error('Date, first name, and last name are required');
+        throw new Error('Date and phone number are required');
     }
 
     const startDate = new Date(`${date}T00:00:00.000Z`);
     const endDate = new Date(`${date}T23:59:59.999Z`);
 
     const result = await Availability.deleteMany({
-        'contractor.firstName': firstName,
-        'contractor.lastName': lastName,
+        'contractor.phoneNumber': phoneNumber,
         'availability.date': {
             $gte: startDate,
             $lte: endDate,

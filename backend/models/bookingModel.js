@@ -19,8 +19,8 @@ const bookingSchema = mongoose.Schema(
       description: { type: String, required: [true, 'Description is required'] },
       notes: String,
       allocatedPerson: {
-        firstName: { type: String, required: [true, 'First name is required'] },
-        lastName: { type: String, required: [true, 'Last name is required'] },
+        firstName: { type: String, required: [false, 'First name is required'] },
+        lastName: { type: String, required: [false, 'Last name is required'] },
       },
       stripePaymentIntentId: { type: String, required: [false, 'Payment Intent is required'] },
     },
