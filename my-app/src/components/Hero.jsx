@@ -3,17 +3,26 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <div className="ml-5 mt-5">
-      <h1 className="text-4xl font-bold leading-tight text-gray-900">
-        Hypothetical Landing Page
-      </h1>
-      <div>Blah blah blah cool website!</div>
-      <div>Lorem ipsum dolor would be nice if we knew what subsidiary we're doing!</div>
-      <Link to="/booking">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-3">
-          Book Now
-        </button>
-      </Link>
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="w-full max-w-4xl">
+        <div className="ml-1/3">
+          <h1 className="text-5xl font-bold leading-tight text-gray-900">
+            Perfect Portraits 
+          </h1>
+          <h1 className="text-5xl font-bold leading-tight text-gray-900">
+            for every
+          </h1>
+          <h1 className="text-5xl font-bold leading-tight text-gray-900">
+            season of life.
+          </h1>
+          <div className="mt-8 text-xl">Feel the Magic of Each Moment, Forever.</div>
+          <Link to="/booking">
+            <button className="mt-8 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full text-sm">
+              BOOK A SESSION
+            </button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };
