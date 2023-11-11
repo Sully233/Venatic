@@ -3,7 +3,7 @@ import React from "react";
 const Booking = () => {
   return (
     <div>
-      <h1 className="text-4xl font-bold leading-tight text-gray-900">
+      <h1 className="text-4xl font-bold leading-tight text-gray-900 ml-5 mt-5">
         Booking Page
       </h1>
     </div>
