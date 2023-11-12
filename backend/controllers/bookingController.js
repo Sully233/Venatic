@@ -97,8 +97,8 @@ const getBookingsOnDate = asyncHandler(async (req, res) => {
         quantity: 1,
       }],
       mode: 'payment',
-      success_url: 'https://yourdomain.com/success?sessionId={CHECKOUT_SESSION_ID}',
-      cancel_url: 'https://yourdomain.com/cancel',
+      success_url: 'https://venatic.me/success?sessionId={CHECKOUT_SESSION_ID}',
+      cancel_url: 'https://venatic.me/unsuccessful',
       customer_email: email, // Pre-fill the email in the checkout session
       metadata: {
         bookingId: newBooking._id.toString(),
