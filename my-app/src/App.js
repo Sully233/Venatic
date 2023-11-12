@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Hero from "./components/Hero";
 import Booking from "./components/Booking";
 import "./index.css";
+import "./images.css";
 
 function App() {
   return (
