@@ -69,12 +69,12 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
 
               //SMS Notification
               const messageBody = `Hi ${booking.customer.firstName}, we've got your booking!\n\n` +
-              `Look out for an email with more details.\n\n` +
-              `Need help? Contact us anytime! 🚀`;
+              `Look out for an email with details.\n\n` +
+              `Need help? Contact us at support@venatic.me 🚀`;
 
               //Email Notification
               const mailOptions = {
-                from: '"Venatic Reservations" <reservations@venatic.com>',
+                from: '"Venatic Reservations" <reservations@venatic.me>',
                 to: booking.customer.email,
                 subject: "✅ Booking Confirmation from Venatic",
                 html: `
@@ -91,7 +91,7 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
                         <p style="margin: 0;"><strong>Receipt 🧾:</strong> ${booking.receipt}</p>
                       </div>
                       <p style="font-size: 16px;">Need to make changes or have questions? No problem! Our support team is here for you.</p>
-                      <a href="mailto:help@venatic.com" style="background-color: #333333; color: #ffffff; padding: 10px 25px; text-decoration: none; border-radius: 5px; font-size: 16px; display: inline-block; margin-top: 10px;">Get Help</a>
+                      <a href="mailto:support@venatic.me" style="background-color: #333333; color: #ffffff; padding: 10px 25px; text-decoration: none; border-radius: 5px; font-size: 16px; display: inline-block; margin-top: 10px;">Get Help</a>
                     </div>
                     <div style="background-color: #f8f8f8; color: #333333; padding: 10px; text-align: center; font-size: 12px;">
                       <p>Please do not reply to this email. For assistance, please reach out to our support team.</p>
