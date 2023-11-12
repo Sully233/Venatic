@@ -73,12 +73,27 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
                                   `We've received your payment and your booking is confirmed.\n\n` +
                                   `Thanks :)`;
 
-              const mailOptions = {
-                from: "info@skimify.ai",
-                to: booking.customer.email,
-                subject: "Your Skimify Account Has Been Created!",
-                text: `Hi ${booking.customer.firstName} ${booking.customer.lastName}, \n Thanks for creating an account. Thanks, Skimify (a divison of Venatic)`
-              }
+                    const mailOptions = {
+                      from: '"Venatic Reservations" <booking@skimify.ai>', 
+                      to: booking.customer.email,
+                      subject: "Confirmation of Your Venatic Booking",
+                      html: `
+                        <div style="font-family: 'Arial', sans-serif; color: #333;">
+                          <h2>Hello ${booking.customer.firstName} ${booking.customer.lastName},</h2>
+                          <p>Thank you for choosing Venatic for your needs. We are delighted to confirm your recent booking.</p>
+                          <p><strong>Booking Details:</strong></p>
+                          <p><strong>Date:</strong> ${new Date(booking.bookingTime.start).toLocaleDateString()}</p>
+                          <p><strong>Time:</strong> ${new Date(booking.bookingTime.start).toLocaleTimeString()} - ${new Date(booking.bookingTime.end).toLocaleTimeString()}</p>
+                          <p><strong>Assigned Specialist:</strong> ${booking.allocatedPerson.firstName} ${booking.allocatedPerson.lastName}</p>
+                          <p>Your receipt number is <strong>${booking.receipt}</strong>. Please keep this for your records.</p>
+                          <p>If you have any questions or need to make any changes to your booking, please contact us at your earliest convenience.</p>
+                          <h3>We look forward to serving you!</h3>
+                          <p>Warm regards,</p>
+                          <p><strong>The Venatic Team</strong></p>
+                          <p><small>This is an automated message, please do not reply directly to this email. If you need assistance, contact customer service at <a href="mailto:help@venatic.me">help@venatic.me</a>.</small></p>
+                        </div>
+                      `,
+                    }
                                   
               transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
