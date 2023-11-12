@@ -72,6 +72,12 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
               `Look out for an email with details.\n\n` +
               `Need help? Contact us at support@venatic.me 🚀`;
 
+
+              const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+
+
+
+
               //Email Notification
               const mailOptions = {
                 from: '"Venatic Reservations" <reservations@venatic.me>',
@@ -85,7 +91,7 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
                     <div style="padding: 20px; text-align: center;">
                       <p style="font-size: 16px; margin: 20px 0;">Hey ${booking.customer.firstName} 👋, your exciting experience with Venatic is booked and ready to go!</p>
                       <div style="background-color: #f8f8f8; padding: 20px; margin: 30px 0; line-height: 1.6; border-radius: 8px;">
-                        <p style="margin: 0;"><strong>Date 📅:</strong> ${new Date(booking.bookingTime.start).toLocaleDateString()}</p>
+                        <p style="margin: 0;"><strong>Date 📅:</strong> ${new Date(booking.bookingTime.start).toLocaleDateString('en-GB', options)}</p>
                         <p style="margin: 0;"><strong>Time ⏰:</strong> ${new Date(booking.bookingTime.start).toLocaleTimeString()} - ${new Date(booking.bookingTime.end).toLocaleTimeString()}</p>
                         <p style="margin: 0;"><strong>Specialist 👤:</strong> ${booking.allocatedPerson.firstName} ${booking.allocatedPerson.lastName}</p>
                         <p style="margin: 0;"><strong>Receipt 🧾:</strong> ${booking.receipt}</p>
