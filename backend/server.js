@@ -3,14 +3,17 @@ const dotenv = require('dotenv').config()
 const helmet = require('helmet');
 const {errorHandler} = require('./middleware/errorMiddleware')
 const connectDB = require('./config/db')
+const cors = require('cors')
 const Booking = require('./models/bookingModel');
 
 connectDB()
 
 const app = express();
+
 const PORT = process.env.PORT;
 
 app.use(helmet());
+app.use(cors())
 
 
 app.use('/api/webhook', require('./routes/stripeRoutes')) //Stripe API

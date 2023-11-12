@@ -1,9 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const { createBooking, getBookingsOnDate, deleteBooking } = require('../controllers/bookingController')
+const { createBooking, getBookingsOnDate, deleteBooking, getName } = require('../controllers/bookingController')
 
 
 router.get('/superuseradmin/ondate', getBookingsOnDate)
+
+router.get('/nameinfo', getName)
+
 
 router.post('/', createBooking)
 

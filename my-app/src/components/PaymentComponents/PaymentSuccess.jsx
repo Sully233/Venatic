@@ -1,14 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import { motion } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom'; 
+import Typewriter from 'typewriter-effect';
+
 
 const PaymentSuccess = () => {
 
 
+  
   const [searchParams] = useSearchParams();
+  const sessionId = searchParams.get('sessionId');
+  const [nameInfo, setNameInfo] = useState({ firstName: '', lastName: '' });
+  const [isLoading, setIsLoading] = useState(false);
 
-  console.log(searchParams.get('sessionId'))
+  useEffect(() => {
+    const fetchNameInfo = async () => {
+      if (sessionId) {
+        setIsLoading(true);
+        try {
+          const response = await fetch(`${process.env.REACT_APP_API_SERVER}/api/booking/nameinfo?session_ID=${sessionId}`);
+          if (response.ok) {
+            const data = await response.json();
+            setNameInfo({ firstName: data.firstName, lastName: data.lastName });
+          } else {
+            console.error('API call failed:', response.status, response.statusText);
+          }
+        } catch (error) {
+          console.error('Network error:', error);
+        }
+        setIsLoading(false);
+      }
+    };
+
+    const timeoutId = setTimeout(() => {
+      if (!nameInfo.firstName) {
+        setNameInfo(prevState => ({ ...prevState, firstName: 'Hey' }));
+      }
+    }, 5000);
+
+    fetchNameInfo();
+
+    return () => clearTimeout(timeoutId);
+  }, [sessionId]);
 
 
   const iconVariants = {
@@ -27,12 +61,16 @@ const PaymentSuccess = () => {
   };
 
   return (
+
+
+
     <motion.div
       className="flex flex-col justify-center items-center min-h-screen px-4 sm:px-6"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
+
       <motion.div className="text-green-500" variants={iconVariants}>
         <CheckCircleIcon className="w-16 h-16 sm:w-24 sm:h-24" />
       </motion.div>

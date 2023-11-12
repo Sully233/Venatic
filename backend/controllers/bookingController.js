@@ -6,6 +6,31 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const client = require('twilio')(process.env.TWILLO_ACCOUNTSID, process.env.TWILLO_AUTH_TOKEN)
 
 
+const getName = asyncHandler(async (req, res) => {
+  const { session_ID } = req.query;
+
+  if (!session_ID) {
+    return res.status(400).json({ message: "Session ID is required." });
+  }
+
+  try {
+    const booking = await Booking.findOne({ stripeSessionID: session_ID });
+
+    if (booking) {
+
+      const { firstName, lastName } = booking.customer;
+
+
+      res.status(200).json({ firstName, lastName });
+    } else {
+      res.status(404).json({ message: "Booking not found with given session ID." });
+    }
+  } catch (error) {
+    console.error('Error fetching booking:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 const getBookingsOnDate = asyncHandler(async (req, res) => {
     const { date } = req.query;
      
@@ -143,5 +168,5 @@ const getBookingsOnDate = asyncHandler(async (req, res) => {
   });
 
 module.exports = {
-    createBooking, getBookingsOnDate, deleteBooking
+    createBooking, getBookingsOnDate, deleteBooking, getName
 };
