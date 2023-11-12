@@ -11,14 +11,17 @@ const nodemailer = require('nodemailer')
 const transporter = nodemailer.createTransport({
 
   host: process.env.EMAIL_HOST,
-  port: 587,
-  secure: false,
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD
   }
 })
 
+const truncateName = (name) => {
+  return name.length > 19 ? name.substring(0, 19) + '...' : name;
+};
 
 const stripeBookingAllocation = asyncHandler(async (req, res) => {
   const sig = req.headers['stripe-signature'];
@@ -67,16 +70,11 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
               await booking.save();
               console.log('Booking updated with receipt number and allocated person');
 
+              const customerFirstName = truncateName(booking.customer.firstName); 
               //SMS Notification
-              const messageBody = `Hi ${booking.customer.firstName}, we've got your booking!\n\n` +
+              const messageBody = `Hi ${customerFirstName}, we've got your booking with Venatic!\n\n` +
               `Look out for an email with details.\n\n` +
-              `Need help? Contact us at support@venatic.me 🚀`;
-
-
-              const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-
-
-
+              `Need help? Contact us at support@venatic.me`;
 
               //Email Notification
               const mailOptions = {
@@ -91,7 +89,7 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
                     <div style="padding: 20px; text-align: center;">
                       <p style="font-size: 16px; margin: 20px 0;">Hey ${booking.customer.firstName} 👋, your exciting experience with Venatic is booked and ready to go!</p>
                       <div style="background-color: #f8f8f8; padding: 20px; margin: 30px 0; line-height: 1.6; border-radius: 8px;">
-                        <p style="margin: 0;"><strong>Date 📅:</strong> ${new Date(booking.bookingTime.start).toLocaleDateString('en-GB', options)}</p>
+                        <p style="margin: 0;"><strong>Date 📅:</strong> ${new Date(booking.bookingTime.start).toLocaleDateString()}</p>
                         <p style="margin: 0;"><strong>Time ⏰:</strong> ${new Date(booking.bookingTime.start).toLocaleTimeString()} - ${new Date(booking.bookingTime.end).toLocaleTimeString()}</p>
                         <p style="margin: 0;"><strong>Specialist 👤:</strong> ${booking.allocatedPerson.firstName} ${booking.allocatedPerson.lastName}</p>
                         <p style="margin: 0;"><strong>Receipt 🧾:</strong> ${booking.receipt}</p>
