@@ -23,6 +23,7 @@ const bookingSchema = mongoose.Schema(
         lastName: { type: String, required: [false, 'Last name is required'] },
       },
       stripePaymentIntentId: { type: String, required: [false, 'Payment Intent is required'] },
+      stripeSessionID: { type: String, required: [false, 'Payment Intent is required'] },
     },
     {
       timestamps: true,

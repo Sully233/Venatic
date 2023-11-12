@@ -44,6 +44,7 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
           if (booking) {
               // Update the booking with the receipt number
               booking.receipt = session.payment_intent;
+              booking.stripeSessionID = session.id;
 
               // Allocate a person to the booking
               let allocatedPerson = { firstName: 'UNALLOCATED', lastName: 'UNALLOCATED' };
