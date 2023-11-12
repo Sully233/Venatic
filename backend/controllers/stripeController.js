@@ -67,34 +67,39 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
               await booking.save();
               console.log('Booking updated with receipt number and allocated person');
 
-              // Send a notification message to the customer
-              const messageBody = `Hi ${booking.customer.firstName} ${booking.customer.lastName},\n\n` +
-                                  `Thanks for your booking with Venatic.\n` +
-                                  `We've received your payment and your booking is confirmed.\n\n` +
-                                  `Thanks :)`;
+              //SMS Notification
+              const messageBody = `Hi ${booking.customer.firstName}, we've got your booking!\n\n` +
+              `Look out for an email with more details.\n\n` +
+              `Need help? Contact us anytime! 🚀`;
 
-                    const mailOptions = {
-                      from: '"Venatic Reservations" <booking@skimify.ai>', 
-                      to: booking.customer.email,
-                      subject: "Confirmation of Your Venatic Booking",
-                      html: `
-                        <div style="font-family: 'Arial', sans-serif; color: #333;">
-                          <h2>Hello ${booking.customer.firstName} ${booking.customer.lastName},</h2>
-                          <p>Thank you for choosing Venatic for your needs. We are delighted to confirm your recent booking.</p>
-                          <p><strong>Booking Details:</strong></p>
-                          <p><strong>Date:</strong> ${new Date(booking.bookingTime.start).toLocaleDateString()}</p>
-                          <p><strong>Time:</strong> ${new Date(booking.bookingTime.start).toLocaleTimeString()} - ${new Date(booking.bookingTime.end).toLocaleTimeString()}</p>
-                          <p><strong>Assigned Specialist:</strong> ${booking.allocatedPerson.firstName} ${booking.allocatedPerson.lastName}</p>
-                          <p>Your receipt number is <strong>${booking.receipt}</strong>. Please keep this for your records.</p>
-                          <p>If you have any questions or need to make any changes to your booking, please contact us at your earliest convenience.</p>
-                          <h3>We look forward to serving you!</h3>
-                          <p>Warm regards,</p>
-                          <p><strong>The Venatic Team</strong></p>
-                          <p><small>This is an automated message, please do not reply directly to this email. If you need assistance, contact customer service at <a href="mailto:help@venatic.me">help@venatic.me</a>.</small></p>
-                        </div>
-                      `,
-                    }
-                                  
+              //Email Notification
+              const mailOptions = {
+                from: '"Venatic Reservations" <reservations@venatic.com>',
+                to: booking.customer.email,
+                subject: "✅ Booking Confirmation from Venatic",
+                html: `
+                  <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #dddddd; border-radius: 10px; overflow: hidden;">
+                    <div style="background-color: #ffffff; color: #333333; padding: 20px; text-align: center; border-bottom: 2px solid #eeeeee;">
+                      <h1 style="font-size: 24px; margin: 0;">Booking Confirmed 🎉</h1>
+                    </div>
+                    <div style="padding: 20px; text-align: center;">
+                      <p style="font-size: 16px; margin: 20px 0;">Hey ${booking.customer.firstName} 👋, your exciting experience with Venatic is booked and ready to go!</p>
+                      <div style="background-color: #f8f8f8; padding: 20px; margin: 30px 0; line-height: 1.6; border-radius: 8px;">
+                        <p style="margin: 0;"><strong>Date 📅:</strong> ${new Date(booking.bookingTime.start).toLocaleDateString()}</p>
+                        <p style="margin: 0;"><strong>Time ⏰:</strong> ${new Date(booking.bookingTime.start).toLocaleTimeString()} - ${new Date(booking.bookingTime.end).toLocaleTimeString()}</p>
+                        <p style="margin: 0;"><strong>Specialist 👤:</strong> ${booking.allocatedPerson.firstName} ${booking.allocatedPerson.lastName}</p>
+                        <p style="margin: 0;"><strong>Receipt 🧾:</strong> ${booking.receipt}</p>
+                      </div>
+                      <p style="font-size: 16px;">Need to make changes or have questions? No problem! Our support team is here for you.</p>
+                      <a href="mailto:help@venatic.com" style="background-color: #333333; color: #ffffff; padding: 10px 25px; text-decoration: none; border-radius: 5px; font-size: 16px; display: inline-block; margin-top: 10px;">Get Help</a>
+                    </div>
+                    <div style="background-color: #f8f8f8; color: #333333; padding: 10px; text-align: center; font-size: 12px;">
+                      <p>Please do not reply to this email. For assistance, please reach out to our support team.</p>
+                    </div>
+                  </div>
+                `,
+              }
+              
               transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
                   console.log("Error:", error)
