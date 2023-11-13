@@ -110,3 +110,4 @@ build
 .tern-port
 
 .idea
+my-app/.DS_Store

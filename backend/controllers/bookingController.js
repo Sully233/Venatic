@@ -6,6 +6,31 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const client = require('twilio')(process.env.TWILLO_ACCOUNTSID, process.env.TWILLO_AUTH_TOKEN)
 
 
+const getName = asyncHandler(async (req, res) => {
+  const { session_ID } = req.query;
+
+  if (!session_ID) {
+    return res.status(400).json({ message: "Session ID is required." });
+  }
+
+  try {
+    const booking = await Booking.findOne({ stripeSessionID: session_ID });
+
+    if (booking) {
+
+      const { firstName, lastName } = booking.customer;
+
+
+      res.status(200).json({ firstName, lastName });
+    } else {
+      res.status(404).json({ message: "Booking not found with given session ID." });
+    }
+  } catch (error) {
+    console.error('Error fetching booking:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 const getBookingsOnDate = asyncHandler(async (req, res) => {
     const { date } = req.query;
      
@@ -97,8 +122,8 @@ const getBookingsOnDate = asyncHandler(async (req, res) => {
         quantity: 1,
       }],
       mode: 'payment',
-      success_url: 'https://yourdomain.com/success?sessionId={CHECKOUT_SESSION_ID}',
-      cancel_url: 'https://yourdomain.com/cancel',
+      success_url: 'https://venatic.me/success?sessionId={CHECKOUT_SESSION_ID}',
+      cancel_url: 'https://venatic.me/unsuccessful',
       customer_email: email, // Pre-fill the email in the checkout session
       metadata: {
         bookingId: newBooking._id.toString(),
@@ -143,5 +168,5 @@ const getBookingsOnDate = asyncHandler(async (req, res) => {
   });
 
 module.exports = {
-    createBooking, getBookingsOnDate, deleteBooking
+    createBooking, getBookingsOnDate, deleteBooking, getName
 };

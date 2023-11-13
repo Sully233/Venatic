@@ -19,6 +19,9 @@ const transporter = nodemailer.createTransport({
   }
 })
 
+const truncateName = (name) => {
+  return name.length > 19 ? name.substring(0, 19) + '...' : name;
+};
 
 const stripeBookingAllocation = asyncHandler(async (req, res) => {
   const sig = req.headers['stripe-signature'];
@@ -41,6 +44,7 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
           if (booking) {
               // Update the booking with the receipt number
               booking.receipt = session.payment_intent;
+              booking.stripeSessionID = session.id;
 
               // Allocate a person to the booking
               let allocatedPerson = { firstName: 'UNALLOCATED', lastName: 'UNALLOCATED' };
@@ -67,19 +71,43 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
               await booking.save();
               console.log('Booking updated with receipt number and allocated person');
 
-              // Send a notification message to the customer
-              const messageBody = `Hi ${booking.customer.firstName} ${booking.customer.lastName},\n\n` +
-                                  `Thanks for your booking with Venatic.\n` +
-                                  `We've received your payment and your booking is confirmed.\n\n` +
-                                  `Thanks :)`;
+              const customerFirstName = truncateName(booking.customer.firstName); 
+              //SMS Notification
+              const messageBody = `Hi ${customerFirstName}, we've got your booking with Venatic!\n\n` +
+              `Look out for an email with details.\n\n` +
+              `Need help? Contact us at support@venatic.me`;
 
+              const options = { day: '2-digit', month: '2-digit', year: 'numeric' }; //Date format dd/mm/yyyy
+
+
+              //Email Notification
               const mailOptions = {
-                from: "info@skimify.ai",
+                from: '"Venatic Reservations" <reservations@venatic.me>',
                 to: booking.customer.email,
-                subject: "Your Skimify Account Has Been Created!",
-                text: `Hi ${booking.customer.firstName} ${booking.customer.lastName}, \n Thanks for creating an account. Thanks, Skimify (a divison of Venatic)`
+                subject: "✅ Booking Confirmation from Venatic",
+                html: `
+                  <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #dddddd; border-radius: 10px; overflow: hidden;">
+                    <div style="background-color: #ffffff; color: #333333; padding: 20px; text-align: center; border-bottom: 2px solid #eeeeee;">
+                      <h1 style="font-size: 24px; margin: 0;">Booking Confirmed 🎉</h1>
+                    </div>
+                    <div style="padding: 20px; text-align: center;">
+                      <p style="font-size: 16px; margin: 20px 0;">Hey ${booking.customer.firstName} 👋, your exciting experience with Venatic is booked and ready to go!</p>
+                      <div style="background-color: #f8f8f8; padding: 20px; margin: 30px 0; line-height: 1.6; border-radius: 8px;">
+                        <p style="margin: 0;"><strong>Date 📅:</strong> ${new Date(booking.bookingTime.start).toLocaleDateString('en-GB', options)}</p>
+                        <p style="margin: 0;"><strong>Time ⏰:</strong> ${new Date(booking.bookingTime.start).toLocaleTimeString()} - ${new Date(booking.bookingTime.end).toLocaleTimeString()}</p>
+                        <p style="margin: 0;"><strong>Specialist 👤:</strong> ${booking.allocatedPerson.firstName} ${booking.allocatedPerson.lastName}</p>
+                        <p style="margin: 0;"><strong>Receipt 🧾:</strong> ${booking.receipt}</p>
+                      </div>
+                      <p style="font-size: 16px;">Need to make changes or have questions? No problem! Our support team is here for you.</p>
+                      <a href="mailto:support@venatic.me" style="background-color: #333333; color: #ffffff; padding: 10px 25px; text-decoration: none; border-radius: 5px; font-size: 16px; display: inline-block; margin-top: 10px;">Get Help</a>
+                    </div>
+                    <div style="background-color: #f8f8f8; color: #333333; padding: 10px; text-align: center; font-size: 12px;">
+                      <p>Please do not reply to this email. For assistance, please reach out to our support team.</p>
+                    </div>
+                  </div>
+                `,
               }
-                                  
+              
               transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
                   console.log("Error:", error)
@@ -90,13 +118,14 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
           
               });
 
-              client.messages.create({
-                  body: messageBody,
-                  from: process.env.TEXT_SEND_NUMBER,
-                  to: `+61${booking.customer.contactNumber}` 
-              })
-              .then(message => console.log(`Notification sent with SID: ${message.sid}`))
-              .catch(error => console.error(`Notification failed with error: ${error}`));
+
+              // client.messages.create({
+              //     body: messageBody,
+              //     from: process.env.TEXT_SEND_NUMBER,
+              //     to: `+61${booking.customer.contactNumber}` 
+              // })
+              // .then(message => console.log(`Notification sent with SID: ${message.sid}`))
+              // .catch(error => console.error(`Notification failed with error: ${error}`));
 
 
           } else {
