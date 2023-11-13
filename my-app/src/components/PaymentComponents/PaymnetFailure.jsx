@@ -17,7 +17,6 @@ console.log(searchParams.get('sessionId'))
   };
 
 
-
   const iconVariants = {
     hidden: { rotate: -15 },
     visible: {

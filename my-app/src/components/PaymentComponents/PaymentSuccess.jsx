@@ -3,12 +3,13 @@ import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import { motion } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom'; 
 import Typewriter from 'typewriter-effect';
+import { useNavigate } from 'react-router-dom';
 
 
 const PaymentSuccess = () => {
 
+  const navigate = useNavigate();
 
-  
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get('sessionId');
   const [nameInfo, setNameInfo] = useState({ firstName: '', lastName: '' });
@@ -32,17 +33,22 @@ const PaymentSuccess = () => {
         setIsLoading(false);
       }
     };
-
-    const timeoutId = setTimeout(() => {
-      if (!nameInfo.firstName) {
-        setNameInfo(prevState => ({ ...prevState, firstName: 'Hey' }));
-      }
-    }, 5000);
+  
 
     fetchNameInfo();
 
-    return () => clearTimeout(timeoutId);
-  }, [sessionId]);
+    const timer = setTimeout(() => {
+      navigate('/');
+    }, 10000);
+  
+
+    return () => {
+      clearTimeout(timer);
+
+    };
+  
+
+  }, [sessionId, navigate]);
 
 
   const iconVariants = {
