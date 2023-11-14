@@ -4,6 +4,7 @@ import Hero from "./components/Hero";
 import Booking from "./components/Booking";
 import PaymentSuccess from "./components/PaymentComponents/PaymentSuccess";
 import PaymentFailure from "./components/PaymentComponents/PaymnetFailure";
+import 'flowbite';
 
 import "./index.css";
 import "./images.css";
