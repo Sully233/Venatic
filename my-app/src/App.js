@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Hero from "./components/Hero";
 import Booking from "./components/Booking";
 import PaymentSuccess from "./components/PaymentComponents/PaymentSuccess";
-import PaymentFailure from "./components/PaymentComponents/PaymnetFailure";
+import PaymentFailure from "./components/PaymentComponents/PaymentFailure";
 import 'flowbite';
 
 import "./index.css";
