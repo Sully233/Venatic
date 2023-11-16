@@ -43,13 +43,30 @@ const Booking = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  // Function to send data to backend
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(JSON.stringify(formData, null, 2));
-    // Further processing or sending to an API
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_SERVER}/api/booking/nameinfo?session_ID=${sessionId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
   };
 
-  // Generate time options for the dropdown (e.g., 9:00, 10:00, ..., 17:00) TEMPORARY
+  // TEMPORARY Generate time options for the dropdown (e.g., 9:00, 10:00, ..., 17:00) TEMPORARY
   const timeOptions = Array.from({ length: 9 }, (_, i) => `${9 + i}:00`);
 
   return (
@@ -58,7 +75,7 @@ const Booking = () => {
         <div className="grid grid-cols-1 gap-4">
           {/* Date Picker */}
           <div>
-            <DateChooser/>
+            <DateChooser />
           </div>
           {/* Time Selectors */}
           <div>
@@ -131,7 +148,7 @@ const Booking = () => {
               onChange={handleChange}
               fullWidth
             />
-          </div>        
+          </div>
           {/* Notes */}
           <div>
             <TextField
