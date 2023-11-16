@@ -4,10 +4,10 @@ import Hero from "./components/Hero";
 import Booking from "./components/Booking";
 import PaymentSuccess from "./components/PaymentComponents/PaymentSuccess";
 import PaymentFailure from "./components/PaymentComponents/PaymentFailure";
-import 'flowbite';
 
 import "./index.css";
 import "./images.css";
+import MyPlacesAutocompletePage from "./components/BookingComponents/searchOptions";
 
 function App() {
   return (
@@ -17,6 +17,7 @@ function App() {
         <Route path="/booking" element={<Booking />} />
         <Route path="/success" element={<PaymentSuccess />} />
         <Route path="/unsuccessful" element={<PaymentFailure />} />
+        <Route path="/autocomplete" element={<MyPlacesAutocompletePage />} />
 
       </Routes>
     </Router>
