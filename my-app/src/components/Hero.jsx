@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import MyPlacesAutocompletePage from "./BookingComponents/searchOptions";
 
 const Hero = () => {
   return (
@@ -24,7 +25,7 @@ const Hero = () => {
             </button>
           </Link>
         </div>
-        <div class="picture1">&nbsp;</div>
+        <MyPlacesAutocompletePage/>
       </div>
     </div>
   );

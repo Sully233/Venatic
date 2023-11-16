@@ -23,6 +23,7 @@ app.use('/api/webhook', require('./routes/stripeRoutes')) //Stripe API
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
+app.use('/api/location', require('./routes/locationRoutes'))
 
 app.use('/api/availabilities', require('./routes/availabilityRoutes'))
 
