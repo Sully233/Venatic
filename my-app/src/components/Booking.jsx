@@ -49,7 +49,7 @@ const Booking = () => {
     console.log(JSON.stringify(formData, null, 2));
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_SERVER}/api/booking/nameinfo?session_ID=${sessionId}`,
+        `${process.env.REACT_APP_API_SERVER}/api/booking/`,
         {
           method: "POST",
           headers: {
