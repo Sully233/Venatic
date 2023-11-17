@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Hero from "./components/Hero";
-import Booking from "./components/Booking";
+import MultiStepForm from "./components/MultiStepForm";
 import PaymentSuccess from "./components/PaymentComponents/PaymentSuccess";
 import PaymentFailure from "./components/PaymentComponents/PaymentFailure";
 
@@ -14,7 +14,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Hero />} />
-        <Route path="/booking" element={<Booking />} />
+        <Route path="/booking" element={<MultiStepForm />} />
         <Route path="/success" element={<PaymentSuccess />} />
         <Route path="/unsuccessful" element={<PaymentFailure />} />
         <Route path="/autocomplete" element={<MyPlacesAutocompletePage />} />
