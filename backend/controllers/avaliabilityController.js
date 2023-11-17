@@ -3,6 +3,45 @@ const asyncHandler = require('express-async-handler');
 const Availability = require('../models/availabilityModel')
 
 
+const getOpenDays = asyncHandler(async (req, res) => {
+
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() + 3);
+
+
+  const endDate = new Date();
+  endDate.setFullYear(endDate.getFullYear() + 2);
+
+
+  const availabilities = await Availability.find({
+    'availability.date': {
+      $gte: startDate,
+      $lte: endDate
+    }
+  }, 'availability.date');
+
+
+  const uniqueDates = new Set();
+
+
+  availabilities.forEach(doc => {
+    doc.availability.forEach(avail => {
+      if (avail.date >= startDate && avail.date <= endDate) {
+
+        uniqueDates.add(avail.date.toISOString().split('T')[0]);
+      }
+    });
+  });
+
+
+  const openDates = Array.from(uniqueDates);
+
+
+  res.status(200).json({ openDates });
+});
+
+
+
 const getOpenTimeSlots = asyncHandler(async (req, res) => {
     
   const { date } = req.query;
@@ -111,5 +150,5 @@ const deleteAvailability = asyncHandler(async (req, res) => {
 
 
 module.exports = {
-    setAvailability, getOpenTimeSlots, deleteAvailability
+    setAvailability, getOpenTimeSlots, deleteAvailability, getOpenDays
 };
