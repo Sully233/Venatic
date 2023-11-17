@@ -8,6 +8,9 @@ import "../index.css";
 
 export default function MultiStepForm() {
   const methods = useForm();
+  const {
+    formState: { isValid },
+  } = methods;
   const [step, setStep] = useState(1);
 
   const nextStep = () => setStep(step + 1);
@@ -56,12 +59,12 @@ export default function MultiStepForm() {
               Back
             </button>
           )}
-          {step < 3 && (
+          {step < 3 && isValid && (
             <button type="button" onClick={nextStep}>
               Next
             </button>
           )}
-          {step === 3 && <button type="submit">Submit</button>}
+          {step === 3 && isValid && <button type="submit">Submit</button>}
         </form>
       </div>
     </FormProvider>
