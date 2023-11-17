@@ -1,7 +1,32 @@
-# Venatic
+# Technologies Used in Venatic Project
 
-Live Frontend:
-https://venatic.me/
+This document highlights the technologies used in the Venatic project.
 
-Live Backend 
-https://api.venatic.me/
+## Frontend
+- **React**
+
+## Backend
+- **Express.js**
+- **Mongodb**
+
+## DevOps and Infrastructure
+- **Docker**
+- **AWS Elastic Beanstalk**
+- **AWS Lambda**
+- **AWS S3**
+- **Cloudflare**
+- **Vercel**
+
+
+## Payment Processing
+- **Stripe**
+
+## State Management
+- **MobX**
+
+## Continuous Integration and Continuous Deployment
+- **Github Actions**
+
+## Live Versions
+- Frontend: [https://venatic.me/](https://venatic.me/)
+- Backend: [https://api.venatic.me/](https://api.venatic.me/)
