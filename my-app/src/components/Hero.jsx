@@ -25,8 +25,8 @@ const Hero = observer(() => {
             <button className="mt-8 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full text-sm">
               BOOK A SESSION
             </button>
-            <p>test mobx</p>
-            <p>{addressStore.address}</p>
+            <p>test mobx (eligibility checker)</p>
+            <p>{addressStore.postcodeEligible}</p>
           </Link>
         </div>
         <MyPlacesAutocompletePage/>

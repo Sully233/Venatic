@@ -13,6 +13,9 @@ const searchOptions = {
 
 };
 
+
+
+
 const MyPlacesAutocompletePage = () => {
   const [address, setAddress] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -20,6 +23,23 @@ const MyPlacesAutocompletePage = () => {
   const handleChange = (value) => {
     setAddress(value);
   };
+
+
+  const fetchEligibility = async (postcode) => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_SERVER}/api/location/?address=${postcode}`);
+        if (response.ok) {
+          const data = await response.json();
+          addressStore.setPostcodeEligible(data.eligibility)
+        } else {
+          console.error('API call failed:', response.status, response.statusText);
+        }
+      } catch (error) {
+        console.error('Network error:', error);
+      }
+    
+  };
+
 
   const handleSelect = (value) => {
     geocodeByAddress(value)
@@ -38,10 +58,11 @@ const MyPlacesAutocompletePage = () => {
         const zipCodeComponent = addressComponents.find(component =>
           component.types.includes('postal_code')
         );
+
         const zipCode = zipCodeComponent ? zipCodeComponent.long_name : '';
         console.log('Zip Code:', zipCode);
-  
 
+        fetchEligibility(zipCode)
         
       })
       .catch(error => setErrorMessage(error.message));

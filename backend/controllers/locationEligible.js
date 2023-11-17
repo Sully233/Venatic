@@ -19,7 +19,7 @@ const checkEligibility = asyncHandler(async (req, res) => {
         return res.status(400).json({ error: 'Address is not a valid postcode' });
     }
     
-    const isEligible = postcodes.includes(addressInt) ? 1 : 0;
+    const isEligible = postcodes.includes(addressInt) ? "Eligible" : "Not Eligible";
 
     res.json({ eligibility: isEligible });
   });
