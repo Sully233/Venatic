@@ -3,6 +3,8 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
+import { observer } from 'mobx-react';
+import {addressStore} from "../../stores/AddressStore"
 
 /*global google*/
 
@@ -27,6 +29,7 @@ const MyPlacesAutocompletePage = () => {
         const fullAddress = geocodeResult.formatted_address;
 
         setAddress(fullAddress);
+        addressStore.setAddress(fullAddress);
 
         console.log('Full Address:', fullAddress);
   
@@ -92,4 +95,4 @@ const MyPlacesAutocompletePage = () => {
   );
 };
 
-export default MyPlacesAutocompletePage;
+export default observer(MyPlacesAutocompletePage);

@@ -21,6 +21,8 @@
     "flowbite": "^2.1.1",
     "flowbite-react": "^0.6.4",
     "framer-motion": "^10.16.4",
+    "mobx": "^6.11.0",
+    "mobx-react": "^9.1.0",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-datepicker": "^4.21.0",

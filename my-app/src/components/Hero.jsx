@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import MyPlacesAutocompletePage from "./BookingComponents/searchOptions";
+import { observer } from "mobx-react";
+import {addressStore} from "../stores/AddressStore"
 
-const Hero = () => {
+const Hero = observer(() => {
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="w-full max-w-4xl grid grid-cols-2 gap-20">
@@ -23,12 +25,14 @@ const Hero = () => {
             <button className="mt-8 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full text-sm">
               BOOK A SESSION
             </button>
+            <p>test mobx</p>
+            <p>{addressStore.address}</p>
           </Link>
         </div>
         <MyPlacesAutocompletePage/>
       </div>
     </div>
   );
-};
+});
 
 export default Hero;
