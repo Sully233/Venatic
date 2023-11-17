@@ -11,7 +11,7 @@ export const StepThree = () => {
         <TextField
           label="First Name"
           name="firstName"
-          {...register('customer.firstName')}
+          {...register('customer.firstName', { required: true })}
           fullWidth
         />
       </div>
@@ -20,7 +20,7 @@ export const StepThree = () => {
         <TextField
           label="Last Name"
           name="lastName"
-          {...register('customer.lastName')}
+          {...register('customer.lastName', { required: true })}
           fullWidth
         />
       </div>
@@ -29,7 +29,7 @@ export const StepThree = () => {
         <TextField
           label="Contact Number"
           name="contactNumber"
-          {...register('customer.contactNumber')}
+          {...register('customer.contactNumber', { required: true })}
           fullWidth
         />
       </div>

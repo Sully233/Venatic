@@ -15,7 +15,7 @@ export const StepTwo = () => {
     <div>
      <InputLabel htmlFor="startTime">Start Time</InputLabel>
       <Select
-        {...register("startTime")}
+        {...register("startTime", { required: true })}
         defaultValue=""
         fullWidth
       >

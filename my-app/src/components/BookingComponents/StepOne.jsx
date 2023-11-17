@@ -1,12 +1,24 @@
-import { useFormContext } from 'react-hook-form';
+import React from 'react';
+import { useFormContext, Controller } from 'react-hook-form';
 import DatePickerMaterialUI from './DateChooser';
 
 export const StepOne = () => {
-  const { register } = useFormContext();
+  const { control } = useFormContext();
 
   return (
     <div>
-      <DatePickerMaterialUI/>
+      <Controller
+        name="date"
+        control={control}
+        defaultValue={null}
+        rules={{ required: 'Date is required' }} 
+        render={({ field: { onChange, value } }) => (
+          <DatePickerMaterialUI
+            selectedDate={value}
+            handleDateChange={onChange}
+          />
+        )}
+      />
     </div>
   );
 };
