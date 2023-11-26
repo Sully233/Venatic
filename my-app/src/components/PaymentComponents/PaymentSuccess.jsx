@@ -39,7 +39,7 @@ const PaymentSuccess = () => {
 
     const timer = setTimeout(() => {
       navigate('/');
-    }, 10000);
+    }, 20000);
   
 
     return () => {
@@ -84,7 +84,7 @@ const PaymentSuccess = () => {
         className="text-3xl sm:text-4xl font-bold leading-tight text-gray-900 mt-5"
         variants={textVariants}
       >
-        Payment Successful!
+        Booking Successful!
       </motion.h1>
       <motion.p
         className="text-base sm:text-lg text-gray-600 text-center mt-3"

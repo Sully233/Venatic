@@ -69,7 +69,7 @@ const MyPlacesAutocompletePage = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-4">
+    <div className=" p-4">
       <PlacesAutocomplete
         value={address}
         onChange={handleChange}
@@ -83,11 +83,11 @@ const MyPlacesAutocompletePage = () => {
             <input
               {...getInputProps({
                 placeholder: 'Enter an address...',
-                className: 'w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500',
+                className: 'w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm',
               })}
             />
             <div
-              className={`autocomplete-dropdown-container absolute z-10 w-full bg-white shadow-lg mt-1 rounded-md ${
+              className={`autocomplete-dropdown-container absolute z-10 w-full bg-white shadow-lg mt-1 rounded-md text-sm ${
                 loading || suggestions.length ? 'block' : 'hidden'
               }`}
             >
