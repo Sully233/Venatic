@@ -5,6 +5,7 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete';
 import { observer } from 'mobx-react';
 import {addressStore} from "../../stores/AddressStore"
+import { FaCheck, FaTimes } from 'react-icons/fa';
 
 /*global google*/
 
@@ -19,6 +20,8 @@ const searchOptions = {
 const MyPlacesAutocompletePage = () => {
   const [address, setAddress] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [isEligible, setIsEligible] = useState(null); // null, true, or false
+
 
   const handleChange = (value) => {
     setAddress(value);
@@ -31,12 +34,23 @@ const MyPlacesAutocompletePage = () => {
         if (response.ok) {
           const data = await response.json();
           addressStore.setPostcodeEligible(data.eligibility)
+
+          if (data.eligibility === 'Eligible') {
+            setIsEligible(true);
+          } else if (data.eligibility === 'Not Eligible') {
+            setIsEligible(false);
+          }
+          
         } else {
           console.error('API call failed:', response.status, response.statusText);
         }
       } catch (error) {
         console.error('Network error:', error);
+
+        
       }
+
+
     
   };
 
@@ -112,6 +126,16 @@ const MyPlacesAutocompletePage = () => {
           </div>
         )}
       </PlacesAutocomplete>
+      {/* {isEligible !== null && (
+        <div className="flex items-center justify-center p-4">
+          {isEligible ? (
+            <FaCheck className="text-green-500 text-xl" />
+          ) : (
+            <FaTimes className="text-red-500 text-xl" />
+          )}
+        </div>
+      )} */}
+
     </div>
   );
 };

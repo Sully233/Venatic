@@ -23,17 +23,16 @@ const Hero = observer(() => {
             Feel the Magic of Each Moment, Forever.
           </div>
           <Link to="/booking" className="mt-4 md:mt-8">
-            <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 md:py-3 px-4 md:px-8 rounded-full text-sm">
-              BOOK A SESSION
-            </button>
           </Link>
           <div className="mt-4">
             <p>test mobx (eligibility checker)</p>
             <p>{addressStore.postcodeEligible}</p>
           </div>
         </div>
-        <div className="order-last md:order-last">
-          <MultiStepForm />
+        <div className="order-last md:order-last flex justify-center md:justify-end">
+        <div className="min-h-[500px] min-w-[500px] w-full md:w-1/2 bg-slate-50 rounded-xl"> {/* Adjust the min-height as needed */}
+            <MultiStepForm />
+          </div>
         </div>
       </div>
     </div>
