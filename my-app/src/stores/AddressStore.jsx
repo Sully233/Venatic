@@ -5,6 +5,9 @@ class AddressStore {
 
   postcodeEligible = "NA"
 
+  selectedSize = 'small'; // Default size
+  duration = 1; // Default duration
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -16,6 +19,16 @@ class AddressStore {
   setPostcodeEligible(eligibility) {
     this.postcodeEligible = eligibility;
   }
+
+  setSelectedSize(size) {
+    this.selectedSize = size;
+  }
+
+  setDuration(duration) {
+    this.duration = duration;
+  }
+
+
 }
 
 

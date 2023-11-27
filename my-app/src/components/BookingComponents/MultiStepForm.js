@@ -6,16 +6,15 @@ import {addressStore} from "../../stores/AddressStore"
 import { motion, AnimatePresence } from 'framer-motion';
 import { CubeIcon, InformationCircleIcon } from '@heroicons/react/24/outline'; // Importing a single cube icon
 import { ChevronRightIcon } from '@heroicons/react/20/solid'; // Import the appropriate icon
+import './form.css'
 
 
-
-
-const StepOne = ({ register, errors }) => {
-    const [selectedSize, setSelectedSize] = useState('small');
-    const [duration, setDuration] = useState(1);
-    const [price, setPrice] = useState(0);
+const StepOne = ({ register, errors, onNext, initialSize = 'small', initialDuration = 1 }) => {
+    const [selectedSize, setSelectedSize] = useState(addressStore.selectedSize);
+    const [duration, setDuration] = useState(addressStore.duration);
     const [popover, setPopover] = useState({ show: false, content: '', position: {} });
     const containerRef = useRef(null);
+    
   
     const sizes = [
       { key: 'small', name: 'Small', description: 'Perfect for individual projects.' },
@@ -28,15 +27,21 @@ const StepOne = ({ register, errors }) => {
       const basePrice = { small: 50, medium: 75, large: 100, extraLarge: 150 };
       return basePrice[sizeKey] * dur;
     };
+
+    const [price, setPrice] = useState(calculatePrice(initialSize, initialDuration));
+
   
     const selectSize = (sizeKey) => {
       setSelectedSize(sizeKey);
       setPrice(calculatePrice(sizeKey, duration));
+      addressStore.setSelectedSize(sizeKey)
+      console.log(addressStore)
     };
   
     const handleSelectDuration = (newDuration) => {
       setDuration(newDuration);
       setPrice(calculatePrice(selectedSize, newDuration));
+      addressStore.setDuration(newDuration)
     };
   
     const handleShowPopover = (size, event) => {
@@ -51,23 +56,9 @@ const StepOne = ({ register, errors }) => {
       });
     };
   
-    const handleHidePopover = () => {
-      setPopover({ show: false, content: '', position: {} });
-    };
+
   
-    // Clicking outside the popover closes it
-    useEffect(() => {
-      const handleClickOutside = (event) => {
-        if (containerRef.current && !containerRef.current.contains(event.target)) {
-          handleHidePopover();
-        }
-      };
-  
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
-      };
-    }, []);
+
   
     return (
       <div className="space-y-6 relative" ref={containerRef}>
@@ -88,13 +79,7 @@ const StepOne = ({ register, errors }) => {
             >
               <CubeIcon className="w-10 h-10 mb-2" />
               <span className="text-gray-700">{size.name}</span>
-              <InformationCircleIcon
-                className="w-5 h-5 absolute top-2 right-2 text-gray-400 hover:text-gray-600"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleShowPopover(size, e);
-                }}
-              />
+
             </div>
           ))}
         </div>
@@ -122,6 +107,13 @@ const StepOne = ({ register, errors }) => {
         {errors.duration && (
           <p className="text-red-500 text-xs italic">{errors.duration.message}</p>
         )}
+  
+        {/* Right-aligned Next Button */}
+        <div className="flex justify-end mt-4">
+        <NextButton onClick={onNext}>
+          Next
+        </NextButton>
+        </div>
       </div>
     );
   };
@@ -129,7 +121,7 @@ const StepOne = ({ register, errors }) => {
 
 
 
-const StepTwo = ({ register, errors }) => (
+const StepTwo = ({onNext, onPrev, register, errors }) => (
     <>
       {/* ... other fields ... */}
       <div className="mb-4">
@@ -156,6 +148,19 @@ const StepTwo = ({ register, errors }) => (
       />
 
       {errors.phone && <p className="text-red-500 text-xs italic">{errors.phone.message}</p>}
+    </div>
+    <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={onPrev}
+        >
+          Previous
+        </button>
+
+    <div>
+    <NextButton onClick={onNext}>
+          Next
+        </NextButton>
     </div>
     </>
   );
@@ -247,39 +252,23 @@ const Confirmation = ({ allFields }) => (
   
     const allFields = getValues(); // Retrieve all form field values
   
+    const totalSteps = 3;
+    const progressBarWidth = (currentStep / totalSteps) * 100 + '%';
+  
+  
+
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="p-4 space-y-4">
-          {currentStep === 1 && <StepOne register={register} errors={errors} />}
-          {currentStep === 2 && <StepTwo register={register} errors={errors} />}
-          {currentStep === 3 && <Confirmation allFields={allFields} />}
-      
-          <div className="flex jus">
-            {currentStep > 1 && (
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={prevStep}
-              >
-                Previous
-              </button>
-            )}
-            {currentStep < 3 && (
-              <NextButton onClick={nextStep}>
-                {currentStep === 2 ? 'Confirm' : 'Next'}
-              </NextButton>
-            )}
-            {currentStep === 3 && (
-              <button
-                type="submit"
-                className="btn btn-primary"
-              >
-                Submit
-              </button>
-            )}
-          </div>
-        </form>
-      );
-      
+      <>
+      <div className="progress-bar-container">
+        <div className="progress-bar" style={{ width: progressBarWidth }} />
+      </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="p-4 space-y-4">
+        {currentStep === 1 && <StepOne onNext={nextStep} register={register} errors={errors} initialSize={addressStore.selectedSize} initialDuration={addressStore.duration} />}
+        {currentStep === 2 && <StepTwo onNext={nextStep} onPrev={prevStep} register={register} errors={errors} />}
+        {currentStep === 3 && <Confirmation allFields={allFields} onPrev={prevStep} />}
+      </form>
+      </>
+    );
   });
 
 export default MultiStepForm;
