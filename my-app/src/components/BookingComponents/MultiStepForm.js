@@ -132,8 +132,13 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
     ];
 
     
-    // State for the currently clicked date
-    const [clickedDate, setClickedDate] = useState(null);
+    const [clickedDate, setClickedDate] = useState(() => {
+      const currentDate = new Date();
+      const soonestAvailableDate = availableDates
+        .filter(date => date >= currentDate)
+        .sort((a, b) => a - b)[0]; // Get the earliest date
+      return soonestAvailableDate || null;
+    });
 
     // Define styles for available and clicked dates
     const modifiersStyles = {
@@ -160,6 +165,10 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
       
       // If the day is not available, do nothing
       if (!isAvailable) {
+        return;
+      }
+
+      if (selected) {
         return;
       }
     
@@ -239,8 +248,7 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
     </>
   )
   
-  
-      };
+};
 
 
 const Confirmation = ({ allFields }) => (
