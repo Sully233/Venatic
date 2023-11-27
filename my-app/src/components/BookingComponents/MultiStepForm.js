@@ -60,7 +60,7 @@ const StepOne = ({ register, errors, onNext, initialSize = 'small', initialDurat
 
   
     return (
-      <div className="space-y-6 relative" ref={containerRef}>
+      <div className="space-y-6 relative px-4 sm:px-6 lg:px-8" ref={containerRef}>
         {popover.show && (
           <div
             className="absolute z-10 p-4 bg-white rounded shadow"
@@ -69,7 +69,7 @@ const StepOne = ({ register, errors, onNext, initialSize = 'small', initialDurat
             <p>{popover.content}</p>
           </div>
         )}
-  
+    
         <div className="grid grid-cols-2 gap-4">
           {sizes.map((size) => (
             <div key={size.key}
@@ -78,11 +78,11 @@ const StepOne = ({ register, errors, onNext, initialSize = 'small', initialDurat
             >
               <CubeIcon className="w-10 h-10 mb-2" />
               <span className="text-gray-700">{size.name}</span>
-
+    
             </div>
           ))}
         </div>
-  
+    
         <div className="flex justify-center space-x-2">
           {Array.from({ length: 6 }, (_, i) => i + 1).map((dur) => (
             <button
@@ -94,7 +94,7 @@ const StepOne = ({ register, errors, onNext, initialSize = 'small', initialDurat
             </button>
           ))}
         </div>
-  
+    
         <div className="flex justify-center">
           <div className="p-6 border border-gray-200 shadow rounded-lg bg-white">
             <h2 className="text-4xl font-semibold text-gray-800">
@@ -102,19 +102,20 @@ const StepOne = ({ register, errors, onNext, initialSize = 'small', initialDurat
             </h2>
           </div>
         </div>
-  
+    
         {errors.duration && (
           <p className="text-red-500 text-xs italic">{errors.duration.message}</p>
         )}
-  
+    
         {/* Right-aligned Next Button */}
         <div className="flex justify-end mt-4">
-        <NextButton onClick={onNext}>
-          Next
-        </NextButton>
+          <NextButton onClick={onNext}>
+            Next
+          </NextButton>
         </div>
       </div>
     );
+    
   };
   
 
@@ -123,46 +124,48 @@ const StepOne = ({ register, errors, onNext, initialSize = 'small', initialDurat
 const StepTwo = ({onNext, onPrev, register, errors }) => (
     <>
       {/* ... other fields ... */}
-      <div className="mb-4">
-        <input
-          type="email"
-          {...register("email", {
-            required: "Email is required",
-            pattern: {
-              value: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
-              message: "Entered value does not match email format"
-            }
-          })}
-          placeholder="Email"
-          className="input input-bordered w-full"
-        />
-        {errors.email?.type === "required" && <p className="text-red-500 text-xs italic">{errors.email.message}</p>}
-        {errors.email?.type === "pattern" && <p className="text-red-500 text-xs italic">{errors.email.message}</p>}
-      </div>
-      <div className="mb-4">
+      <div className="px-4 sm:px-6 lg:px-8"> {/* Added responsive padding */}
+    {/* ... other fields ... */}
+    <div className="mb-4">
+      <input
+        type="email"
+        {...register("email", {
+          required: "Email is required",
+          pattern: {
+            value: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
+            message: "Entered value does not match email format"
+          }
+        })}
+        placeholder="Email"
+        className="input input-bordered w-full"
+      />
+      {errors.email?.type === "required" && <p className="text-red-500 text-xs italic">{errors.email.message}</p>}
+      {errors.email?.type === "pattern" && <p className="text-red-500 text-xs italic">{errors.email.message}</p>}
+    </div>
+    <div className="mb-4">
       <input
         {...register("phone", { required: "Phone is required" })}
         placeholder="Phone"
         className="input input-bordered w-full"
       />
-
       {errors.phone && <p className="text-red-500 text-xs italic">{errors.phone.message}</p>}
     </div>
     <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={onPrev}
-        >
-          Previous
-        </button>
+      type="button"
+      className="btn btn-secondary"
+      onClick={onPrev}
+    >
+      Previous
+    </button>
     <div>
-    <MyPlacesAutocompletePage/>
+      <MyPlacesAutocompletePage/>
     </div>
     <div>
-    <NextButton onClick={onNext}>
-          Next
-        </NextButton>
+      <NextButton onClick={onNext}>
+        Next
+      </NextButton>
     </div>
+  </div>
     </>
   );
 
