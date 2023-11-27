@@ -77,7 +77,7 @@ const StepOne = ({ register, errors, onNext, initialSize = 'small', initialDurat
               className={`p-4 border rounded-lg flex flex-col items-center justify-center cursor-pointer relative ${selectedSize === size.key ? 'border-blue-500' : 'border-gray-300'}`}
               onClick={() => selectSize(size.key)}
             >
-              <CubeIcon className="w-10 h-10 mb-2" />
+              <CubeIcon className="w-5 h-5 mb-2" />
               <span className="text-gray-700">{size.name}</span>
 
             </div>
