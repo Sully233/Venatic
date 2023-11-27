@@ -30,10 +30,10 @@ const Hero = observer(() => {
           </div>
         </div>
         <div className="order-last md:order-last flex justify-center md:justify-end">
-        <div className="min-h-[500px] min-w-[500px] w-full md:w-1/2 bg-slate-50 rounded-xl"> {/* Adjust the min-height as needed */}
-            <MultiStepForm />
-          </div>
+        <div className="w-full md:min-w-[500px] md:w-1/2 bg-slate-50 rounded-xl">
+          <MultiStepForm />
         </div>
+      </div>
       </div>
     </div>
   );
