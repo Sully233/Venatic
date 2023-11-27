@@ -125,11 +125,35 @@ const StepOne = ({ register, errors, onNext, initialSize = 'small', initialDurat
 
 const StepThree = ({onNext, onPrev, register, errors }) => {
 
-    const availableDates = [
-      new Date(2023, 11, 14), // December 14, 2023
-      new Date(2023, 11, 15), // December 15, 2023
-      new Date(2023, 11, 20), // December 20, 2023
-    ];
+  const [availableDates, setAvailableDates] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAvailableDates = async () => {
+      setIsLoading(true); // Start loading
+      try {
+        const response = await fetch('http://localhost:8000/api/availabilities/calendar');
+        //const response = await fetch(`${process.env.REACT_APP_API_SERVER}/api/availabilities/calendar`);
+        
+        const data = await response.json();
+        const dates = data.openDates.map(dateStr => new Date(dateStr));
+        setAvailableDates(dates);
+        console.log(dates)
+
+        const currentDate = new Date();
+        const soonestAvailableDate = dates
+          .filter(date => date >= currentDate)
+          .sort((a, b) => a - b)[0];
+        setClickedDate(soonestAvailableDate || null);
+      } catch (error) {
+        console.error('Error fetching available dates:', error);
+        // You can also set an error state here to show an error message
+      }
+      setIsLoading(false); // Stop loading
+    };
+
+    fetchAvailableDates();
+  }, []);
 
     
     const [clickedDate, setClickedDate] = useState(() => {
@@ -158,22 +182,26 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
       clicked: clickedDate,
     };
 
+    const isSameDay = (d1, d2) => {
+      return d1.getFullYear() === d2.getFullYear() &&
+             d1.getMonth() === d2.getMonth() &&
+             d1.getDate() === d2.getDate();
+    };
+
     const handleDayClick = (day, { selected }) => {
       // Check if the clicked day is in the list of available dates
       const isAvailable = availableDates.some(availableDay => 
-        availableDay.getTime() === day.getTime());
+        isSameDay(availableDay, day));
       
       // If the day is not available, do nothing
       if (!isAvailable) {
         return;
       }
-
-      if (selected) {
-        return;
-      }
     
-      // If the day is available, update the state
-      setClickedDate(selected ? null : day);
+      // If the day is available and not currently selected, update the state
+      if (!selected) {
+        setClickedDate(day);
+      }
     };
 
     const currentDate = new Date();
@@ -183,6 +211,10 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
     const soonestAvailableDate = availableDates
     .filter(date => date >= currentDate)
     .sort((a, b) => a - b)[0]; // Get the earliest date
+
+    if (isLoading) {
+      return <div>Loading...</div>; // Or replace with a loading spinner component
+    }
 
     return (
 
