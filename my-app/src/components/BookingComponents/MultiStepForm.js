@@ -7,6 +7,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { CubeIcon, InformationCircleIcon } from '@heroicons/react/24/outline'; // Importing a single cube icon
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'; // Import the appropriate icon
 import './form.css'
+import { DayPicker } from 'react-day-picker';
+
+
 
 const StepOne = ({ register, errors, onNext, initialSize = 'small', initialDuration = 1 }) => {
     const [selectedSize, setSelectedSize] = useState(addressStore.selectedSize);
@@ -55,9 +58,7 @@ const StepOne = ({ register, errors, onNext, initialSize = 'small', initialDurat
       });
     };
   
-
-  
-
+    
   
     return (
       <div className="space-y-6 relative" ref={containerRef}>
@@ -112,6 +113,7 @@ const StepOne = ({ register, errors, onNext, initialSize = 'small', initialDurat
         <NextButton onClick={onNext}>
           Next
         </NextButton>
+
         </div>
       </div>
     );
@@ -121,11 +123,53 @@ const StepOne = ({ register, errors, onNext, initialSize = 'small', initialDurat
 
 
 
-const StepTwo = ({onNext, onPrev, register, errors }) => (
+const StepThree = ({onNext, onPrev, register, errors }) => {
+
+    const availableDates = [
+      new Date(2023, 11, 14), // December 14, 2023
+      new Date(2023, 11, 15), // December 15, 2023
+      new Date(2023, 11, 20), // December 20, 2023
+    ];
+
+    // State for the currently clicked date
+    const [clickedDate, setClickedDate] = useState(null);
+
+    // Define styles for available and clicked dates
+    const modifiersStyles = {
+      available: {
+        color: 'black',
+        backgroundColor: '#d8e6ff',
+      },
+      clicked: {
+        color: 'white',
+        backgroundColor: '#4a90e2',
+      }
+    };
+
+    // Define modifiers based on the state
+    const modifiers = {
+      available: availableDates,
+      clicked: clickedDate,
+    };
+
+    // Update state when a day is clicked
+    const handleDayClick = (day, { selected }) => {
+      if (availableDates.some(availableDay => 
+        availableDay.getTime() === day.getTime())) {
+        setClickedDate(selected ? null : day);
+      }
+    };
+
+    const currentDate = new Date();
+    const currentYear = new Date().getFullYear();
+    const currentMonth = currentDate.getMonth();
+
+
+    return (
+
     <>
-      {/* ... other fields ... */}
       <div className="px-4 sm:px-6 lg:px-8"> {/* Added responsive padding */}
-    {/* ... other fields ... */}
+
     <div className="mb-4">
       <input
         type="email"
@@ -161,13 +205,28 @@ const StepTwo = ({onNext, onPrev, register, errors }) => (
       <MyPlacesAutocompletePage/>
     </div>
     <div>
+    <DayPicker
+      mode="single"
+      selected={clickedDate}
+      onDayClick={handleDayClick}
+      modifiers={modifiers}
+      modifiersStyles={modifiersStyles}
+      fromYear={currentYear}
+      toYear={currentYear + 1}
+      defaultMonth={new Date(currentYear, currentMonth)}
+    />
+    </div>
+    <div>
       <NextButton onClick={onNext}>
         Next
       </NextButton>
     </div>
   </div>
     </>
-  );
+  )
+  
+  
+      };
 
 
 const Confirmation = ({ allFields }) => (
@@ -270,7 +329,7 @@ const Confirmation = ({ allFields }) => (
 
       <form onSubmit={handleSubmit(onSubmit)} className="p-4 space-y-4">
         {currentStep === 1 && <StepOne onNext={nextStep} register={register} errors={errors} initialSize={addressStore.selectedSize} initialDuration={addressStore.duration} />}
-        {currentStep === 2 && <StepTwo onNext={nextStep} onPrev={prevStep} register={register} errors={errors} />}
+        {currentStep === 2 && <StepThree onNext={nextStep} onPrev={prevStep} register={register} errors={errors} />}
         {currentStep === 3 && <Confirmation allFields={allFields} onPrev={prevStep} />}
       </form>
       </>
