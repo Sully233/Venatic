@@ -5,9 +5,8 @@ import MyPlacesAutocompletePage from "../DatepickerComponents/searchOptions";
 import {addressStore} from "../../stores/AddressStore"
 import { motion, AnimatePresence } from 'framer-motion';
 import { CubeIcon, InformationCircleIcon } from '@heroicons/react/24/outline'; // Importing a single cube icon
-import { ChevronRightIcon } from '@heroicons/react/20/solid'; // Import the appropriate icon
+import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'; // Import the appropriate icon
 import './form.css'
-
 
 const StepOne = ({ register, errors, onNext, initialSize = 'small', initialDuration = 1 }) => {
     const [selectedSize, setSelectedSize] = useState(addressStore.selectedSize);
@@ -156,7 +155,9 @@ const StepTwo = ({onNext, onPrev, register, errors }) => (
         >
           Previous
         </button>
-
+    <div>
+    <MyPlacesAutocompletePage/>
+    </div>
     <div>
     <NextButton onClick={onNext}>
           Next
@@ -259,9 +260,11 @@ const Confirmation = ({ allFields }) => (
 
     return (
       <>
+
       <div className="progress-bar-container">
         <div className="progress-bar" style={{ width: progressBarWidth }} />
       </div>
+
       <form onSubmit={handleSubmit(onSubmit)} className="p-4 space-y-4">
         {currentStep === 1 && <StepOne onNext={nextStep} register={register} errors={errors} initialSize={addressStore.selectedSize} initialDuration={addressStore.duration} />}
         {currentStep === 2 && <StepTwo onNext={nextStep} onPrev={prevStep} register={register} errors={errors} />}
