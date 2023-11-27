@@ -131,6 +131,7 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
       new Date(2023, 11, 20), // December 20, 2023
     ];
 
+    
     // State for the currently clicked date
     const [clickedDate, setClickedDate] = useState(null);
 
@@ -152,18 +153,27 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
       clicked: clickedDate,
     };
 
-    // Update state when a day is clicked
     const handleDayClick = (day, { selected }) => {
-      if (availableDates.some(availableDay => 
-        availableDay.getTime() === day.getTime())) {
-        setClickedDate(selected ? null : day);
+      // Check if the clicked day is in the list of available dates
+      const isAvailable = availableDates.some(availableDay => 
+        availableDay.getTime() === day.getTime());
+      
+      // If the day is not available, do nothing
+      if (!isAvailable) {
+        return;
       }
+    
+      // If the day is available, update the state
+      setClickedDate(selected ? null : day);
     };
 
     const currentDate = new Date();
     const currentYear = new Date().getFullYear();
     const currentMonth = currentDate.getMonth();
 
+    const soonestAvailableDate = availableDates
+    .filter(date => date >= currentDate)
+    .sort((a, b) => a - b)[0]; // Get the earliest date
 
     return (
 
@@ -213,8 +223,12 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
       modifiersStyles={modifiersStyles}
       fromYear={currentYear}
       toYear={currentYear + 1}
-      defaultMonth={new Date(currentYear, currentMonth)}
+      defaultMonth={soonestAvailableDate || new Date(currentYear, currentMonth)}
+      numberOfMonths={1}
+      fromMonth={soonestAvailableDate}
+
     />
+
     </div>
     <div>
       <NextButton onClick={onNext}>
