@@ -145,10 +145,13 @@ const StepThree = observer(({onNext, onPrev, register, errors }) => {
         console.log(dates)
 
         const currentDate = new Date();
+        
         const soonestAvailableDate = dates
           .filter(date => date >= currentDate)
           .sort((a, b) => a - b)[0];
         setClickedDate(soonestAvailableDate || null);
+        fetchAvailableTimes(soonestAvailableDate)
+
       } catch (error) {
         console.error('Error fetching available dates:', error);
         // You can also set an error state here to show an error message
