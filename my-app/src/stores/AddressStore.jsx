@@ -9,7 +9,11 @@ class AddressStore {
   duration = 1; // Default duration
 
   availabilities = []
-  chosenAvailibility = ""
+  chosenAvailibility = null
+
+  datesLoaded = false
+
+  date = null
 
   constructor() {
     makeAutoObservable(this);
@@ -39,6 +43,13 @@ class AddressStore {
     this.chosenAvailibility = timeslot
   }
 
+  setDatesLoaded(value){
+    this.datesLoaded = value
+  }
+
+  setDate(newDate){
+    this.date = newDate
+  }
 
 
 }

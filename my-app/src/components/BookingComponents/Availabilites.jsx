@@ -4,7 +4,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { addressStore } from "../../stores/AddressStore";
 
 const Availabilities = observer(() => {
-  const [selectedTime, setSelectedTime] = useState(null);
+
+
+  const [selectedTime, setSelectedTime] = useState(() => {
+
+    return addressStore.chosenAvailibility || null;
+
+    });
+  
+  
 
   const allTimeSlots = [
     "08:00", "09:00", "10:00", "11:00", "12:00",
@@ -46,7 +54,7 @@ const Availabilities = observer(() => {
 
   const handleTimeClick = (time) => {
     setSelectedTime(time);
-    console.log(`Time selected: ${time}`);
+    addressStore.setChosenAvailability(time)
   };
 
   const variants = {

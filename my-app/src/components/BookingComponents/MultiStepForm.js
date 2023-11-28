@@ -135,8 +135,14 @@ const StepThree = observer(({onNext, onPrev, register, errors }) => {
 
 
   useEffect(() => {
+
+
+
     const fetchAvailableDates = async () => {
+      
+
       setIsLoading(true); // Start loading
+       
       try {
 
         const response = await fetch(`${process.env.REACT_APP_API_SERVER}/api/availabilities/calendar`);
@@ -144,15 +150,17 @@ const StepThree = observer(({onNext, onPrev, register, errors }) => {
         const data = await response.json();
         const dates = data.openDates.map(dateStr => new Date(dateStr));
         setAvailableDates(dates);
-        console.log(dates)
+        if (dates.length > 0){
+          addressStore.setDatesLoaded(true)
+        }
 
         const currentDate = new Date();
         
         const soonestAvailableDate = dates
           .filter(date => date >= currentDate)
           .sort((a, b) => a - b)[0];
-        setClickedDate(soonestAvailableDate || null);
-        fetchAvailableTimes(soonestAvailableDate)
+        setClickedDate(addressStore.date || soonestAvailableDate || null);  
+        fetchAvailableTimes(addressStore.date || soonestAvailableDate)
 
       } catch (error) {
         console.error('Error fetching available dates:', error);
@@ -165,7 +173,7 @@ const StepThree = observer(({onNext, onPrev, register, errors }) => {
   }, []);
 
       const fetchAvailableTimes = async (date) => {
-        setIsLoading(true);
+
         try {
           const dateString = [
             date.getFullYear(),
@@ -182,7 +190,7 @@ const StepThree = observer(({onNext, onPrev, register, errors }) => {
           console.error('Error fetching available times:', error);
 
         }
-        setIsLoading(false);
+
       };
 
     
@@ -225,6 +233,7 @@ const StepThree = observer(({onNext, onPrev, register, errors }) => {
       if (!selected) {
         setClickedDate(day);
         fetchAvailableTimes(day);
+        addressStore.setDate(day)
       }
     };
 
