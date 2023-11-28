@@ -15,6 +15,8 @@ class AddressStore {
 
   date = null
 
+  availabilityLoaded = true
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -51,8 +53,11 @@ class AddressStore {
     this.date = newDate
   }
 
-
+  setAvailabilityLoaded(value) {
+    this.availabilityLoaded = value
+  }
 }
+
 
 
 export const addressStore = new AddressStore();

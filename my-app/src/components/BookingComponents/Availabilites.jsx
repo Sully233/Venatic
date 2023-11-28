@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { observer } from "mobx-react";
 import { motion, AnimatePresence } from 'framer-motion';
 import { addressStore } from "../../stores/AddressStore";
+import AnimatedLoader from './AnimatedLoader';
 
 const Availabilities = observer(() => {
 
@@ -67,6 +68,8 @@ const Availabilities = observer(() => {
       }
     }),
   };
+
+
 
   return (
     <AnimatePresence>
