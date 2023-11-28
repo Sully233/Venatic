@@ -8,6 +8,7 @@ import { CubeIcon, InformationCircleIcon } from '@heroicons/react/24/outline'; /
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'; // Import the appropriate icon
 import './form.css'
 import { DayPicker } from 'react-day-picker';
+import Availabilities from './Availabilites';
 
 
 
@@ -169,7 +170,8 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
           const response = await fetch(`${process.env.REACT_APP_API_SERVER}/api/availabilities?date=${dateString}`);
           const times = await response.json();
           setAvailableTimes(times); // Set the available times for the selected date
-          console.log(times)
+          addressStore.setAvailabilties(times)
+
         } catch (error) {
           console.error('Error fetching available times:', error);
 
@@ -304,12 +306,12 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
       modifiersStyles={modifiersStyles}
       fromYear={currentYear}
       toYear={currentYear + 1}
-      defaultMonth={soonestAvailableDate || new Date(currentYear, currentMonth)}
+      defaultMonth={clickedDate || soonestAvailableDate || new Date(currentYear, currentMonth)}
       numberOfMonths={1}
       fromMonth={soonestAvailableDate}
 
     />
-        {clickedDate && renderAvailableTimes()}
+    <Availabilities></Availabilities>
 
     </div>
     <div>
