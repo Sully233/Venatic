@@ -127,6 +127,8 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
 
   const [availableDates, setAvailableDates] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [availableTimes, setAvailableTimes] = useState([]);
+
 
   useEffect(() => {
     const fetchAvailableDates = async () => {
@@ -154,6 +156,26 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
 
     fetchAvailableDates();
   }, []);
+
+      const fetchAvailableTimes = async (date) => {
+        setIsLoading(true);
+        try {
+          const dateString = [
+            date.getFullYear(),
+            ('0' + (date.getMonth() + 1)).slice(-2), // Ensures two digits for month
+            ('0' + date.getDate()).slice(-2)          // Ensures two digits for day
+          ].join('-');
+          
+          const response = await fetch(`${process.env.REACT_APP_API_SERVER}/api/availabilities?date=${dateString}`);
+          const times = await response.json();
+          setAvailableTimes(times); // Set the available times for the selected date
+          console.log(times)
+        } catch (error) {
+          console.error('Error fetching available times:', error);
+
+        }
+        setIsLoading(false);
+      };
 
     
     const [clickedDate, setClickedDate] = useState(() => {
@@ -201,8 +223,25 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
       // If the day is available and not currently selected, update the state
       if (!selected) {
         setClickedDate(day);
+        fetchAvailableTimes(day);
       }
     };
+
+
+    const renderAvailableTimes = () => {
+      if (isLoading) {
+        return <div>Loading times...</div>; // Or replace with a loading spinner component
+      }
+  
+      return (
+        <ul>
+          {availableTimes.map((time, index) => (
+            <li key={index}>{time}</li>
+          ))}
+        </ul>
+      );
+    };
+  
 
     const currentDate = new Date();
     const currentYear = new Date().getFullYear();
@@ -215,6 +254,7 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
     if (isLoading) {
       return <div>Loading...</div>; // Or replace with a loading spinner component
     }
+
 
     return (
 
@@ -269,6 +309,7 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
       fromMonth={soonestAvailableDate}
 
     />
+        {clickedDate && renderAvailableTimes()}
 
     </div>
     <div>
