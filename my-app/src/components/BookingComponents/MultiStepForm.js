@@ -130,6 +130,8 @@ const StepThree = observer(({onNext, onPrev, register, errors }) => {
   const [availableDates, setAvailableDates] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [availableTimes, setAvailableTimes] = useState([]);
+  const [clickedDate, setClickedDate] = useState(null)
+
 
 
   useEffect(() => {
@@ -184,13 +186,6 @@ const StepThree = observer(({onNext, onPrev, register, errors }) => {
       };
 
     
-    const [clickedDate, setClickedDate] = useState(() => {
-      const currentDate = new Date();
-      const soonestAvailableDate = availableDates
-        .filter(date => date >= currentDate)
-        .sort((a, b) => a - b)[0]; // Get the earliest date
-      return soonestAvailableDate || null;
-    });
 
     // Define styles for available and clicked dates
     const modifiersStyles = {
