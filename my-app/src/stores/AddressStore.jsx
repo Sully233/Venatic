@@ -8,7 +8,8 @@ class AddressStore {
   selectedSize = 'small'; // Default size
   duration = 1; // Default duration
 
-  availabilties = []
+  availabilities = []
+  chosenAvailibility = ""
 
   constructor() {
     makeAutoObservable(this);
@@ -30,9 +31,15 @@ class AddressStore {
     this.duration = duration;
   }
 
-  setAvailabilties(availability) {
-    this.availabilties = availability;
+  setavailabilities(availability) {
+    this.availabilities = availability;
   }
+
+  setChosenAvailability(timeslot) {
+    this.chosenAvailibility = timeslot
+  }
+
+
 
 }
 

@@ -9,6 +9,7 @@ import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'; /
 import './form.css'
 import { DayPicker } from 'react-day-picker';
 import Availabilities from './Availabilites';
+import AnimatedLoader from './AnimatedLoader';
 
 
 
@@ -124,7 +125,7 @@ const StepOne = ({ register, errors, onNext, initialSize = 'small', initialDurat
 
 
 
-const StepThree = ({onNext, onPrev, register, errors }) => {
+const StepThree = observer(({onNext, onPrev, register, errors }) => {
 
   const [availableDates, setAvailableDates] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -170,7 +171,7 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
           const response = await fetch(`${process.env.REACT_APP_API_SERVER}/api/availabilities?date=${dateString}`);
           const times = await response.json();
           setAvailableTimes(times); // Set the available times for the selected date
-          addressStore.setAvailabilties(times)
+          addressStore.setavailabilities(times)
 
         } catch (error) {
           console.error('Error fetching available times:', error);
@@ -230,20 +231,6 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
     };
 
 
-    const renderAvailableTimes = () => {
-      if (isLoading) {
-        return <div>Loading times...</div>; // Or replace with a loading spinner component
-      }
-  
-      return (
-        <ul>
-          {availableTimes.map((time, index) => (
-            <li key={index}>{time}</li>
-          ))}
-        </ul>
-      );
-    };
-  
 
     const currentDate = new Date();
     const currentYear = new Date().getFullYear();
@@ -254,7 +241,7 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
     .sort((a, b) => a - b)[0]; // Get the earliest date
 
     if (isLoading) {
-      return <div>Loading...</div>; // Or replace with a loading spinner component
+      return <AnimatedLoader></AnimatedLoader> 
     }
 
 
@@ -314,7 +301,7 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
     <Availabilities></Availabilities>
 
     </div>
-    <div>
+    <div className='p-6 float-right'>
       <NextButton onClick={onNext}>
         Next
       </NextButton>
@@ -323,7 +310,7 @@ const StepThree = ({onNext, onPrev, register, errors }) => {
     </>
   )
   
-};
+});
 
 
 const Confirmation = ({ allFields }) => (
