@@ -234,6 +234,7 @@ const StepThree = observer(({onNext, onPrev, register, errors }) => {
         setClickedDate(day);
         fetchAvailableTimes(day);
         addressStore.setDate(day)
+        addressStore.setChosenAvailability(null)
       }  
     };
 

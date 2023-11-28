@@ -7,11 +7,11 @@ import AnimatedLoader from './AnimatedLoader';
 const Availabilities = observer(() => {
 
 
-  const [selectedTime, setSelectedTime] = useState(() => {
+//   const [selectedTime, setSelectedTime] = useState(() => {
 
-    return addressStore.chosenAvailibility || null;
+//     return addressStore.chosenAvailibility || null;
 
-    });
+//     });
   
   
 
@@ -54,7 +54,6 @@ const Availabilities = observer(() => {
   const validTimeSlots = allTimeSlots.slice(0, allTimeSlots.length - (addressStore.duration - 1));
 
   const handleTimeClick = (time) => {
-    setSelectedTime(time);
     addressStore.setChosenAvailability(time)
   };
 
@@ -89,7 +88,7 @@ const Availabilities = observer(() => {
               disabled={!isTimeSlotAvailable(time, addressStore.duration)}
               className={`w-full px-4 py-2 text-white rounded-lg shadow transform transition duration-150 ${
                 isTimeSlotAvailable(time, addressStore.duration) ?
-                (selectedTime === time
+                (addressStore.chosenAvailibility === time
                   ? 'bg-green-500 hover:bg-green-600' // Selected time slot
                   : 'bg-blue-500 hover:bg-blue-600 hover:scale-105') // Available time slot
                   : 'bg-gray-300 cursor-not-allowed' // Unavailable time slot
