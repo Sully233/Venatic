@@ -18,10 +18,14 @@ const searchOptions = {
 
 
 const MyPlacesAutocompletePage = () => {
-  const [address, setAddress] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [isEligible, setIsEligible] = useState(null); // null, true, or false
 
+  const [address, setAddress] = useState(() => {
+
+    return addressStore.address;
+
+    });
 
   const handleChange = (value) => {
     setAddress(value);

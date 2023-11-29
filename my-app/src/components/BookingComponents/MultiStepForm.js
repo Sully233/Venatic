@@ -172,26 +172,27 @@ const StepThree = observer(({onNext, onPrev, register, errors }) => {
     fetchAvailableDates();
   }, []);
 
-      const fetchAvailableTimes = async (date) => {
+    const fetchAvailableTimes = async (date) => {
 
-        try {
-          const dateString = [
-            date.getFullYear(),
-            ('0' + (date.getMonth() + 1)).slice(-2), // Ensures two digits for month
-            ('0' + date.getDate()).slice(-2)          // Ensures two digits for day
-          ].join('-');
-          
-          const response = await fetch(`${process.env.REACT_APP_API_SERVER}/api/availabilities?date=${dateString}`);
-          const times = await response.json();
-          setAvailableTimes(times); // Set the available times for the selected date
-          addressStore.setavailabilities(times)
+      setIsLoading(true)
+      try {
+        const dateString = [
+          date.getFullYear(),
+          ('0' + (date.getMonth() + 1)).slice(-2), // Ensures two digits for month
+          ('0' + date.getDate()).slice(-2)          // Ensures two digits for day
+        ].join('-');
+        
+        const response = await fetch(`${process.env.REACT_APP_API_SERVER}/api/availabilities?date=${dateString}`);
+        const times = await response.json();
+        setAvailableTimes(times); // Set the available times for the selected date
+        addressStore.setavailabilities(times)
 
-        } catch (error) {
-          console.error('Error fetching available times:', error);
+      } catch (error) {
+        console.error('Error fetching available times:', error);
 
-        }
-
-      };
+      }
+      setIsLoading(false)
+    };
 
     
 
@@ -321,18 +322,25 @@ const StepThree = observer(({onNext, onPrev, register, errors }) => {
 });
 
 
-const Confirmation = ({ allFields }) => (
-    <div className="space-y-2">
+
+
+
+  const Confirmation = observer((allFields) => {
+
+
+    return (
+
+      <div className="space-y-2">
       <h3 className="text-lg font-semibold">Please confirm your details:</h3>
       <p><strong>First Name:</strong> {allFields.firstName}</p>
       <p><strong>Last Name:</strong> {allFields.lastName}</p>
       <p><strong>Email:</strong> {allFields.email}</p>
       <p><strong>Phone:</strong> {allFields.phone}</p>
-      <p><strong>Address:</strong> {allFields.eligibilityAddress}</p>
-    </div>
-  );
+      <p><strong>Address:</strong> {addressStore.address}</p>
+    </div>    
 
-
+    );
+  });
 
 
   const NextButton = ({ onClick, children }) => (
