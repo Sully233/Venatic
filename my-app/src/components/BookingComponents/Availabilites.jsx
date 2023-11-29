@@ -7,13 +7,6 @@ import AnimatedLoader from './AnimatedLoader';
 const Availabilities = observer(() => {
 
 
-//   const [selectedTime, setSelectedTime] = useState(() => {
-
-//     return addressStore.chosenAvailibility || null;
-
-//     });
-  
-  
 
   const allTimeSlots = [
     "08:00", "09:00", "10:00", "11:00", "12:00",

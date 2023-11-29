@@ -283,13 +283,6 @@ const StepThree = observer(({onNext, onPrev, register, errors }) => {
       />
       {errors.phone && <p className="text-red-500 text-xs italic">{errors.phone.message}</p>}
     </div>
-    <button
-      type="button"
-      className="btn btn-secondary"
-      onClick={onPrev}
-    >
-      Previous
-    </button>
     <div>
       <MyPlacesAutocompletePage/>
     </div>
@@ -310,6 +303,8 @@ const StepThree = observer(({onNext, onPrev, register, errors }) => {
     <Availabilities></Availabilities>
 
     </div>
+
+    
     <div className='p-6 float-right'>
       <NextButton onClick={onNext}>
         Next
@@ -354,6 +349,15 @@ const StepThree = observer(({onNext, onPrev, register, errors }) => {
       <ChevronRightIcon className="ml-2 -mr-1 h-4 w-4" />
     </motion.button>
   );
+
+  const PreviousButton = ({ onClick }) => (
+    <ChevronLeftIcon 
+      className="h-6 w-6 text-gray-500 hover:text-gray-700 cursor-pointer"
+      onClick={onClick} 
+    />
+  );
+
+
 
   const MultiStepForm = observer(() => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -423,9 +427,17 @@ const StepThree = observer(({onNext, onPrev, register, errors }) => {
     return (
       <>
 
-      <div className="progress-bar-container">
-        <div className="progress-bar" style={{ width: progressBarWidth }} />
-      </div>
+<div className="flex items-center space-x-4">
+        {currentStep > 1 && (
+          <PreviousButton onClick={prevStep}>
+            Previous
+          </PreviousButton>
+        )}
+
+        <div className="progress-bar-container flex-1">
+          <div className="progress-bar" style={{ width: progressBarWidth }} />
+        </div>
+  </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="p-4 space-y-4">
         {currentStep === 1 && <StepOne onNext={nextStep} register={register} errors={errors} initialSize={addressStore.selectedSize} initialDuration={addressStore.duration} />}
