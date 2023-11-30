@@ -1,17 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { observer } from "mobx-react";
+import React, { useState, useRef } from 'react';
 import { addressStore } from "../../../stores/AddressStore"
-
 import { motion, AnimatePresence } from 'framer-motion';
-import { CubeIcon, InformationCircleIcon } from '@heroicons/react/24/outline';
+import { CubeIcon } from '@heroicons/react/24/outline';
 import '../form.css'
-import AnimatedLoader from '../AnimatedLoader';
 import NextButton from '../Buttons/NextButton';
-
-
-
-
-
 
 
 const StepOne = ({ register, errors, onNext, initialSize = 'small', initialDuration = 1 }) => {
