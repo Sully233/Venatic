@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import MyPlacesAutocompletePage from './DatepickerComponents/searchOptions';
+import MyPlacesAutocompletePage from './addressSearchComponents/searchOptions';
 import { observer } from 'mobx-react';
 import { addressStore } from '../stores/AddressStore';
 import MultiStepForm from './BookingComponents/MultiStepForm';

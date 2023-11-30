@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { observer } from "mobx-react";
-import MyPlacesAutocompletePage from "../../DatepickerComponents/searchOptions"
+import MyPlacesAutocompletePage from "../../addressSearchComponents/searchOptions"
 import { addressStore } from "../../../stores/AddressStore"
 import { motion, AnimatePresence } from 'framer-motion';
 

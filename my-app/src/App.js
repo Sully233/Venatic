@@ -6,7 +6,7 @@ import PaymentFailure from "./components/PaymentComponents/PaymentFailure";
 
 import "./index.css";
 import "./images.css";
-import MyPlacesAutocompletePage from "./components/DatepickerComponents/searchOptions";
+import MyPlacesAutocompletePage from "./components/addressSearchComponents/searchOptions";
 import 'react-day-picker/dist/style.css';
 
 
