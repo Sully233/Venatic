@@ -3,7 +3,7 @@ const router = express.Router()
 const { stripeBookingAllocation } = require('../controllers/stripeController')
 
 
-router.post('/', express.raw({type: 'application/json'}), stripeBookingAllocation )
+router.post('/', express.raw({ type: 'application/json' }), stripeBookingAllocation)
 
 
 

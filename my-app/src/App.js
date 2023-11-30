@@ -19,7 +19,6 @@ function App() {
         <Route path="/success" element={<PaymentSuccess />} />
         <Route path="/unsuccessful" element={<PaymentFailure />} />
         <Route path="/autocomplete" element={<MyPlacesAutocompletePage />} />
-
       </Routes>
     </Router>
   );

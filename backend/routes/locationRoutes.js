@@ -3,7 +3,7 @@ const router = express.Router()
 const { checkEligibility } = require('../controllers/locationEligible')
 
 
-router.get('/', express.raw({type: 'application/json'}), checkEligibility )
+router.get('/', express.raw({ type: 'application/json' }), checkEligibility)
 
 
 

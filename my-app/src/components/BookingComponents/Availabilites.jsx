@@ -6,8 +6,6 @@ import AnimatedLoader from './AnimatedLoader';
 
 const Availabilities = observer(() => {
 
-
-
   const allTimeSlots = [
     "08:00", "09:00", "10:00", "11:00", "12:00",
     "13:00", "14:00", "15:00", "16:00", "17:00",
@@ -62,7 +60,6 @@ const Availabilities = observer(() => {
   };
 
 
-
   return (
     <AnimatePresence>
       <ul className="space-y-2">
@@ -79,13 +76,12 @@ const Availabilities = observer(() => {
             <button
               onClick={() => isTimeSlotAvailable(time, addressStore.duration) && handleTimeClick(time)}
               disabled={!isTimeSlotAvailable(time, addressStore.duration)}
-              className={`w-full px-4 py-2 text-white rounded-lg shadow transform transition duration-150 ${
-                isTimeSlotAvailable(time, addressStore.duration) ?
-                (addressStore.chosenAvailibility === time
-                  ? 'bg-green-500 hover:bg-green-600' // Selected time slot
-                  : 'bg-blue-500 hover:bg-blue-600 hover:scale-105') // Available time slot
-                  : 'bg-gray-300 cursor-not-allowed' // Unavailable time slot
-              }`}
+              className={`w-full px-4 py-2 text-white rounded-lg shadow transform transition duration-150 ${isTimeSlotAvailable(time, addressStore.duration) ?
+                  (addressStore.chosenAvailibility === time
+                    ? 'bg-green-500 hover:bg-green-600' 
+                    : 'bg-blue-500 hover:bg-blue-600 hover:scale-105') 
+                  : 'bg-gray-300 cursor-not-allowed' 
+                }`}
             >
               {formatTimeSlot(time)}
             </button>

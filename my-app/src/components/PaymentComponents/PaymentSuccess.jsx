@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import { motion } from 'framer-motion';
-import { useSearchParams } from 'react-router-dom'; 
-import Typewriter from 'typewriter-effect';
+import { useSearchParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -33,20 +32,20 @@ const PaymentSuccess = () => {
         setIsLoading(false);
       }
     };
-  
+
 
     fetchNameInfo();
 
     const timer = setTimeout(() => {
       navigate('/');
     }, 20000);
-  
+
 
     return () => {
       clearTimeout(timer);
 
     };
-  
+
 
   }, [sessionId, navigate]);
 

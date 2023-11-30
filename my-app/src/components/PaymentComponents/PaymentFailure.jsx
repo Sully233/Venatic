@@ -1,21 +1,20 @@
 import React from 'react';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 import { motion } from 'framer-motion';
-import { useNavigate, useSearchParams } from 'react-router-dom'; 
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const PaymentFailure = () => {
 
-    
-const [searchParams] = useSearchParams();
-console.log(searchParams.get('sessionId'))
+
+  const [searchParams] = useSearchParams();
+  console.log(searchParams.get('sessionId'))
 
 
   const navigate = useNavigate();
 
   const navigateHome = () => {
-    navigate('/'); 
+    navigate('/');
   };
-
 
   const iconVariants = {
     hidden: { rotate: -15 },

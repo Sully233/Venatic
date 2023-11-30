@@ -8,7 +8,7 @@ router.get('/', getOpenTimeSlots)
 router.get('/calendar/', getOpenDays)
 
 
-router.post('/superuseradmin/setavailability', setAvailability )
+router.post('/superuseradmin/setavailability', setAvailability)
 
 router.delete('/superuseradmin/removeavailability', deleteAvailability)
 
