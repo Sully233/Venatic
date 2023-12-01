@@ -32,7 +32,6 @@ const StepOne = ({ register, errors, onNext, initialSize = 'small', initialDurat
         setSelectedSize(sizeKey);
         setPrice(calculatePrice(sizeKey, duration));
         addressStore.setSelectedSize(sizeKey)
-        console.log(addressStore)
     };
 
     const handleSelectDuration = (newDuration) => {

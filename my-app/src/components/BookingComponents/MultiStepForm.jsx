@@ -32,7 +32,7 @@ const MultiStepForm = observer(() => {
 
 
   const onSubmit = (data) => {
-    console.log(data);
+
     // Handle form submission, e.g., sending data to an API
   };
 
@@ -40,8 +40,8 @@ const MultiStepForm = observer(() => {
 
     if (currentStep === 1) {
       // If we're on the first step, only proceed if the postcode is eligible
-      console.log(addressStore.postcodeEligible)
 
+      
     }
 
     // Determine which fields to validate based on the current step
@@ -58,7 +58,6 @@ const MultiStepForm = observer(() => {
     const result = await trigger(fieldNames);
 
     if (result) {
-      console.log('fired')
       setCurrentStep((prev) => prev + 1);
     }
   };

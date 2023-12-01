@@ -67,7 +67,6 @@ const MyPlacesAutocompletePage = () => {
         setAddress(fullAddress);
         addressStore.setAddress(fullAddress);
 
-        console.log('Full Address:', fullAddress);
   
         // Extracting the zip code
         const addressComponents = geocodeResult.address_components;
@@ -76,7 +75,6 @@ const MyPlacesAutocompletePage = () => {
         );
 
         const zipCode = zipCodeComponent ? zipCodeComponent.long_name : '';
-        console.log('Zip Code:', zipCode);
 
         fetchEligibility(zipCode)
         

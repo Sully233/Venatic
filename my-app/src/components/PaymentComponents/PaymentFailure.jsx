@@ -7,7 +7,6 @@ const PaymentFailure = () => {
 
 
   const [searchParams] = useSearchParams();
-  console.log(searchParams.get('sessionId'))
 
 
   const navigate = useNavigate();
