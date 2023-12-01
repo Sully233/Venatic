@@ -1,64 +1,67 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react";
-import MyPlacesAutocompletePage from "../../addressSearchComponents/searchOptions"
-import { addressStore } from "../../../stores/AddressStore"
-import { motion, AnimatePresence } from 'framer-motion';
-import '../form.css'
-import AnimatedLoader from '../AnimatedLoader';
-import NextButton from '../Buttons/NextButton';
-
-
-
+import MyPlacesAutocompletePage from "../../addressSearchComponents/searchOptions";
+import { addressStore } from "../../../stores/AddressStore";
+import { motion, AnimatePresence } from "framer-motion";
+import "../form.css";
+import AnimatedLoader from "../AnimatedLoader";
+import NextButton from "../Buttons/NextButton";
 
 const StepThree = observer(({ onNext, onPrev, register, errors }) => {
+  const [isLoading, setIsLoading] = useState(false);
 
-    const [isLoading, setIsLoading] = useState(false);
+  if (isLoading) {
+    return <AnimatedLoader></AnimatedLoader>;
+  }
 
-    if (isLoading) {
-        return <AnimatedLoader></AnimatedLoader>
-    }
-
-    return (
-
-        <div>
-            <div className="px-4 sm:px-6 lg:px-8"> {/* Added responsive padding */}
-                <div className="mb-4">
-                    <input
-                        type="email"
-                        {...register("email", {
-                            required: "Email is required",
-                            pattern: {
-                                value: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
-                                message: "Entered value does not match email format"
-                            }
-                        })}
-                        placeholder="Email"
-                        className="input input-bordered w-full"
-                    />
-                    {errors.email?.type === "required" && <p className="text-red-500 text-xs italic">{errors.email.message}</p>}
-                    {errors.email?.type === "pattern" && <p className="text-red-500 text-xs italic">{errors.email.message}</p>}
-                </div>
-                <div className="mb-4">
-                    <input
-                        {...register("phone", { required: "Phone is required" })}
-                        placeholder="Phone"
-                        className="input input-bordered w-full"
-                    />
-                    {errors.phone && <p className="text-red-500 text-xs italic">{errors.phone.message}</p>}
-                </div>
-                <div>
-                    <MyPlacesAutocompletePage />
-                </div>
-                <div className='p-6 float-right'>
-                    <NextButton onClick={onNext}>
-                        Next
-                    </NextButton>
-                </div>
-            </div>
+  return (
+    <div>
+      <div className="px-4 sm:px-6 lg:px-8">
+        <div className="mb-4">
+          <input
+            type="email"
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
+                message: "Entered value does not match email format",
+              },
+            })}
+            placeholder="Email"
+            className="input input-bordered w-full"
+          />
+          {errors.email?.type === "required" && (
+            <p className="text-red-500 text-xs italic">
+              {errors.email.message}
+            </p>
+          )}
+          {errors.email?.type === "pattern" && (
+            <p className="text-red-500 text-xs italic">
+              {errors.email.message}
+            </p>
+          )}
         </div>
-    )
-
+        <div className="mb-4">
+          <input
+            {...register("phone", { required: "Phone is required" })}
+            placeholder="Phone"
+            className="input input-bordered w-full"
+          />
+          {errors.phone && (
+            <p className="text-red-500 text-xs italic">
+              {errors.phone.message}
+            </p>
+          )}
+        </div>
+        <div>
+          <MyPlacesAutocompletePage />
+        </div>
+        <div className="p-6 float-right">
+          <NextButton onClick={onNext}>Next</NextButton>
+        </div>
+      </div>
+    </div>
+  );
 });
-
 
 export default StepThree;

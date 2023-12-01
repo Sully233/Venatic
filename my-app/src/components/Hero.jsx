@@ -1,8 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { observer } from 'mobx-react';
-import { addressStore } from '../stores/AddressStore';
-import MultiStepForm from './BookingComponents/MultiStepForm';
+import React from "react";
+import { Link } from "react-router-dom";
+import { observer } from "mobx-react";
+import { addressStore } from "../stores/AddressStore";
+import MultiStepForm from "./BookingComponents/MultiStepForm";
 
 const Hero = observer(() => {
   return (
@@ -21,8 +21,7 @@ const Hero = observer(() => {
           <div className="mt-4 md:mt-8 text-lg md:text-xl">
             Feel the Magic of Each Moment, Forever.
           </div>
-          <Link to="/booking" className="mt-4 md:mt-8">
-          </Link>
+          <Link to="/booking" className="mt-4 md:mt-8"></Link>
           <div className="mt-4">
             <p>test mobx (eligibility checker)</p>
             <p>{addressStore.postcodeEligible}</p>

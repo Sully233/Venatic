@@ -1,23 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { observer } from "mobx-react";
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from "framer-motion";
 import { addressStore } from "../../stores/AddressStore";
-import AnimatedLoader from './AnimatedLoader';
+import AnimatedLoader from "./AnimatedLoader";
 
 const Availabilities = observer(() => {
-
   const allTimeSlots = [
-    "08:00", "09:00", "10:00", "11:00", "12:00",
-    "13:00", "14:00", "15:00", "16:00", "17:00",
-    "18:00", "19:00", "20:00"
+    "08:00",
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+    "19:00",
+    "20:00",
   ];
 
   const addHoursAndFormat = (time, hours) => {
-    let [hrs, mins] = time.split(':').map(Number);
+    let [hrs, mins] = time.split(":").map(Number);
     const date = new Date();
     date.setHours(hrs, mins);
     date.setHours(date.getHours() + hours);
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+    return date.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
   };
 
   const formatTimeSlot = (time) => {
@@ -42,10 +55,13 @@ const Availabilities = observer(() => {
   };
 
   // Exclude time slots that end after the last time slot in allTimeSlots
-  const validTimeSlots = allTimeSlots.slice(0, allTimeSlots.length - (addressStore.duration - 1));
+  const validTimeSlots = allTimeSlots.slice(
+    0,
+    allTimeSlots.length - (addressStore.duration - 1)
+  );
 
   const handleTimeClick = (time) => {
-    addressStore.setChosenAvailability(time)
+    addressStore.setChosenAvailability(time);
   };
 
   const variants = {
@@ -54,15 +70,15 @@ const Availabilities = observer(() => {
       opacity: 1,
       y: 0,
       transition: {
-        delay: index * 0.05
-      }
+        delay: index * 0.05,
+      },
     }),
   };
 
   const listStyles = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)', // Two columns of equal width
-    gridGap: '10px', // Adjust gap between items as needed
+    display: "grid",
+    gridTemplateColumns: "repeat(2, 1fr)", // Two columns of equal width
+    gridGap: "10px", // Adjust gap between items as needed
   };
 
   return (
@@ -79,14 +95,18 @@ const Availabilities = observer(() => {
             className="list-none"
           >
             <button
-              onClick={() => isTimeSlotAvailable(time, addressStore.duration) && handleTimeClick(time)}
+              onClick={() =>
+                isTimeSlotAvailable(time, addressStore.duration) &&
+                handleTimeClick(time)
+              }
               disabled={!isTimeSlotAvailable(time, addressStore.duration)}
-              className={`w-full px-4 py-2 text-white rounded-lg shadow transform transition duration-150 ${isTimeSlotAvailable(time, addressStore.duration) ?
-                  (addressStore.chosenAvailibility === time
-                    ? 'bg-green-500 hover:bg-green-600' 
-                    : 'bg-blue-500 hover:bg-blue-600 hover:scale-105') 
-                  : 'bg-gray-300 cursor-not-allowed text-sm' 
-                }`}
+              className={`w-full px-4 py-2 text-white rounded-lg shadow transform transition duration-150 ${
+                isTimeSlotAvailable(time, addressStore.duration)
+                  ? addressStore.chosenAvailibility === time
+                    ? "bg-green-500 hover:bg-green-600"
+                    : "bg-blue-500 hover:bg-blue-600 hover:scale-105"
+                  : "bg-gray-300 cursor-not-allowed text-sm"
+              }`}
             >
               {formatTimeSlot(time)}
             </button>

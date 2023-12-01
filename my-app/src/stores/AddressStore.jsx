@@ -1,21 +1,21 @@
 import { makeAutoObservable } from "mobx";
 
 class AddressStore {
-  address = '';
+  address = "";
 
-  postcodeEligible = "NA"
+  postcodeEligible = "NA";
 
-  selectedSize = 'small'; // Default size
+  selectedSize = "small"; // Default size
   duration = 1; // Default duration
 
-  availabilities = []
-  chosenAvailibility = null
+  availabilities = [];
+  chosenAvailibility = null;
 
-  datesLoaded = false
+  datesLoaded = false;
 
-  date = null
+  date = null;
 
-  availabilityLoaded = true
+  availabilityLoaded = true;
 
   constructor() {
     makeAutoObservable(this);
@@ -42,23 +42,20 @@ class AddressStore {
   }
 
   setChosenAvailability(timeslot) {
-    this.chosenAvailibility = timeslot
+    this.chosenAvailibility = timeslot;
   }
 
-  setDatesLoaded(value){
-    this.datesLoaded = value
+  setDatesLoaded(value) {
+    this.datesLoaded = value;
   }
 
-  setDate(newDate){
-    this.date = newDate
+  setDate(newDate) {
+    this.date = newDate;
   }
 
   setAvailabilityLoaded(value) {
-    this.availabilityLoaded = value
+    this.availabilityLoaded = value;
   }
 }
 
-
-
 export const addressStore = new AddressStore();
-

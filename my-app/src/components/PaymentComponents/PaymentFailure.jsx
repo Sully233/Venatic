@@ -1,29 +1,31 @@
-import React from 'react';
-import { XCircleIcon } from '@heroicons/react/24/solid';
-import { motion } from 'framer-motion';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import React from "react";
+import { XCircleIcon } from "@heroicons/react/24/solid";
+import { motion } from "framer-motion";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const PaymentFailure = () => {
-
-
   const [searchParams] = useSearchParams();
-
 
   const navigate = useNavigate();
 
   const navigateHome = () => {
-    navigate('/');
+    navigate("/");
   };
 
   const iconVariants = {
     hidden: { rotate: -15 },
     visible: {
       rotate: 0,
-      transition: { type: 'spring', stiffness: 260, damping: 20 },
+      transition: { type: "spring", stiffness: 260, damping: 20 },
     },
     shake: {
       rotate: [0, -15, 15, -15, 15, 0],
-      transition: { type: 'spring', stiffness: 260, damping: 20, times: [0, 0.2, 0.4, 0.6, 0.8, 1] },
+      transition: {
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+        times: [0, 0.2, 0.4, 0.6, 0.8, 1],
+      },
     },
   };
 
@@ -33,8 +35,8 @@ const PaymentFailure = () => {
   };
 
   const containerVariants = {
-    hidden: { backgroundColor: '#f9fafb' },
-    visible: { backgroundColor: '#fee2e2', transition: { duration: 0.5 } },
+    hidden: { backgroundColor: "#f9fafb" },
+    visible: { backgroundColor: "#fee2e2", transition: { duration: 0.5 } },
   };
 
   return (
@@ -44,7 +46,13 @@ const PaymentFailure = () => {
       initial="hidden"
       animate="visible"
     >
-      <motion.div className="text-red-500" variants={iconVariants} initial="hidden" animate="visible" whileHover="shake">
+      <motion.div
+        className="text-red-500"
+        variants={iconVariants}
+        initial="hidden"
+        animate="visible"
+        whileHover="shake"
+      >
         <XCircleIcon className="w-16 h-16 sm:w-24 sm:h-24" />
       </motion.div>
       <motion.h1
@@ -57,7 +65,8 @@ const PaymentFailure = () => {
         className="text-base sm:text-lg text-gray-600 text-center mt-3"
         variants={textVariants}
       >
-        Unfortunately, there was an issue with your payment. Please try again or contact support.
+        Unfortunately, there was an issue with your payment. Please try again or
+        contact support.
       </motion.p>
 
       <motion.button
@@ -68,7 +77,6 @@ const PaymentFailure = () => {
       >
         Try Again
       </motion.button>
-
     </motion.div>
   );
 };

@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { CheckCircleIcon } from '@heroicons/react/24/solid';
-import { motion } from 'framer-motion';
-import { useSearchParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-
+import React, { useEffect, useState } from "react";
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { motion } from "framer-motion";
+import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const PaymentSuccess = () => {
-
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
-  const sessionId = searchParams.get('sessionId');
-  const [nameInfo, setNameInfo] = useState({ firstName: '', lastName: '' });
+  const sessionId = searchParams.get("sessionId");
+  const [nameInfo, setNameInfo] = useState({ firstName: "", lastName: "" });
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -19,40 +17,43 @@ const PaymentSuccess = () => {
       if (sessionId) {
         setIsLoading(true);
         try {
-          const response = await fetch(`${process.env.REACT_APP_API_SERVER}/api/booking/nameinfo?session_ID=${sessionId}`);
+          const response = await fetch(
+            `${process.env.REACT_APP_API_SERVER}/api/booking/nameinfo?session_ID=${sessionId}`
+          );
           if (response.ok) {
             const data = await response.json();
             setNameInfo({ firstName: data.firstName, lastName: data.lastName });
           } else {
-            console.error('API call failed:', response.status, response.statusText);
+            console.error(
+              "API call failed:",
+              response.status,
+              response.statusText
+            );
           }
         } catch (error) {
-          console.error('Network error:', error);
+          console.error("Network error:", error);
         }
         setIsLoading(false);
       }
     };
 
-
     fetchNameInfo();
 
     const timer = setTimeout(() => {
-      navigate('/');
+      navigate("/");
     }, 20000);
-
 
     return () => {
       clearTimeout(timer);
-
     };
-
-
   }, [sessionId, navigate]);
-
 
   const iconVariants = {
     hidden: { scale: 0 },
-    visible: { scale: 1, transition: { type: 'spring', stiffness: 260, damping: 20 } },
+    visible: {
+      scale: 1,
+      transition: { type: "spring", stiffness: 260, damping: 20 },
+    },
   };
 
   const textVariants = {
@@ -61,21 +62,20 @@ const PaymentSuccess = () => {
   };
 
   const containerVariants = {
-    hidden: { backgroundColor: '#e5e7eb' },
-    visible: { backgroundColor: '#ecfdf5', transition: { delay: 0.2, duration: 0.5 } },
+    hidden: { backgroundColor: "#e5e7eb" },
+    visible: {
+      backgroundColor: "#ecfdf5",
+      transition: { delay: 0.2, duration: 0.5 },
+    },
   };
 
   return (
-
-
-
     <motion.div
       className="flex flex-col justify-center items-center min-h-screen px-4 sm:px-6"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-
       <motion.div className="text-green-500" variants={iconVariants}>
         <CheckCircleIcon className="w-16 h-16 sm:w-24 sm:h-24" />
       </motion.div>
@@ -89,7 +89,8 @@ const PaymentSuccess = () => {
         className="text-base sm:text-lg text-gray-600 text-center mt-3"
         variants={textVariants}
       >
-        We've received your booking - further confirmation will be sent to you very shortly.
+        We've received your booking - further confirmation will be sent to you
+        very shortly.
       </motion.p>
     </motion.div>
   );
