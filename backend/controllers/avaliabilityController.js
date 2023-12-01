@@ -4,42 +4,65 @@ const Availability = require('../models/availabilityModel')
 
 
 const getOpenDays = asyncHandler(async (req, res) => {
+  const duration = parseInt(req.query.duration, 10) || 1; // Default to 1 hour if not provided
 
   const startDate = new Date();
   startDate.setDate(startDate.getDate() + 3);
 
-
   const endDate = new Date();
   endDate.setFullYear(endDate.getFullYear() + 2);
-
 
   const availabilities = await Availability.find({
     'availability.date': {
       $gte: startDate,
       $lte: endDate
     }
-  }, 'availability.date');
+  }, 'availability.date availability.startTime availability.endTime');
 
-
-  const uniqueDates = new Set();
-
+  const uniqueDates = new Map();
 
   availabilities.forEach(doc => {
     doc.availability.forEach(avail => {
       if (avail.date >= startDate && avail.date <= endDate) {
-
-        uniqueDates.add(avail.date.toISOString().split('T')[0]);
+        const dateKey = avail.date.toISOString().split('T')[0];
+        if (!uniqueDates.has(dateKey)) {
+          uniqueDates.set(dateKey, []);
+        }
+        uniqueDates.get(dateKey).push(avail);
       }
     });
   });
 
+  const openDates = [];
 
-  const openDates = Array.from(uniqueDates);
+  uniqueDates.forEach((times, date) => {
 
+    times.sort((a, b) => a.startTime - b.startTime);
+
+
+    outerLoop:
+    for (let i = 0; i < times.length; i++) {
+      let continuousHours = 1;
+      let currentTime = times[i];
+
+      for (let j = i + 1; j < times.length; j++) {
+        if (times[j].startTime.getTime() === currentTime.endTime.getTime()) {
+          continuousHours++;
+          currentTime = times[j];
+
+          if (continuousHours >= duration) {
+            openDates.push(date);
+            break outerLoop; 
+          }
+        } else {
+          break; 
+        }
+      }
+    }
+  });
 
   res.status(200).json({ openDates });
 });
-
 
 
 const getOpenTimeSlots = asyncHandler(async (req, res) => {

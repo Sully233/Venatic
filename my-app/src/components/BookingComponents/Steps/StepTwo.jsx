@@ -26,7 +26,7 @@ const StepTwo = ({
 
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API_SERVER}/api/availabilities/calendar`
+          `${process.env.REACT_APP_API_SERVER}/api/availabilities/calendar?duration=${formStore.duration}`
         );
 
         const data = await response.json();
