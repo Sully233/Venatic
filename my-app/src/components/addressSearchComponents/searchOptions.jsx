@@ -5,7 +5,6 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 import { observer } from "mobx-react";
 import { formStore } from "../../stores/FormStore";
-import { FaCheck, FaTimes } from "react-icons/fa";
 
 /*global google*/
 
