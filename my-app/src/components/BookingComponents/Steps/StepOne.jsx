@@ -100,7 +100,7 @@ const StepOne = ({
             />
             <span
               className={`text-gray-700 ${
-                selectedSize === size.key ? "text-blue-500" : "text-gray-700"
+                selectedSize === size.key ? "!text-blue-500" : "text-gray-700"
               }`}
             >
               {size.name}
