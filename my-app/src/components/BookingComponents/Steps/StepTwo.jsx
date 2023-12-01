@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react";
-import { addressStore } from "../../../stores/AddressStore";
+import { formStore } from "../../../stores/FormStore";
 import { motion, AnimatePresence } from "framer-motion";
 import "../form.css";
 import { DayPicker } from "react-day-picker";
@@ -33,7 +33,7 @@ const StepTwo = ({
         const dates = data.openDates.map((dateStr) => new Date(dateStr));
         setAvailableDates(dates);
         if (dates.length > 0) {
-          addressStore.setDatesLoaded(true);
+          formStore.setDatesLoaded(true);
         }
 
         const currentDate = new Date();
@@ -41,8 +41,8 @@ const StepTwo = ({
         const soonestAvailableDate = dates
           .filter((date) => date >= currentDate)
           .sort((a, b) => a - b)[0];
-        setClickedDate(addressStore.date || soonestAvailableDate || null);
-        fetchAvailableTimes(addressStore.date || soonestAvailableDate);
+        setClickedDate(formStore.date || soonestAvailableDate || null);
+        fetchAvailableTimes(formStore.date || soonestAvailableDate);
       } catch (error) {
         console.error("Error fetching available dates:", error);
       }
@@ -66,7 +66,7 @@ const StepTwo = ({
       );
       const times = await response.json();
       setAvailableTimes(times); // Set the available times for the selected date
-      addressStore.setavailabilities(times);
+      formStore.setavailabilities(times);
     } catch (error) {
       console.error("Error fetching available times:", error);
     }
@@ -114,8 +114,8 @@ const StepTwo = ({
     if (!selected) {
       setClickedDate(day);
       fetchAvailableTimes(day);
-      addressStore.setDate(day);
-      addressStore.setChosenAvailability(null);
+      formStore.setDate(day);
+      formStore.setChosenAvailability(null);
     }
   };
 

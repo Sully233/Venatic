@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
-import { addressStore } from "../stores/AddressStore";
+import { formStore } from "../stores/FormStore";
 import MultiStepForm from "./BookingComponents/MultiStepForm";
 
 const Hero = observer(() => {
@@ -24,7 +24,7 @@ const Hero = observer(() => {
           <Link to="/booking" className="mt-4 md:mt-8"></Link>
           <div className="mt-4">
             <p>test mobx (eligibility checker)</p>
-            <p>{addressStore.postcodeEligible}</p>
+            <p>{formStore.postcodeEligible}</p>
           </div>
         </div>
         <div className="order-last md:order-last flex justify-center md:justify-end">

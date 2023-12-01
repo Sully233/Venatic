@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { observer } from "mobx-react";
-import { addressStore } from "../../stores/AddressStore";
+import { formStore } from "../../stores/FormStore";
 import "./form.css";
 import StepTwo from "./Steps/StepTwo";
 import StepOne from "./Steps/StepOne";
@@ -31,8 +31,8 @@ const MultiStepForm = observer(() => {
 
   // Sync the address from the store to the form
   useEffect(() => {
-    setValue("eligibilityAddress", addressStore.address);
-  }, [addressStore.address, setValue]);
+    setValue("eligibilityAddress", formStore.address);
+  }, [formStore.address, setValue]);
 
   const onSubmit = (data) => {
     // Handle form submission, e.g., sending data to an API
@@ -87,8 +87,8 @@ const MultiStepForm = observer(() => {
             onNext={nextStep}
             register={register}
             errors={errors}
-            initialSize={addressStore.selectedSize}
-            initialDuration={addressStore.duration}
+            initialSize={formStore.selectedSize}
+            initialDuration={formStore.duration}
           />
         )}
         {currentStep === 2 && (

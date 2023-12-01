@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { addressStore } from "../../../stores/AddressStore";
+import { formStore } from "../../../stores/FormStore";
 import { motion, AnimatePresence } from "framer-motion";
 import { CubeIcon } from "@heroicons/react/24/outline";
 import "../form.css";
@@ -12,8 +12,8 @@ const StepOne = ({
   initialSize = "small",
   initialDuration = 1,
 }) => {
-  const [selectedSize, setSelectedSize] = useState(addressStore.selectedSize);
-  const [duration, setDuration] = useState(addressStore.duration);
+  const [selectedSize, setSelectedSize] = useState(formStore.selectedSize);
+  const [duration, setDuration] = useState(formStore.duration);
   const [popover, setPopover] = useState({
     show: false,
     content: "",
@@ -48,13 +48,13 @@ const StepOne = ({
   const selectSize = (sizeKey) => {
     setSelectedSize(sizeKey);
     setPrice(calculatePrice(sizeKey, duration));
-    addressStore.setSelectedSize(sizeKey);
+    formStore.setSelectedSize(sizeKey);
   };
 
   const handleSelectDuration = (newDuration) => {
     setDuration(newDuration);
     setPrice(calculatePrice(selectedSize, newDuration));
-    addressStore.setDuration(newDuration);
+    formStore.setDuration(newDuration);
   };
 
   const handleShowPopover = (size, event) => {

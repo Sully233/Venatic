@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
 
-class AddressStore {
+class FormStore {
+  
   address = "";
 
   postcodeEligible = "NA";
@@ -58,4 +59,4 @@ class AddressStore {
   }
 }
 
-export const addressStore = new AddressStore();
+export const formStore = new FormStore();

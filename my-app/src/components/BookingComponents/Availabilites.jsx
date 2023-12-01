@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { addressStore } from "../../stores/AddressStore";
+import { formStore } from "../../stores/FormStore";
 import AnimatedLoader from "./AnimatedLoader";
 
 const Availabilities = observer(() => {
@@ -34,7 +34,7 @@ const Availabilities = observer(() => {
   };
 
   const formatTimeSlot = (time) => {
-    const duration = addressStore.duration || 1;
+    const duration = formStore.duration || 1;
     const endTime = addHoursAndFormat(time, duration);
     return `${time} - ${endTime}`;
   };
@@ -47,7 +47,7 @@ const Availabilities = observer(() => {
     if (endTimeIndex >= allTimeSlots.length) return false;
 
     for (let i = startTimeIndex; i <= endTimeIndex; i++) {
-      if (!addressStore.availabilities.includes(allTimeSlots[i])) {
+      if (!formStore.availabilities.includes(allTimeSlots[i])) {
         return false;
       }
     }
@@ -57,11 +57,11 @@ const Availabilities = observer(() => {
   // Exclude time slots that end after the last time slot in allTimeSlots
   const validTimeSlots = allTimeSlots.slice(
     0,
-    allTimeSlots.length - (addressStore.duration - 1)
+    allTimeSlots.length - (formStore.duration - 1)
   );
 
   const handleTimeClick = (time) => {
-    addressStore.setChosenAvailability(time);
+    formStore.setChosenAvailability(time);
   };
 
   const variants = {
@@ -96,13 +96,13 @@ const Availabilities = observer(() => {
           >
             <button
               onClick={() =>
-                isTimeSlotAvailable(time, addressStore.duration) &&
+                isTimeSlotAvailable(time, formStore.duration) &&
                 handleTimeClick(time)
               }
-              disabled={!isTimeSlotAvailable(time, addressStore.duration)}
+              disabled={!isTimeSlotAvailable(time, formStore.duration)}
               className={`w-full px-4 py-2 text-white rounded-lg shadow transform transition duration-150 ${
-                isTimeSlotAvailable(time, addressStore.duration)
-                  ? addressStore.chosenAvailibility === time
+                isTimeSlotAvailable(time, formStore.duration)
+                  ? formStore.chosenAvailibility === time
                     ? "bg-green-500 hover:bg-green-600"
                     : "bg-blue-500 hover:bg-blue-600 hover:scale-105"
                   : "bg-gray-300 cursor-not-allowed text-sm"

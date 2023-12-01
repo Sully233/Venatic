@@ -4,7 +4,7 @@ import PlacesAutocomplete, {
   getLatLng,
 } from "react-places-autocomplete";
 import { observer } from "mobx-react";
-import { addressStore } from "../../stores/AddressStore";
+import { formStore } from "../../stores/FormStore";
 import { FaCheck, FaTimes } from "react-icons/fa";
 
 /*global google*/
@@ -18,7 +18,7 @@ const MyPlacesAutocompletePage = () => {
   const [isEligible, setIsEligible] = useState(null); // null, true, or false
 
   const [address, setAddress] = useState(() => {
-    return addressStore.address;
+    return formStore.address;
   });
 
   const handleChange = (value) => {
@@ -32,7 +32,7 @@ const MyPlacesAutocompletePage = () => {
       );
       if (response.ok) {
         const data = await response.json();
-        addressStore.setPostcodeEligible(data.eligibility);
+        formStore.setPostcodeEligible(data.eligibility);
 
         if (data.eligibility === "Eligible") {
           setIsEligible(true);
@@ -55,7 +55,7 @@ const MyPlacesAutocompletePage = () => {
         const fullAddress = geocodeResult.formatted_address;
 
         setAddress(fullAddress);
-        addressStore.setAddress(fullAddress);
+        formStore.setAddress(fullAddress);
 
         // Extracting the zip code
         const addressComponents = geocodeResult.address_components;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react";
-import { addressStore } from "../../../stores/AddressStore";
+import { formStore } from "../../../stores/FormStore";
 import { motion, AnimatePresence } from "framer-motion";
 
 import "../form.css";
@@ -22,7 +22,7 @@ const Confirmation = observer((allFields) => {
         <strong>Phone:</strong> {allFields.phone}
       </p>
       <p>
-        <strong>Address:</strong> {addressStore.address}
+        <strong>Address:</strong> {formStore.address}
       </p>
     </div>
   );

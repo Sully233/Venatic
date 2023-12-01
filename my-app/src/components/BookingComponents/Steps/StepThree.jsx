@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react";
 import MyPlacesAutocompletePage from "../../addressSearchComponents/searchOptions";
-import { addressStore } from "../../../stores/AddressStore";
+import { formStore } from "../../../stores/FormStore";
 import { motion, AnimatePresence } from "framer-motion";
 import "../form.css";
 import AnimatedLoader from "../AnimatedLoader";
@@ -16,6 +16,10 @@ const StepThree = observer(({ onNext, onPrev, register, errors }) => {
 
   return (
     <div>
+      <div>
+        <MyPlacesAutocompletePage />
+      </div>
+
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="mb-4">
           <input
@@ -52,9 +56,6 @@ const StepThree = observer(({ onNext, onPrev, register, errors }) => {
               {errors.phone.message}
             </p>
           )}
-        </div>
-        <div>
-          <MyPlacesAutocompletePage />
         </div>
         <div className="p-6 float-right">
           <NextButton onClick={onNext}>Next</NextButton>
