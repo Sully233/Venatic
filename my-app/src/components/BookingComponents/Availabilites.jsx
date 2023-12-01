@@ -59,10 +59,15 @@ const Availabilities = observer(() => {
     }),
   };
 
+  const listStyles = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)', // Two columns of equal width
+    gridGap: '10px', // Adjust gap between items as needed
+  };
 
   return (
     <AnimatePresence>
-      <ul className="space-y-2">
+      <ul style={listStyles} className="">
         {validTimeSlots.map((time, index) => (
           <motion.li
             key={time}
@@ -80,7 +85,7 @@ const Availabilities = observer(() => {
                   (addressStore.chosenAvailibility === time
                     ? 'bg-green-500 hover:bg-green-600' 
                     : 'bg-blue-500 hover:bg-blue-600 hover:scale-105') 
-                  : 'bg-gray-300 cursor-not-allowed' 
+                  : 'bg-gray-300 cursor-not-allowed text-sm' 
                 }`}
             >
               {formatTimeSlot(time)}

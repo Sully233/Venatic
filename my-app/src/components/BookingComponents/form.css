@@ -17,4 +17,8 @@
     transition: width 0.4s ease;
   }
 
+.date-suffix {
+  font-size: 75%;  
+  vertical-align: super;
+}
 

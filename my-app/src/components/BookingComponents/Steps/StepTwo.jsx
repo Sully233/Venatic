@@ -139,6 +139,35 @@ const StepTwo = ({ register, errors, onNext, initialSize = 'small', initialDurat
         return <AnimatedLoader></AnimatedLoader>
     }
 
+    const formatDate = (date) => {
+        if (!date) return null;
+        const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        const dayName = dayNames[date.getDay()];
+        const dateNumber = date.getDate();
+        const monthName = monthNames[date.getMonth()];
+        const year = date.getFullYear();
+        const suffix = numberSuffix(dateNumber);
+
+        return (
+            <div>
+                Choose a timeslot:<br />
+                Availabilties for {dayName} the {dateNumber}<span className="date-suffix">{suffix}</span> of {monthName} {year}
+            </div>
+        );
+    };
+
+    // Function to get the correct suffix for the date number
+    const numberSuffix = (dateNumber) => {
+        if (dateNumber > 3 && dateNumber < 21) return 'th'; // handles 4th to 20th
+        switch (dateNumber % 10) {
+            case 1: return "st";
+            case 2: return "nd";
+            case 3: return "rd";
+            default: return "th";
+        }
+    }
 
     return (
         <div>
@@ -157,7 +186,9 @@ const StepTwo = ({ register, errors, onNext, initialSize = 'small', initialDurat
                 fromMonth={soonestAvailableDate}
                 className="mb-4"
             />
-            <h2 className="text-lg font-semibold text-gray-700 mb-4">Select Time Slot</h2>
+            <h2 className="text-lg font-semibold text-gray-700 mb-4">
+                {formatDate(clickedDate)}
+            </h2>
             <Availabilities />
 
 
