@@ -55,6 +55,9 @@ const StepOne = ({
     setDuration(newDuration);
     setPrice(calculatePrice(selectedSize, newDuration));
     formStore.setDuration(newDuration);
+    //Cancel Existing Selections For Calendar
+    formStore.setChosenAvailability(null);
+    formStore.setDate(null)
   };
 
   const handleShowPopover = (size, event) => {
