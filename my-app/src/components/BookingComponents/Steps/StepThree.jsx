@@ -6,9 +6,43 @@ import AnimatedLoader from "../AnimatedLoader";
 import NextButton from "../Buttons/NextButton";
 import { XCircleIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
 import { customerDetailsStore } from "../../../stores/CustomerDetailsStore";
+import { z } from "zod";
 
 const StepThree = observer(({ onNext }) => {
   const [isLoading, setIsLoading] = useState(false);
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+  });
+  const [formErrors, setFormErrors] = useState({});
+
+  const customerDetailsSchema = z.object({
+    firstName: z.string().min(1, "First Name is required"),
+    lastName: z.string().min(1, "Last Name is required"),
+    email: z.string().email("Invalid email address"),
+    phoneNumber: z
+      .string()
+      .regex(/^04\d{8}$/, "Phone Number should start with '04' and be exactly 10 digits long"),
+  });
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleNextClick = () => {
+    try {
+      customerDetailsSchema.parse(formData);
+      setFormErrors({});
+      onNext(); // Proceed if validation is successful
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        setFormErrors(error.flatten().fieldErrors);
+      }
+    }
+  };
 
   if (isLoading) {
     return <AnimatedLoader />;
@@ -20,14 +54,19 @@ const StepThree = observer(({ onNext }) => {
         return (
           <div className="text-center py-2">
             <CheckCircleIcon className="h-10 w-10 mx-auto text-green-600" />
-            <span className="block text-green-500">Great, your address is eligible.</span>
+            <span className="block text-green-500">
+              Great, your address is eligible.
+            </span>
           </div>
         );
       case "Not Eligible":
         return (
           <div className="text-center py-2">
             <XCircleIcon className="h-10 w-10 mx-auto text-red-500" />
-            <span className="block text-red-500">Sorry, we don't currently service this location, but we're always expanding our reach. Check back soon.</span>
+            <span className="block text-red-500">
+              Sorry, we don't currently service this location, but we're always
+              expanding our reach. Check back soon.
+            </span>
           </div>
         );
       default:
@@ -37,33 +76,57 @@ const StepThree = observer(({ onNext }) => {
 
   const customerDetailsForm = () => (
     <div>
-
       <div className="text-lg font-semibold text-gray-700 mb-4 ">
         <p>Please enter your details:</p>
       </div>
-    
-    <div className="space-y-4">
-      <input
-        type="text"
-        placeholder="First Name"
-        className="w-full p-2 border border-gray-300 rounded"
-      />
-      <input
-        type="text"
-        placeholder="Last Name"
-        className="w-full p-2 border border-gray-300 rounded"
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        className="w-full p-2 border border-gray-300 rounded"
-      />
-      <input
-        type="tel"
-        placeholder="Phone Number"
-        className="w-full p-2 border border-gray-300 rounded"
-      />
-    </div>
+
+      <div className="space-y-4">
+      {formErrors.firstName && (
+          <div className="error-message">{formErrors.firstName}</div>
+        )}
+        <input
+          type="text"
+          name="firstName"
+          placeholder="First Name"
+          value={formData.firstName}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+
+        {formErrors.lastName && (
+          <div className="error-message">{formErrors.lastName}</div>
+        )}
+        <input
+          type="text"
+          name="lastName"
+          placeholder="Last Name"
+          value={formData.lastName}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+        {formErrors.email && (
+          <div className="error-message">{formErrors.email}</div>
+        )}
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+        {formErrors.phoneNumber && (
+          <div className="error-message">{formErrors.phoneNumber}</div>
+        )}
+        <input
+          type="tel"
+          name="phoneNumber"
+          placeholder="Phone Number"
+          value={formData.phoneNumber}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
     </div>
   );
 
@@ -78,11 +141,11 @@ const StepThree = observer(({ onNext }) => {
       {eligibilityMessage()}
 
       <div className="py-4">
-      {formStore.postcodeEligible === "Eligible" && customerDetailsForm()}
+        {formStore.postcodeEligible === "Eligible" && customerDetailsForm()}
       </div>
       {formStore.postcodeEligible === "Eligible" && (
         <div className="py-4">
-          <NextButton onClick={onNext}>Review</NextButton>
+          <NextButton onClick={handleNextClick}>Review</NextButton>
         </div>
       )}
     </div>

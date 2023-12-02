@@ -22,3 +22,6 @@
   vertical-align: super;
 }
 
+.error-message {
+  color: red;
+}
