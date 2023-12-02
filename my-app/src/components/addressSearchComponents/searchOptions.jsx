@@ -70,7 +70,7 @@ const MyPlacesAutocompletePage = () => {
   };
 
   return (
-    <div className=" p-4">
+    <div className="py-1">
       <PlacesAutocomplete
         value={address}
         onChange={handleChange}
@@ -84,7 +84,7 @@ const MyPlacesAutocompletePage = () => {
               {...getInputProps({
                 placeholder: "Enter an address...",
                 className:
-                  "w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm",
+                  "w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
               })}
             />
             <div
