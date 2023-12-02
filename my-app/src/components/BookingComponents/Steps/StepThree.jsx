@@ -20,7 +20,7 @@ const StepThree = observer(({ onNext, onPrev, register, errors }) => {
         <MyPlacesAutocompletePage />
       </div>
 
-      <div className="px-4 sm:px-6 lg:px-8">
+      <div className="">
         <div className="mb-4">
           <input
             type="email"
@@ -57,7 +57,7 @@ const StepThree = observer(({ onNext, onPrev, register, errors }) => {
             </p>
           )}
         </div>
-        <div className="p-6 float-right">
+        <div className="">
           <NextButton onClick={onNext}>Next</NextButton>
         </div>
       </div>
