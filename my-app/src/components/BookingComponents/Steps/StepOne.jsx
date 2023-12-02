@@ -1,9 +1,10 @@
 import React, { useState, useRef } from "react";
 import { formStore } from "../../../stores/FormStore";
 import { motion, AnimatePresence } from "framer-motion";
-import { CubeIcon } from "@heroicons/react/24/outline";
+import { CubeIcon, InformationCircleIcon } from "@heroicons/react/24/outline";
 import "../form.css";
 import NextButton from "../Buttons/NextButton";
+import Modal from "../Modals/Modal"
 
 const StepOne = ({
   register,
@@ -20,6 +21,8 @@ const StepOne = ({
     position: {},
   });
   const containerRef = useRef(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+const [selectedModalSize, setSelectedModalSize] = useState(null);
 
   const sizes = [
     {
@@ -41,6 +44,11 @@ const StepOne = ({
     return basePrice[sizeKey] * dur;
   };
 
+  const handleInfoClick = (sizeKey) => {
+    setSelectedModalSize(sizeKey);
+    setIsModalOpen(true);
+  };
+
   const [price, setPrice] = useState(
     calculatePrice(initialSize, initialDuration)
   );
@@ -60,33 +68,22 @@ const StepOne = ({
     formStore.setDate(null)
   };
 
-  const handleShowPopover = (size, event) => {
-    const buttonRect = event.target.getBoundingClientRect();
-    setPopover({
-      show: true,
-      content: size.description,
-      position: {
-        top: buttonRect.bottom + window.scrollY,
-        left: buttonRect.left + buttonRect.width / 2 + window.scrollX,
-      },
-    });
-  };
-
   return (
-    <div className="space-y-6 relative" ref={containerRef}>
-      {popover.show && (
-        <div
-          className="absolute z-10 p-4 bg-white rounded shadow"
-          style={{
-            top: popover.position.top,
-            left: popover.position.left,
-            transform: "translateX(-50%)",
-          }}
-        >
-          <p>{popover.content}</p>
-        </div>
-      )}
 
+    
+    <div className="space-y-6 relative" ref={containerRef}>
+      <div>
+      <AnimatePresence>
+        {isModalOpen && (
+          <Modal
+            sizeKey={selectedModalSize}
+            onClose={() => setIsModalOpen(false)}
+            sizes={sizes}
+          />
+        )}
+      </AnimatePresence>
+      </div>
+    
       <div className="grid grid-cols-2 gap-4">
         {sizes.map((size) => (
           <div
@@ -96,6 +93,10 @@ const StepOne = ({
             }`}
             onClick={() => selectSize(size.key)}
           >
+            <InformationCircleIcon
+              className="w-5 h-5 absolute top-2 right-2 text-gray-500 hover:text-gray-700 cursor-pointer"
+              onClick={() => handleInfoClick(size.key)}
+            />
             <CubeIcon
               className={`w-5 h-5 mb-2 ${
                 selectedSize === size.key ? "text-blue-500" : "text-gray-700"
@@ -140,7 +141,6 @@ const StepOne = ({
         <p className="text-red-500 text-xs italic">{errors.duration.message}</p>
       )}
 
-      {/* Right-aligned Next Button */}
       <div className="flex justify-end mt-4">
         <NextButton onClick={onNext}>Next</NextButton>
       </div>
