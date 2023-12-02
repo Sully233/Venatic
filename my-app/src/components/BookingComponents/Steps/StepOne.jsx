@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { CubeIcon, InformationCircleIcon } from "@heroicons/react/24/outline";
 import "../form.css";
 import NextButton from "../Buttons/NextButton";
-import Modal from "../Modals/Modal"
+import Modal from "../Modals/Modal";
 
 const StepOne = ({
   register,
@@ -22,20 +22,20 @@ const StepOne = ({
   });
   const containerRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-const [selectedModalSize, setSelectedModalSize] = useState(null);
+  const [selectedModalSize, setSelectedModalSize] = useState(null);
 
   const sizes = [
     {
       key: "small",
       name: "Small",
-      description: "Perfect for individual projects.",
+      description: "Small text goes here.",
     },
-    { key: "medium", name: "Medium", description: "Great for small teams." },
-    { key: "large", name: "Large", description: "Ideal for larger projects." },
+    { key: "medium", name: "Medium", description: "Medium text goes here." },
+    { key: "large", name: "Large", description: "Large text goes here." },
     {
       key: "extraLarge",
       name: "Extra Large",
-      description: "Best for enterprise-scale solutions.",
+      description: "XL text goes here.",
     },
   ];
 
@@ -65,14 +65,11 @@ const [selectedModalSize, setSelectedModalSize] = useState(null);
     formStore.setDuration(newDuration);
     //Cancel Existing Selections For Calendar
     formStore.setChosenAvailability(null);
-    formStore.setDate(null)
+    formStore.setDate(null);
   };
 
   return (
-
-    
     <div className="space-y-6 relative" ref={containerRef}>
-    
       <div className="grid grid-cols-2 gap-4">
         {sizes.map((size) => (
           <div
@@ -103,17 +100,17 @@ const [selectedModalSize, setSelectedModalSize] = useState(null);
       </div>
 
       <div>
-      <AnimatePresence>
-        {isModalOpen && (
-          <Modal
-            sizeKey={selectedModalSize}
-            onClose={() => setIsModalOpen(false)}
-            sizes={sizes}
-          />
-        )}
-      </AnimatePresence>
+        <AnimatePresence>
+          {isModalOpen && (
+            <Modal
+              sizeKey={selectedModalSize}
+              onClose={() => setIsModalOpen(false)}
+              sizes={sizes}
+            />
+          )}
+        </AnimatePresence>
       </div>
-      
+
       <div className="flex justify-center space-x-2">
         {Array.from({ length: 6 }, (_, i) => i + 1).map((dur) => (
           <button

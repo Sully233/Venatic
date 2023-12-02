@@ -3,6 +3,11 @@ import { observer } from "mobx-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { formStore } from "../../stores/FormStore";
 import AnimatedLoader from "./AnimatedLoader";
+import {
+  CubeIcon,
+  InformationCircleIcon,
+  CheckIcon,
+} from "@heroicons/react/24/outline";
 
 const Availabilities = observer(() => {
   const allTimeSlots = [
@@ -100,15 +105,18 @@ const Availabilities = observer(() => {
                 handleTimeClick(time)
               }
               disabled={!isTimeSlotAvailable(time, formStore.duration)}
-              className={`w-full px-4 py-2 text-white rounded-lg shadow transform transition duration-150 ${
+              className={`w-full px-4 py-2 rounded-lg shadow transform transition duration-150 border flex justify-between items-center ${
                 isTimeSlotAvailable(time, formStore.duration)
                   ? formStore.chosenAvailibility === time
-                    ? "bg-green-500 hover:bg-green-600"
-                    : "bg-blue-500 hover:bg-blue-600 hover:scale-105"
-                  : "bg-gray-300 cursor-not-allowed text-sm"
+                    ? "border-blue-500 text-black"
+                    : "border-gray-400 text-black hover:bg-gray-100"
+                  : "bg-gray-300 cursor-not-allowed text-sm border-gray-300"
               }`}
             >
-              {formatTimeSlot(time)}
+              <span>{formatTimeSlot(time)}</span>
+              {formStore.chosenAvailibility === time && (
+                <CheckIcon className="h-5 w-5 text-blue-500" />
+              )}
             </button>
           </motion.li>
         ))}
