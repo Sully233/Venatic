@@ -20,7 +20,7 @@ const Confirmation = observer((allFields) => {
         <strong>Email:</strong> {customerDetailsStore.email}
       </p>
       <p>
-        <strong>Phone:</strong> {customerDetailsStore.phone}
+        <strong>Phone:</strong> {customerDetailsStore.phoneNumber}
       </p>
       <p>
         <strong>Address:</strong> {formStore.address}

@@ -19,7 +19,7 @@ class CustomerDetailsStore {
     this.firstName = firstName;
   }
 
-  setlastName(lastName) {
+  setLastName(lastName) {
     this.lastName = lastName;
   }
 
@@ -27,6 +27,9 @@ class CustomerDetailsStore {
     this.email = email
   }
 
+  setPhoneNumber(phoneNumber) {
+    this.phoneNumber = phoneNumber
+  }
 }
 
 export const customerDetailsStore = new CustomerDetailsStore();

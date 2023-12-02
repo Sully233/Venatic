@@ -12,10 +12,10 @@ const StepThree = observer(({ onNext }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phoneNumber: "",
+    firstName: customerDetailsStore.firstName,
+    lastName: customerDetailsStore.lastName,
+    email: customerDetailsStore.email,
+    phoneNumber: customerDetailsStore.phoneNumber,
   });
   const [formErrors, setFormErrors] = useState({});
 
@@ -29,13 +29,31 @@ const StepThree = observer(({ onNext }) => {
   });
 
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const updatedValue = e.target.value;
+    setFormData({ ...formData, [e.target.name]: updatedValue });
+
+    if (e.target.name === "firstName") {
+        customerDetailsStore.setFirstName(updatedValue);
+    } else if (e.target.name === "lastName") {
+        customerDetailsStore.setLastName(updatedValue);
+    } else if (e.target.name === "email") {
+        customerDetailsStore.setEmail(updatedValue);
+    } else if (e.target.name === "phoneNumber") {
+        customerDetailsStore.setPhoneNumber(updatedValue);
+    }
+
   };
 
   const handleNextClick = () => {
     try {
       customerDetailsSchema.parse(formData);
       setFormErrors({});
+      customerDetailsStore.setFirstName(formData.firstName)
+      customerDetailsStore.setLastName(formData.lastName)
+      customerDetailsStore.setEmail(formData.email)
+      customerDetailsStore.setPhoneNumber(formData.phoneNumber)
+
+
       onNext(); // Proceed if validation is successful
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -88,7 +106,7 @@ const StepThree = observer(({ onNext }) => {
           type="text"
           name="firstName"
           placeholder="First Name"
-          value={formData.firstName}
+          value={customerDetailsStore.firstName}
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded"
         />
@@ -100,7 +118,7 @@ const StepThree = observer(({ onNext }) => {
           type="text"
           name="lastName"
           placeholder="Last Name"
-          value={formData.lastName}
+          value={customerDetailsStore.lastName}
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded"
         />
@@ -111,7 +129,7 @@ const StepThree = observer(({ onNext }) => {
           type="email"
           name="email"
           placeholder="Email"
-          value={formData.email}
+          value={customerDetailsStore.email}
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded"
         />
@@ -122,7 +140,7 @@ const StepThree = observer(({ onNext }) => {
           type="tel"
           name="phoneNumber"
           placeholder="Phone Number"
-          value={formData.phoneNumber}
+          value={customerDetailsStore.phoneNumber}
           onChange={handleInputChange}
           className="w-full p-2 border border-gray-300 rounded"
         />

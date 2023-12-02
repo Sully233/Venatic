@@ -189,7 +189,7 @@ const StepTwo = ({
   };
 
   return (
-    <div classname="">
+    <div className="">
       <h2 className="text-lg font-semibold text-gray-700 mb-4">
         Choose a Date
       </h2>
