@@ -216,10 +216,10 @@ const StepTwo = ({
       <Availabilities />
 
       {formStore.chosenAvailibility && (
-      <div className="p-6 float-right">
-        <NextButton onClick={onNext}>Next</NextButton>
-      </div>
-    )}
+        <div className="py-4 ">
+          <NextButton classname="" onClick={onNext}>Next</NextButton>
+        </div>
+      )}
     </div>
   );
 };
