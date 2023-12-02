@@ -7,6 +7,8 @@ import NextButton from "../Buttons/NextButton";
 import { XCircleIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
 import { customerDetailsStore } from "../../../stores/CustomerDetailsStore";
 import { z } from "zod";
+import TextField from '@mui/material/TextField';
+
 
 const StepThree = observer(({ onNext }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -94,55 +96,55 @@ const StepThree = observer(({ onNext }) => {
 
   const customerDetailsForm = () => (
     <div>
-      <div className="text-lg font-semibold text-gray-700 mb-4 ">
+      <div className="text-lg font-semibold text-gray-700 mb-4">
         <p>Please enter your details:</p>
       </div>
-
+  
       <div className="space-y-4">
-      {formErrors.firstName && (
-          <div className="error-message">{formErrors.firstName}</div>
-        )}
-        <input
-          type="text"
+        <TextField
+          label="First Name"
+          variant="outlined"
           name="firstName"
-          placeholder="First Name"
           value={customerDetailsStore.firstName}
           onChange={handleInputChange}
-          className="w-full p-2 border border-gray-300 rounded"
+          error={!!formErrors.firstName}
+          helperText={formErrors.firstName}
+          fullWidth
         />
-
-        {formErrors.lastName && (
-          <div className="error-message">{formErrors.lastName}</div>
-        )}
-        <input
-          type="text"
+  
+        <TextField
+          label="Last Name"
+          variant="outlined"
           name="lastName"
-          placeholder="Last Name"
           value={customerDetailsStore.lastName}
           onChange={handleInputChange}
-          className="w-full p-2 border border-gray-300 rounded"
+          error={!!formErrors.lastName}
+          helperText={formErrors.lastName}
+          fullWidth
         />
-        {formErrors.email && (
-          <div className="error-message">{formErrors.email}</div>
-        )}
-        <input
+  
+        <TextField
+          label="Email"
+          variant="outlined"
           type="email"
           name="email"
-          placeholder="Email"
           value={customerDetailsStore.email}
           onChange={handleInputChange}
-          className="w-full p-2 border border-gray-300 rounded"
+          error={!!formErrors.email}
+          helperText={formErrors.email}
+          fullWidth
         />
-        {formErrors.phoneNumber && (
-          <div className="error-message">{formErrors.phoneNumber}</div>
-        )}
-        <input
+  
+        <TextField
+          label="Phone Number"
+          variant="outlined"
           type="tel"
           name="phoneNumber"
-          placeholder="Phone Number"
           value={customerDetailsStore.phoneNumber}
           onChange={handleInputChange}
-          className="w-full p-2 border border-gray-300 rounded"
+          error={!!formErrors.phoneNumber}
+          helperText={formErrors.phoneNumber}
+          fullWidth
         />
       </div>
     </div>
