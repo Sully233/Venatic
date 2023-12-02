@@ -8,7 +8,7 @@ import "../form.css";
 const Confirmation = observer((allFields) => {
   return (
     <div className="space-y-2">
-      <h3 className="text-lg font-semibold">Please confirm your details:</h3>
+      <h3 className="text-lg font-semibold">Please review your details:</h3>
       <p>
         <strong>First Name:</strong> {allFields.firstName}
       </p>
