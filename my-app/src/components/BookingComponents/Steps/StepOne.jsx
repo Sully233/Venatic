@@ -72,17 +72,6 @@ const [selectedModalSize, setSelectedModalSize] = useState(null);
 
     
     <div className="space-y-6 relative" ref={containerRef}>
-      <div>
-      <AnimatePresence>
-        {isModalOpen && (
-          <Modal
-            sizeKey={selectedModalSize}
-            onClose={() => setIsModalOpen(false)}
-            sizes={sizes}
-          />
-        )}
-      </AnimatePresence>
-      </div>
     
       <div className="grid grid-cols-2 gap-4">
         {sizes.map((size) => (
@@ -113,6 +102,18 @@ const [selectedModalSize, setSelectedModalSize] = useState(null);
         ))}
       </div>
 
+      <div>
+      <AnimatePresence>
+        {isModalOpen && (
+          <Modal
+            sizeKey={selectedModalSize}
+            onClose={() => setIsModalOpen(false)}
+            sizes={sizes}
+          />
+        )}
+      </AnimatePresence>
+      </div>
+      
       <div className="flex justify-center space-x-2">
         {Array.from({ length: 6 }, (_, i) => i + 1).map((dur) => (
           <button
