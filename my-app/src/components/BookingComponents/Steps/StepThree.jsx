@@ -73,9 +73,9 @@ const StepThree = observer(({ onNext }) => {
       case "Eligible":
         return (
           <div className="text-center py-2">
-            <CheckCircleIcon className="h-10 w-10 mx-auto text-green-600" />
-            <span className="block text-green-500">
-              Great, your address is eligible.
+            <CheckCircleIcon className="h-10 w-10 mx-auto font-bold text-green-600" />  
+            <span className="block text-green-700 font-medium">
+              Awesome, we service your address!
             </span>
           </div>
         );
@@ -83,9 +83,9 @@ const StepThree = observer(({ onNext }) => {
         return (
           <div className="text-center py-2">
             <XCircleIcon className="h-10 w-10 mx-auto text-red-500" />
-            <span className="block text-red-500">
-              Sorry, we don't currently service this location, but we're always
-              expanding our reach. Check back soon.
+            <span className="py-2 block text-red-500 font-medium">
+              Sorry, we don't currently service this location. We're always
+              expanding our reach. Please check back soon.
             </span>
           </div>
         );

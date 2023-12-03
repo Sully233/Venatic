@@ -1,10 +1,13 @@
-const asyncHandler = require('express-async-handler');
-const Availability = require('../models/availabilityModel');
-const Booking = require('../models/bookingModel');
+const asyncHandler = require("express-async-handler");
+const Availability = require("../models/availabilityModel");
+const Booking = require("../models/bookingModel");
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const client = require('twilio')(process.env.TWILLO_ACCOUNTSID, process.env.TWILLO_AUTH_TOKEN)
-
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const client = require("twilio")(
+  process.env.TWILLO_ACCOUNTSID,
+  process.env.TWILLO_AUTH_TOKEN
+);
+const { bookingCost } = require("../utils/priceCalculator");
 
 const getName = asyncHandler(async (req, res) => {
   const { session_ID } = req.query;
@@ -17,17 +20,17 @@ const getName = asyncHandler(async (req, res) => {
     const booking = await Booking.findOne({ stripeSessionID: session_ID });
 
     if (booking) {
-
       const { firstName, lastName } = booking.customer;
-
 
       res.status(200).json({ firstName, lastName });
     } else {
-      res.status(404).json({ message: "Booking not found with given session ID." });
+      res
+        .status(404)
+        .json({ message: "Booking not found with given session ID." });
     }
   } catch (error) {
-    console.error('Error fetching booking:', error);
-    res.status(500).send('Internal Server Error');
+    console.error("Error fetching booking:", error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
@@ -36,7 +39,7 @@ const getBookingsOnDate = asyncHandler(async (req, res) => {
 
   if (!date) {
     res.status(400);
-    throw new Error('Please provide a date');
+    throw new Error("Please provide a date");
   }
 
   const startDate = new Date(new Date(date).toISOString());
@@ -45,17 +48,15 @@ const getBookingsOnDate = asyncHandler(async (req, res) => {
   const endDate = new Date(new Date(date).toISOString());
   endDate.setUTCHours(23, 59, 59, 999);
 
-  console.log(startDate)
+  console.log(startDate);
   const bookings = await Booking.find({
-    'bookingTime.start': { $gte: startDate, $lte: endDate }
-  }).sort({ 'bookingTime.start': 1 });
+    "bookingTime.start": { $gte: startDate, $lte: endDate },
+  }).sort({ "bookingTime.start": 1 });
 
   res.status(200).json(bookings);
 });
 
-
 const createBooking = asyncHandler(async (req, res) => {
-
   const {
     firstName,
     lastName,
@@ -66,13 +67,21 @@ const createBooking = asyncHandler(async (req, res) => {
     price,
     receipt,
     description,
-    notes
+    notes,
   } = req.body;
 
-
-  if (!firstName || !lastName || !contactNumber || !email || !bookingStartTime || !bookingEndTime || !price || !description) {
+  if (
+    !firstName ||
+    !lastName ||
+    !contactNumber ||
+    !email ||
+    !bookingStartTime ||
+    !bookingEndTime ||
+    !price ||
+    !description
+  ) {
     res.status(400);
-    throw new Error('Please add all required fields');
+    throw new Error("Please add all required fields");
   }
 
   const bookingStart = new Date(bookingStartTime);
@@ -80,22 +89,21 @@ const createBooking = asyncHandler(async (req, res) => {
 
   if (bookingStart >= bookingEnd) {
     res.status(400);
-    throw new Error('Booking end time must be after start time');
+    throw new Error("Booking end time must be after start time");
   }
 
-
   const existingBooking = await Booking.findOne({
-    'customer.email': email,
-    'bookingTime.start': bookingStart,
-    'bookingTime.end': bookingEnd
+    "customer.email": email,
+    "bookingTime.start": bookingStart,
+    "bookingTime.end": bookingEnd,
   });
 
   if (existingBooking) {
     res.status(400);
-    throw new Error('A booking with the same details already exists');
+    throw new Error("A booking with the same details already exists");
   }
 
-  let allocatedPerson = { firstName: 'UNALLOCATED', lastName: 'UNALLOCATED' };
+  let allocatedPerson = { firstName: "UNALLOCATED", lastName: "UNALLOCATED" };
 
   const newBooking = await Booking.create({
     customer: { firstName, lastName, contactNumber, email },
@@ -107,35 +115,32 @@ const createBooking = asyncHandler(async (req, res) => {
     allocatedPerson,
   });
 
-
   const session = await stripe.checkout.sessions.create({
-    payment_method_types: ['card'],
-    line_items: [{
-      price_data: {
-        currency: 'aud',
-        product_data: {
-          name: 'Booking',
-          description: description,
+    payment_method_types: ["card"],
+    line_items: [
+      {
+        price_data: {
+          currency: "aud",
+          product_data: {
+            name: "Booking",
+            description: description,
+          },
+          unit_amount: Math.round(price * 100), // Convert price to cents
         },
-        unit_amount: Math.round(price * 100), // Convert price to cents
+        quantity: 1,
       },
-      quantity: 1,
-    }],
-    mode: 'payment',
-    success_url: 'https://venatic.me/success?sessionId={CHECKOUT_SESSION_ID}',
-    cancel_url: 'https://venatic.me/unsuccessful',
+    ],
+    mode: "payment",
+    success_url: "https://venatic.me/success?sessionId={CHECKOUT_SESSION_ID}",
+    cancel_url: "https://venatic.me/unsuccessful",
     customer_email: email, // Pre-fill the email in the checkout session
     metadata: {
       bookingId: newBooking._id.toString(),
     },
   });
 
-
-
   res.status(201).json({ url: session.url });
-
 });
-
 
 const deleteBooking = asyncHandler(async (req, res) => {
   const { date, startTime, endTime, contactNumber } = req.body;
@@ -147,26 +152,35 @@ const deleteBooking = asyncHandler(async (req, res) => {
 
   // Find the booking by date, start time, end time, and contact number
   const booking = await Booking.findOne({
-    'bookingTime.start': bookingStartTime,
-    'bookingTime.end': bookingEndTime,
-    'customer.contactNumber': contactNumber,
+    "bookingTime.start": bookingStartTime,
+    "bookingTime.end": bookingEndTime,
+    "customer.contactNumber": contactNumber,
   });
 
   // If no booking is found, return an error response
   if (!booking) {
-    res.status(404).json({ message: 'Booking not found' });
+    res.status(404).json({ message: "Booking not found" });
     return;
   }
 
   // Delete the found booking
   await Booking.deleteOne({ _id: booking._id });
 
+  res.status(200).json({ message: "Booking deleted successfully" });
+});
 
+const getBookingPrice = asyncHandler(async (req, res) => {
+  const { selection, duration } = req.query;
 
+  const price = bookingCost(selection, duration);
 
-  res.status(200).json({ message: 'Booking deleted successfully' });
+  res.status(200).json({ price });
 });
 
 module.exports = {
-  createBooking, getBookingsOnDate, deleteBooking, getName
+  createBooking,
+  getBookingsOnDate,
+  deleteBooking,
+  getName,
+  getBookingPrice,
 };

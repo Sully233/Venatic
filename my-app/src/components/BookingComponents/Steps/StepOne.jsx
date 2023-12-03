@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { formStore } from "../../../stores/FormStore";
 import { motion, AnimatePresence } from "framer-motion";
 import { CubeIcon, InformationCircleIcon } from "@heroicons/react/24/outline";
@@ -23,6 +23,8 @@ const StepOne = ({
   const containerRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedModalSize, setSelectedModalSize] = useState(null);
+  const [price, setPrice] = useState(0);
+
 
   const sizes = [
     {
@@ -39,29 +41,42 @@ const StepOne = ({
     },
   ];
 
-  const calculatePrice = (sizeKey, dur) => {
-    const basePrice = { small: 50, medium: 75, large: 100, extraLarge: 150 };
-    return basePrice[sizeKey] * dur;
+  const fetchPrice = async (sizeKey, dur) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/booking/price?selection=${sizeKey}&duration=${dur}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        console.log(typeof data.price);
+        setPrice(data.price);
+      } else {
+        setPrice(0);
+      }
+    } catch (error) {
+      console.error("Error fetching price:", error);
+    }
   };
+
+
+  useEffect(() => {
+    fetchPrice(initialSize, initialDuration);
+  }, [initialSize, initialDuration]);
 
   const handleInfoClick = (sizeKey) => {
     setSelectedModalSize(sizeKey);
     setIsModalOpen(true);
   };
 
-  const [price, setPrice] = useState(
-    calculatePrice(initialSize, initialDuration)
-  );
-
   const selectSize = (sizeKey) => {
     setSelectedSize(sizeKey);
-    setPrice(calculatePrice(sizeKey, duration));
+    fetchPrice(sizeKey, duration);
     formStore.setSelectedSize(sizeKey);
   };
 
   const handleSelectDuration = (newDuration) => {
     setDuration(newDuration);
-    setPrice(calculatePrice(selectedSize, newDuration));
+    fetchPrice(selectedSize, newDuration);
     formStore.setDuration(newDuration);
     //Cancel Existing Selections For Calendar
     formStore.setChosenAvailability(null);
