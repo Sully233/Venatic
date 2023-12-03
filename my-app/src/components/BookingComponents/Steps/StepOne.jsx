@@ -44,7 +44,7 @@ const StepOne = ({
   const fetchPrice = async (sizeKey, dur) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/booking/price?selection=${sizeKey}&duration=${dur}`
+        `${process.env.REACT_APP_API_SERVER}/api/booking/price?selection=${sizeKey}&duration=${dur}`
       );
       if (response.ok) {
         const data = await response.json();
