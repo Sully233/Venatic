@@ -48,7 +48,6 @@ const StepOne = ({
       );
       if (response.ok) {
         const data = await response.json();
-        console.log(typeof data.price);
         setPrice(data.price);
       } else {
         setPrice(0);
@@ -60,7 +59,9 @@ const StepOne = ({
 
 
   useEffect(() => {
-    fetchPrice(initialSize, initialDuration);
+    if (price===0){
+      fetchPrice(initialSize, initialDuration);
+    }
   }, [initialSize, initialDuration]);
 
   const handleInfoClick = (sizeKey) => {
