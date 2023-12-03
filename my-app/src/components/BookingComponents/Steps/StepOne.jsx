@@ -5,6 +5,7 @@ import { CubeIcon, InformationCircleIcon } from "@heroicons/react/24/outline";
 import "../form.css";
 import NextButton from "../Buttons/NextButton";
 import Modal from "../Modals/Modal";
+import AnimatedLoader from "../AnimatedLoader";
 
 const StepOne = ({
   register,
@@ -24,7 +25,7 @@ const StepOne = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedModalSize, setSelectedModalSize] = useState(null);
   const [price, setPrice] = useState(0);
-
+  const [isLoading, setIsLoading] = useState(false);
 
   const sizes = [
     {
@@ -57,10 +58,11 @@ const StepOne = ({
     }
   };
 
-
   useEffect(() => {
-    if (price===0){
+    if (price === 0) {
+      setIsLoading(true);
       fetchPrice(initialSize, initialDuration);
+      setIsLoading(false);
     }
   }, [initialSize, initialDuration]);
 
@@ -83,6 +85,10 @@ const StepOne = ({
     formStore.setChosenAvailability(null);
     formStore.setDate(null);
   };
+
+  if (isLoading) {
+    return <AnimatedLoader />;
+  }
 
   return (
     <div className="space-y-6 relative" ref={containerRef}>
