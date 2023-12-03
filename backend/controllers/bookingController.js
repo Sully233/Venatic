@@ -101,10 +101,10 @@ const createBooking = asyncHandler(async (req, res) => {
     "bookingTime.end": bookingEnd,
   });
 
-  if (existingBooking) {
-    res.status(400);
-    throw new Error("A booking with the same details already exists");
-  }
+  // if (existingBooking) {
+  //   res.status(400);
+  //   throw new Error("A booking with the same details already exists");
+  // }
 
   let allocatedPerson = { firstName: "UNALLOCATED", lastName: "UNALLOCATED" };
 

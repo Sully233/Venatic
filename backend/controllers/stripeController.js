@@ -119,13 +119,13 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
         });
 
 
-        // client.messages.create({
-        //     body: messageBody,
-        //     from: process.env.TEXT_SEND_NUMBER,
-        //     to: `+61${booking.customer.contactNumber}` 
-        // })
-        // .then(message => console.log(`Notification sent with SID: ${message.sid}`))
-        // .catch(error => console.error(`Notification failed with error: ${error}`));
+        client.messages.create({
+            body: messageBody,
+            from: process.env.TEXT_SEND_NUMBER,
+            to: `+61${booking.customer.contactNumber}` 
+        })
+        .then(message => console.log(`Notification sent with SID: ${message.sid}`))
+        .catch(error => console.error(`Notification failed with error: ${error}`));
 
 
       } else {
