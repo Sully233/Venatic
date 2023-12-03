@@ -64,10 +64,11 @@ const createBooking = asyncHandler(async (req, res) => {
     email,
     bookingStartTime,
     bookingEndTime,
-    price,
+    duration,
     receipt,
     description,
     notes,
+    selection
   } = req.body;
 
   if (
@@ -77,8 +78,9 @@ const createBooking = asyncHandler(async (req, res) => {
     !email ||
     !bookingStartTime ||
     !bookingEndTime ||
-    !price ||
-    !description
+    !duration ||
+    !description || 
+    !selection
   ) {
     res.status(400);
     throw new Error("Please add all required fields");
@@ -86,6 +88,7 @@ const createBooking = asyncHandler(async (req, res) => {
 
   const bookingStart = new Date(bookingStartTime);
   const bookingEnd = new Date(bookingEndTime);
+  const price = bookingCost(selection, duration)
 
   if (bookingStart >= bookingEnd) {
     res.status(400);
