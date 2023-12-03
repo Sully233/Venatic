@@ -108,15 +108,15 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
                 `,
         }
 
-        // transporter.sendMail(mailOptions, (error, info) => {
-        //   if (error) {
-        //     console.log("Error:", error)
-        //   }
-        //   else {
-        //     console.log("Email sent", info.response)
-        //   }
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.log("Error:", error)
+          }
+          else {
+            console.log("Email sent", info.response)
+          }
 
-        // });
+        });
 
 
         client.messages.create({
