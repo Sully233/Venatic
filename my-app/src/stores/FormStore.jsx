@@ -1,7 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
 class FormStore {
-  
   address = "";
 
   postcodeEligible = "NA";
@@ -17,6 +16,8 @@ class FormStore {
   date = null;
 
   availabilityLoaded = true;
+
+  price = 0;
 
   constructor() {
     makeAutoObservable(this);
@@ -56,6 +57,10 @@ class FormStore {
 
   setAvailabilityLoaded(value) {
     this.availabilityLoaded = value;
+  }
+
+  setPrice(value) {
+    this.price = value;
   }
 }
 

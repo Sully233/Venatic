@@ -50,6 +50,7 @@ const StepOne = ({
       if (response.ok) {
         const data = await response.json();
         setPrice(data.price);
+        formStore.setPrice(data.price);
       } else {
         setPrice(0);
       }
