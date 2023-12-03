@@ -4,11 +4,14 @@ import MyPlacesAutocompletePage from "../../addressSearchComponents/searchOption
 import { formStore } from "../../../stores/FormStore";
 import AnimatedLoader from "../AnimatedLoader";
 import NextButton from "../Buttons/NextButton";
-import { XCircleIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
+import {
+  XCircleIcon,
+  CheckCircleIcon,
+  QuestionMarkCircleIcon,
+} from "@heroicons/react/24/solid";
 import { customerDetailsStore } from "../../../stores/CustomerDetailsStore";
 import { z } from "zod";
-import TextField from '@mui/material/TextField';
-
+import TextField from "@mui/material/TextField";
 
 const StepThree = observer(({ onNext }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +30,10 @@ const StepThree = observer(({ onNext }) => {
     email: z.string().email("Invalid email address"),
     phoneNumber: z
       .string()
-      .regex(/^04\d{8}$/, "Phone Number should start with '04' and be exactly 10 digits long"),
+      .regex(
+        /^04\d{8}$/,
+        "Phone Number should start with '04' and be exactly 10 digits long"
+      ),
   });
 
   const handleInputChange = (e) => {
@@ -35,26 +41,24 @@ const StepThree = observer(({ onNext }) => {
     setFormData({ ...formData, [e.target.name]: updatedValue });
 
     if (e.target.name === "firstName") {
-        customerDetailsStore.setFirstName(updatedValue);
+      customerDetailsStore.setFirstName(updatedValue);
     } else if (e.target.name === "lastName") {
-        customerDetailsStore.setLastName(updatedValue);
+      customerDetailsStore.setLastName(updatedValue);
     } else if (e.target.name === "email") {
-        customerDetailsStore.setEmail(updatedValue);
+      customerDetailsStore.setEmail(updatedValue);
     } else if (e.target.name === "phoneNumber") {
-        customerDetailsStore.setPhoneNumber(updatedValue);
+      customerDetailsStore.setPhoneNumber(updatedValue);
     }
-
   };
 
   const handleNextClick = () => {
     try {
       customerDetailsSchema.parse(formData);
       setFormErrors({});
-      customerDetailsStore.setFirstName(formData.firstName)
-      customerDetailsStore.setLastName(formData.lastName)
-      customerDetailsStore.setEmail(formData.email)
-      customerDetailsStore.setPhoneNumber(formData.phoneNumber)
-
+      customerDetailsStore.setFirstName(formData.firstName);
+      customerDetailsStore.setLastName(formData.lastName);
+      customerDetailsStore.setEmail(formData.email);
+      customerDetailsStore.setPhoneNumber(formData.phoneNumber);
 
       onNext(); // Proceed if validation is successful
     } catch (error) {
@@ -73,7 +77,7 @@ const StepThree = observer(({ onNext }) => {
       case "Eligible":
         return (
           <div className="text-center py-2">
-            <CheckCircleIcon className="h-10 w-10 mx-auto font-bold text-green-600" />  
+            <CheckCircleIcon className="h-10 w-10 mx-auto font-bold text-green-600" />
             <span className="block text-green-700 font-medium">
               Awesome, we service your address!
             </span>
@@ -89,6 +93,16 @@ const StepThree = observer(({ onNext }) => {
             </span>
           </div>
         );
+      case "MorePreciseRequired":
+        return (
+          <div className="text-center py-2">
+            <QuestionMarkCircleIcon className="h-10 w-10 mx-auto text-orange-500" />
+            <span className="block text-oran-700 font-medium">
+              We need a bit more information to check if we service your area.
+              Please provide a more precise address.
+            </span>
+          </div>
+        );
       default:
         return null;
     }
@@ -99,7 +113,7 @@ const StepThree = observer(({ onNext }) => {
       <div className="text-lg font-semibold text-gray-700 mb-4">
         <p>Please enter your details:</p>
       </div>
-  
+
       <div className="space-y-4">
         <TextField
           label="First Name"
@@ -111,7 +125,7 @@ const StepThree = observer(({ onNext }) => {
           helperText={formErrors.firstName}
           fullWidth
         />
-  
+
         <TextField
           label="Last Name"
           variant="outlined"
@@ -122,7 +136,7 @@ const StepThree = observer(({ onNext }) => {
           helperText={formErrors.lastName}
           fullWidth
         />
-  
+
         <TextField
           label="Email"
           variant="outlined"
@@ -134,7 +148,7 @@ const StepThree = observer(({ onNext }) => {
           helperText={formErrors.email}
           fullWidth
         />
-  
+
         <TextField
           label="Phone Number"
           variant="outlined"

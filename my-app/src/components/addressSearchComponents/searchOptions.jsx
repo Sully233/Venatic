@@ -25,24 +25,33 @@ const MyPlacesAutocompletePage = () => {
   };
 
   const fetchEligibility = async (postcode) => {
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_SERVER}/api/location/?address=${postcode}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        formStore.setPostcodeEligible(data.eligibility);
+    if (postcode === "") {
+      formStore.setPostcodeEligible("MorePreciseRequired");
+      setIsEligible(false);
+    } else {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_SERVER}/api/location/?address=${postcode}`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          formStore.setPostcodeEligible(data.eligibility);
 
-        if (data.eligibility === "Eligible") {
-          setIsEligible(true);
-        } else if (data.eligibility === "Not Eligible") {
-          setIsEligible(false);
+          if (data.eligibility === "Eligible") {
+            setIsEligible(true);
+          } else if (data.eligibility === "Not Eligible") {
+            setIsEligible(false);
+          }
+        } else {
+          console.error(
+            "API call failed:",
+            response.status,
+            response.statusText
+          );
         }
-      } else {
-        console.error("API call failed:", response.status, response.statusText);
+      } catch (error) {
+        console.error("Network error:", error);
       }
-    } catch (error) {
-      console.error("Network error:", error);
     }
   };
 
@@ -115,15 +124,6 @@ const MyPlacesAutocompletePage = () => {
           </div>
         )}
       </PlacesAutocomplete>
-      {/* {isEligible !== null && (
-        <div className="flex items-center justify-center p-4">
-          {isEligible ? (
-            <FaCheck className="text-green-500 text-xl" />
-          ) : (
-            <FaTimes className="text-red-500 text-xl" />
-          )}
-        </div>
-      )} */}
     </div>
   );
 };
