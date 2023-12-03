@@ -76,6 +76,7 @@ const StepOne = ({
     setSelectedSize(sizeKey);
     fetchPrice(sizeKey, duration);
     formStore.setSelectedSize(sizeKey);
+    formStore.setCheckoutURL(null)
   };
 
   const handleSelectDuration = (newDuration) => {
@@ -85,6 +86,7 @@ const StepOne = ({
     //Cancel Existing Selections For Calendar
     formStore.setChosenAvailability(null);
     formStore.setDate(null);
+    formStore.setCheckoutURL(null)
   };
 
   if (isLoading) {
@@ -93,6 +95,9 @@ const StepOne = ({
 
   return (
     <div className="space-y-6 relative" ref={containerRef}>
+      <h2 className="text-lg font-semibold text-gray-700 mb-4">
+        Please select a package
+      </h2>
       <div className="grid grid-cols-2 gap-4">
         {sizes.map((size) => (
           <div
@@ -134,6 +139,9 @@ const StepOne = ({
         </AnimatePresence>
       </div>
 
+      <h2 className="text-lg font-semibold text-gray-700 mb-4">
+        Please select a duration
+      </h2>
       <div className="flex justify-center space-x-2">
         {Array.from({ length: 6 }, (_, i) => i + 1).map((dur) => (
           <button

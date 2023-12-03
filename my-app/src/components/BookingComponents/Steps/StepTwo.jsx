@@ -24,12 +24,10 @@ const StepTwo = ({
     const fetchAvailableDates = async () => {
       setIsLoading(true); // Start loading
 
-
       try {
         const response = await fetch(
           `${process.env.REACT_APP_API_SERVER}/api/availabilities/calendar?duration=${formStore.duration}`
         );
-        
 
         const data = await response.json();
         const dates = data.openDates.map((dateStr) => new Date(dateStr));
@@ -44,7 +42,7 @@ const StepTwo = ({
           .filter((date) => date >= currentDate)
           .sort((a, b) => a - b)[0];
         setClickedDate(formStore.date || soonestAvailableDate || null);
-        formStore.setDate(formStore.date || soonestAvailableDate || null)
+        formStore.setDate(formStore.date || soonestAvailableDate || null);
         fetchAvailableTimes(formStore.date || soonestAvailableDate);
       } catch (error) {
         console.error("Error fetching available dates:", error);
@@ -119,6 +117,7 @@ const StepTwo = ({
       fetchAvailableTimes(day);
       formStore.setDate(day);
       formStore.setChosenAvailability(null);
+      formStore.setCheckoutURL(null);
     }
   };
 
@@ -220,7 +219,9 @@ const StepTwo = ({
 
       {formStore.chosenAvailibility && (
         <div className="py-4 ">
-          <NextButton classname="" onClick={onNext}>Next</NextButton>
+          <NextButton classname="" onClick={onNext}>
+            Next
+          </NextButton>
         </div>
       )}
     </div>

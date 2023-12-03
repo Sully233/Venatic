@@ -19,6 +19,8 @@ class FormStore {
 
   price = 0;
 
+  checkoutURL = null;
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -62,6 +64,12 @@ class FormStore {
   setPrice(value) {
     this.price = value;
   }
+
+  setCheckoutURL(value) {
+    this.checkoutURL = value;
+  }
 }
+
+
 
 export const formStore = new FormStore();

@@ -67,6 +67,7 @@ const Availabilities = observer(() => {
 
   const handleTimeClick = (time) => {
     formStore.setChosenAvailability(time);
+    formStore.setCheckoutURL(null);
   };
 
   const variants = {

@@ -5,6 +5,7 @@ import { customerDetailsStore } from "../../../stores/CustomerDetailsStore";
 import { formStore } from "../../../stores/FormStore";
 import "../form.css";
 import NextButton from "../Buttons/NextButton";
+import AnimatedLoader from "../AnimatedLoader";
 
 const detailVariant = {
   hidden: { opacity: 0, y: 20 },
@@ -51,6 +52,7 @@ const getDaySuffix = (day) => {
 
 const Confirmation = observer(() => {
   const formattedDate = formatDate(formStore.date);
+  const [isLoading, setIsLoading] = useState(false);
 
   const formattedTime = formatTimeSlot(
     formStore.chosenAvailibility,
@@ -60,32 +62,29 @@ const Confirmation = observer(() => {
   const [checkoutUrl, setCheckoutUrl] = useState("");
 
   const formatDateForAPI = (date, time, durationHours) => {
-
     const year = date.getFullYear();
-    const month = date.getMonth() + 1; 
+    const month = date.getMonth() + 1;
     const day = date.getDate();
-  
 
-    const monthPadded = month.toString().padStart(2, '0');
-    const dayPadded = day.toString().padStart(2, '0');
-  
+    const monthPadded = month.toString().padStart(2, "0");
+    const dayPadded = day.toString().padStart(2, "0");
+
     // Construct a UTC date string
     const startTimeString = `${year}-${monthPadded}-${dayPadded}T${time}:00.000Z`;
-  
 
     const startDateUTC = new Date(startTimeString);
-  
 
     if (isNaN(startDateUTC.getTime())) {
       throw new Error("Invalid date constructed");
     }
-  
 
-    const endDateUTC = new Date(startDateUTC.getTime() + durationHours * 60 * 60 * 1000);
-  
+    const endDateUTC = new Date(
+      startDateUTC.getTime() + durationHours * 60 * 60 * 1000
+    );
+
     return {
       bookingStartTime: startDateUTC.toISOString(),
-      bookingEndTime: endDateUTC.toISOString()
+      bookingEndTime: endDateUTC.toISOString(),
     };
   };
 
@@ -97,35 +96,42 @@ const Confirmation = observer(() => {
 
   useEffect(() => {
     const postBookingDetails = async () => {
-      console.log(bookingStartTime)
-      console.log(bookingEndTime)
-      try {
-        const response = await fetch(
-          `${process.env.REACT_APP_API_SERVER}/api/booking`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              firstName: customerDetailsStore.firstName,
-              lastName: customerDetailsStore.lastName,
-              contactNumber: customerDetailsStore.phoneNumber,
-              email: customerDetailsStore.email,
-              bookingStartTime,
-              bookingEndTime,
-              duration: formStore.duration,
-              description: "Service description",
-              notes: "Any additional notes",
-              selection: formStore.selectedSize,
-            }),
-          }
-        );
+      if (formStore.checkoutURL === null) {
+        try {
+          setIsLoading(true);
+          const response = await fetch(
+            `${process.env.REACT_APP_API_SERVER}/api/booking`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                firstName: customerDetailsStore.firstName,
+                lastName: customerDetailsStore.lastName,
+                contactNumber: customerDetailsStore.phoneNumber,
+                email: customerDetailsStore.email,
+                bookingStartTime,
+                bookingEndTime,
+                duration: formStore.duration,
+                description: "Service description",
+                notes: "Any additional notes",
+                selection: formStore.selectedSize,
+              }),
+            }
+          );
 
-        const data = await response.json();
-        setCheckoutUrl(data.url);
-      } catch (error) {
-        console.error("Error posting booking details:", error);
+          const data = await response.json();
+          setCheckoutUrl(data.url);
+          formStore.setCheckoutURL(data.url)
+          
+          setIsLoading(false);
+        } catch (error) {
+          console.error("Error posting booking details:", error);
+        }
+      }
+      else {
+        setCheckoutUrl(formStore.checkoutURL)
       }
     };
 
@@ -140,6 +146,10 @@ const Confirmation = observer(() => {
       console.error("Checkout URL not available");
     }
   };
+
+  if (isLoading) {
+    return <AnimatedLoader />;
+  }
 
   return (
     <div>
