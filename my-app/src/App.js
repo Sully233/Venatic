@@ -7,20 +7,30 @@ import PaymentFailure from "./components/PaymentComponents/PaymentFailure";
 import "./index.css";
 import "./images.css";
 import MyPlacesAutocompletePage from "./components/addressSearchComponents/searchOptions";
-import 'react-day-picker/dist/style.css';
-
-
+import "react-day-picker/dist/style.css";
+import Header from "./components/Header";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Hero />} />
-        <Route path="/success" element={<PaymentSuccess />} />
-        <Route path="/unsuccessful" element={<PaymentFailure />} />
-        <Route path="/autocomplete" element={<MyPlacesAutocompletePage />} />
-      </Routes>
-    </Router>
+    <div>
+      <body className="h-[5000px]">
+        <div className=""></div>
+        <div></div>
+        <Header />
+        <Router>
+          <Routes>
+            <Route path="/" element={<Hero />} />
+
+            <Route path="/success" element={<PaymentSuccess />} />
+            <Route path="/unsuccessful" element={<PaymentFailure />} />
+            <Route
+              path="/autocomplete"
+              element={<MyPlacesAutocompletePage />}
+            />
+          </Routes>
+        </Router>
+      </body>
+    </div>
   );
 }
 

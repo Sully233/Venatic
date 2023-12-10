@@ -7,6 +7,7 @@ import MultiStepForm from "./BookingComponents/MultiStepForm";
 const Hero = observer(() => {
   return (
     <div className="flex justify-center items-center min-h-screen p-4">
+
       <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="flex flex-col justify-center text-center md:text-left">
           <h1 className="text-3xl md:text-5xl font-bold leading-tight text-gray-900">
@@ -22,10 +23,7 @@ const Hero = observer(() => {
             Feel the Magic of Each Moment, Forever.
           </div>
           <Link to="/booking" className="mt-4 md:mt-8"></Link>
-          <div className="mt-4">
-            <p>test mobx (eligibility checker)</p>
-            <p>{formStore.postcodeEligible}</p>
-          </div>
+
         </div>
         <div className="order-last md:order-last flex justify-center md:justify-end">
           <div className="w-full md:min-w-[500px] md:w-1/2 bg-slate-50 rounded-xl">

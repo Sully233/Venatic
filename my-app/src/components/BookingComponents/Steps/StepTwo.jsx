@@ -21,6 +21,8 @@ const StepTwo = ({
   const [clickedDate, setClickedDate] = useState(null);
 
   useEffect(() => {
+
+
     const fetchAvailableDates = async () => {
       setIsLoading(true); // Start loading
 

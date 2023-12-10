@@ -123,15 +123,14 @@ const Confirmation = observer(() => {
 
           const data = await response.json();
           setCheckoutUrl(data.url);
-          formStore.setCheckoutURL(data.url)
-          
+          formStore.setCheckoutURL(data.url);
+
           setIsLoading(false);
         } catch (error) {
           console.error("Error posting booking details:", error);
         }
-      }
-      else {
-        setCheckoutUrl(formStore.checkoutURL)
+      } else {
+        setCheckoutUrl(formStore.checkoutURL);
       }
     };
 
@@ -153,45 +152,44 @@ const Confirmation = observer(() => {
 
   return (
     <div>
-      <motion.div
-        className="space-y-4 p-4   "
-        initial="hidden"
-        animate="visible"
-        variants={detailVariant}
-        transition={{ duration: 0.5 }}
-      >
-        <h3 className="text-lg font-semibold text-gray-800">
-          Please review your details:
-        </h3>
-        <p className="text-gray-700">
-          <strong>Date:</strong> {formattedDate}
-        </p>
-        <p className="text-gray-700">
-          <strong>Time:</strong> {formattedTime}
-        </p>
-        <p className="text-gray-700">
-          <strong>First Name:</strong> {customerDetailsStore.firstName}
-        </p>
-        <p className="text-gray-700">
-          <strong>Last Name:</strong> {customerDetailsStore.lastName}
-        </p>
-        <p className="text-gray-700">
-          <strong>Email:</strong> {customerDetailsStore.email}
-        </p>
-        <p className="text-gray-700">
-          <strong>Phone:</strong> {customerDetailsStore.phoneNumber}
-        </p>
-        <p className="text-gray-700">
-          <strong>Address:</strong> {formStore.address}
-        </p>
-        <p className="text-gray-700">
-          <strong>Price:</strong> ${formStore.price.toFixed(2)}
-        </p>
-      </motion.div>
 
-      <NextButton onClick={handleProceedToPayment} className="py-4">
+      <div className="space-y-4">
+      <h3 className="text-lg font-semibold text-gray-800">
+        Please review your details:
+      </h3>
+      <p className="text-gray-700">
+        <strong>Date:</strong> {formattedDate}
+      </p>
+      <p className="text-gray-700">
+        <strong>Time:</strong> {formattedTime}
+      </p>
+      <p className="text-gray-700">
+        <strong>First Name:</strong> {customerDetailsStore.firstName}
+      </p>
+      <p className="text-gray-700">
+        <strong>Last Name:</strong> {customerDetailsStore.lastName}
+      </p>
+      <p className="text-gray-700">
+        <strong>Email:</strong> {customerDetailsStore.email}
+      </p>
+      <p className="text-gray-700">
+        <strong>Phone:</strong> {customerDetailsStore.phoneNumber}
+      </p>
+      <p className="text-gray-700">
+        <strong>Address:</strong> {formStore.address}
+      </p>
+      <p className="text-gray-700">
+        <strong>Price:</strong> ${formStore.price.toFixed(2)}
+      </p>
+      </div>
+
+      <div className="py-4">
+
+      <NextButton onClick={handleProceedToPayment} >
         Checkout
       </NextButton>
+      </div>
+
     </div>
   );
 });

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react";
 import MyPlacesAutocompletePage from "../../addressSearchComponents/searchOptions";
 import { formStore } from "../../../stores/FormStore";
@@ -14,6 +14,8 @@ import { z } from "zod";
 import TextField from "@mui/material/TextField";
 
 const StepThree = observer(({ onNext }) => {
+
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -163,6 +165,11 @@ const StepThree = observer(({ onNext }) => {
       </div>
     </div>
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
 
   return (
     <div>
