@@ -165,9 +165,6 @@ const StepTwo = ({
     const year = date.getFullYear();
     const suffix = numberSuffix(dateNumber);
 
-
-  
-
     return (
       <div>
         Choose a timeslot:
@@ -179,7 +176,7 @@ const StepTwo = ({
   };
 
   const disabledDays = (date) => {
-    return !availableDates.some((availableDate) => 
+    return !availableDates.some((availableDate) =>
       isSameDay(availableDate, date)
     );
   };
@@ -197,8 +194,6 @@ const StepTwo = ({
         return "th";
     }
   };
-
-  
 
   return (
     <div className="">
@@ -221,7 +216,6 @@ const StepTwo = ({
         numberOfMonths={1}
         fromMonth={soonestAvailableDate}
         disabled={disabledDays}
-
         className="mb-4"
       />
       <h2 className="text-lg font-semibold text-gray-700 mb-4">
