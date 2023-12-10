@@ -17,6 +17,7 @@ function App() {
         <div className=""></div>
         <div></div>
         <Header />
+        <div className="py-16 sm:py-16 md:py-16 lg:py-0 xl:py-0 2xl:py-0">
         <Router>
           <Routes>
             <Route path="/" element={<Hero />} />
@@ -29,7 +30,9 @@ function App() {
             />
           </Routes>
         </Router>
+        </div>
       </body>
+      
     </div>
   );
 }
