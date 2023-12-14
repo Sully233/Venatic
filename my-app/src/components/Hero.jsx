@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 import { formStore } from "../stores/FormStore";
 import MultiStepForm from "./BookingComponents/MultiStepForm";
+import ReactGA from "react-ga4";
 
 const Hero = observer(() => {
-  return (
+
+
+
+  ReactGA.send({ hitType: 'pageview', page: window.location.pathname });
+
+    return (
     <div className="flex justify-center items-center min-h-screen p-4">
 
       <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8">

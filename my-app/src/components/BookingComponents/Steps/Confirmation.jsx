@@ -188,6 +188,8 @@ const Confirmation = observer(() => {
       <NextButton onClick={handleProceedToPayment} >
         Checkout
       </NextButton>
+
+ 
       </div>
 
     </div>

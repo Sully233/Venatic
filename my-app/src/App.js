@@ -9,15 +9,19 @@ import "./images.css";
 import MyPlacesAutocompletePage from "./components/addressSearchComponents/searchOptions";
 import "react-day-picker/dist/style.css";
 import Header from "./components/Header";
+import ReactGA from "react-ga4";
+
 
 function App() {
+
+  ReactGA.initialize('G-70W43V359V')
+  
   return (
     <div>
-      <body className="h-[5000px]">
         <div className=""></div>
         <div></div>
         <Header />
-        <div className="py-16 sm:py-16 md:py-16 lg:py-0 xl:py-0 2xl:py-0">
+        <div className="">
         <Router>
           <Routes>
             <Route path="/" element={<Hero />} />
@@ -31,7 +35,6 @@ function App() {
           </Routes>
         </Router>
         </div>
-      </body>
       
     </div>
   );
