@@ -9,7 +9,10 @@ const Hero = observer(() => {
 
 
 
-  ReactGA.send({ hitType: 'pageview', page: window.location.pathname });
+  useEffect(() => {
+    ReactGA.send({ hitType: 'pageview', page: window.location.pathname });
+
+  }, []);
 
     return (
     <div className="flex justify-center items-center min-h-screen p-4">

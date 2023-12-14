@@ -8,6 +8,7 @@ import StepOne from "./Steps/StepOne";
 import StepThree from "./Steps/StepThree";
 import Confirmation from "./Steps/Confirmation";
 import PreviousButton from "./Buttons/PreviousButton";
+import ReactGA from "react-ga4";
 
 const MultiStepForm = observer(() => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -56,7 +57,16 @@ const MultiStepForm = observer(() => {
     const result = await trigger(fieldNames);
 
     if (result) {
+
+      ReactGA.event({
+        category: 'Form',
+        action: 'Next Step',
+        label: `Step ${currentStep}`
+      });
+
+
       setCurrentStep((prev) => prev + 1);
+
     }
   };
 
