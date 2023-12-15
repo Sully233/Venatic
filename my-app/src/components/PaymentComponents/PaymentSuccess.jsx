@@ -3,6 +3,7 @@ import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import {Helmet} from "react-helmet";
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
@@ -70,12 +71,16 @@ const PaymentSuccess = () => {
   };
 
   return (
+    
     <motion.div
       className="flex flex-col justify-center items-center min-h-screen px-4 sm:px-6"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
+      <Helmet>
+        <title>Booking Successful</title>
+      </Helmet>
       <motion.div className="text-green-500" variants={iconVariants}>
         <CheckCircleIcon className="w-16 h-16 sm:w-24 sm:h-24" />
       </motion.div>

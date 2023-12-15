@@ -4,6 +4,8 @@ import { observer } from "mobx-react";
 import { formStore } from "../stores/FormStore";
 import MultiStepForm from "./BookingComponents/MultiStepForm";
 import ReactGA from "react-ga4";
+import {Helmet} from "react-helmet";
+import Header from './Header';
 
 const Hero = observer(() => {
 
@@ -15,9 +17,12 @@ const Hero = observer(() => {
   }, []);
 
     return (
+      
     <div className="flex justify-center items-center min-h-screen p-4">
-
-      <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8">
+      <Helmet>
+        <title>Venatic</title>
+      </Helmet>  
+>      <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="flex flex-col justify-center text-center md:text-left">
           <h1 className="text-3xl md:text-5xl font-bold leading-tight text-gray-900">
             Perfect Portraits

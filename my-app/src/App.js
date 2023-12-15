@@ -11,31 +11,20 @@ import "react-day-picker/dist/style.css";
 import Header from "./components/Header";
 import ReactGA from "react-ga4";
 
-
 function App() {
+  ReactGA.initialize("G-70W43V359V");
 
-  ReactGA.initialize('G-70W43V359V')
-  
   return (
     <div>
-        <div className=""></div>
-        <div></div>
-        <Header />
-        <div className="">
-        <Router>
-          <Routes>
-            <Route path="/" element={<Hero />} />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Hero />} />
 
-            <Route path="/success" element={<PaymentSuccess />} />
-            <Route path="/unsuccessful" element={<PaymentFailure />} />
-            <Route
-              path="/autocomplete"
-              element={<MyPlacesAutocompletePage />}
-            />
-          </Routes>
-        </Router>
-        </div>
-      
+          <Route path="/success" element={<PaymentSuccess />} />
+          <Route path="/unsuccessful" element={<PaymentFailure />} />
+          <Route path="/autocomplete" element={<MyPlacesAutocompletePage />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

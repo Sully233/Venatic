@@ -2,6 +2,7 @@ import React from "react";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import {Helmet} from "react-helmet";
 
 const PaymentFailure = () => {
   const [searchParams] = useSearchParams();
@@ -46,6 +47,9 @@ const PaymentFailure = () => {
       initial="hidden"
       animate="visible"
     >
+        <Helmet>
+        <title>Unsuccessful Payment</title>
+      </Helmet>
       <motion.div
         className="text-red-500"
         variants={iconVariants}

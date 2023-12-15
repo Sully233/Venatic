@@ -1,29 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
+import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import {Helmet} from "react-helmet";
 
-export default function Header() {
+const Header = () => {
+
+  const headerVariants = {
+    hidden: { opacity: 0, y: -50 },
+    visible: { opacity: 1, y: 0 }
+  };
+  
   return (
-    <header className="bg-gray-100 shadow-md">
-      <motion.div 
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
-        initial={{ y: -250 }}
-        animate={{ y: 0 }}
-        transition={{ type: "spring", stiffness: 120 }}
-      >
-        <nav className="flex justify-between items-center h-16">
-          <div className="flex-shrink-0">
-            <h1 className="text-xl font-semibold text-gray-800">Venatic</h1>
-          </div>
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-
-              <a href="/" className="text-gray-800 hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
-              <a href="/about" className="text-gray-800 hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium">About</a>
-              <a href="/contact" className="text-gray-800 hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
-            </div>
-          </div>
-        </nav>
-      </motion.div>
-    </header>
+    <motion.header
+      initial="hidden"
+      animate="visible"
+      variants={headerVariants}
+      transition={{ duration: 0.5 }}
+      className="bg-gray-100 shadow-md flex justify-between items-center p-4"
+    >
+      {/* Your content here, like a logo or navigation links */}
+      <div className="text-lg font-bold">Your Brand</div>
+      <nav>
+        {/* Navigation items */}
+      </nav>
+    </motion.header>
   );
-}
+
+
+};
+
+export default Header;
