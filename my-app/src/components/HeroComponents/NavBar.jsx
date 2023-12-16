@@ -17,8 +17,8 @@ const NavBar = () => {
           {isOpen ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
         </button>
       </div>
-      <div className={`nav-links-container ${isOpen ? 'flex' : 'hidden'} md:flex mt-4 md:mt-0`}>
-        <div className="nav-links flex flex-col md:flex-row gap-4">
+      <div className={`nav-links-container ${isOpen ? 'flex' : 'hidden'} md:flex mt-4 md:mt-0 `}>
+        <div className="nav-links flex flex-col md:flex-row gap-4">  
           <Link to="/about" className="hover:text-blue-500 transition duration-300">About</Link>
           <Link to="/services" className="hover:text-blue-500 transition duration-300">Services</Link>
           <Link to="/contact" className="hover:text-blue-500 transition duration-300">Contact</Link>

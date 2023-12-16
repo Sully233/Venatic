@@ -161,14 +161,14 @@ const StepThree = observer(({ onNext }) => {
           error={!!formErrors.phoneNumber}
           helperText={formErrors.phoneNumber}
           fullWidth
+          inputProps={{ maxLength: 10 }}
+          
         />
       </div>
     </div>
   );
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+
 
 
   return (

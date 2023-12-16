@@ -1,20 +1,44 @@
 import { motion } from "framer-motion";
 
-const AnimatedLoader = () => {
-  const spinTransition = {
-    repeat: Infinity,
-    ease: "linear",
-    duration: 1,
-  };
 
+
+const variants = {
+  initial: {
+    scaleY: 0.5,
+    opacity: 0,
+  },
+  animate: {
+    scaleY: 1,
+    opacity: 1,
+    transition: {
+      repeat: Infinity,
+      repeatType: "mirror",
+      duration: 0.4,
+      ease: "circIn",
+    },
+  },
+};
+
+const AnimatedLoader = () => {
   return (
-    <div className="flex justify-center items-center h-screen">
-      <motion.span
-        className="inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"
-        animate={{ rotate: 360 }}
-        transition={spinTransition}
-      />
+    <div className="grid place-content-center px-4 py-24">
+
+    <motion.div
+      transition={{
+        staggerChildren: 0.1,
+      }}
+      initial="initial"
+      animate="animate"
+      className="flex gap-1"
+    >
+      <motion.div variants={variants} className="h-12 w-2 bg-blue-400" />
+      <motion.div variants={variants} className="h-12 w-2 bg-blue-400" />
+      <motion.div variants={variants} className="h-12 w-2 bg-blue-400" />
+      <motion.div variants={variants} className="h-12 w-2 bg-blue-400" />
+      <motion.div variants={variants} className="h-12 w-2 bg-blue-400" />
+    </motion.div>
     </div>
+
   );
 };
 
