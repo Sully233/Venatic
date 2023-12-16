@@ -10,6 +10,7 @@ import NavBar from "./HeroComponents/NavBar";
 import Footer from "./HeroComponents/Footer";
 import ShuffleHero from "./ShuffleHero";
 import "./hero.css";
+import HorizontalScrollCarousel from "./HeroComponents/HorizontalScroll";
 
 const Hero = observer(() => {
   useEffect(() => {
@@ -21,15 +22,13 @@ const Hero = observer(() => {
   // );
 
   return (
-
-
     <div className="flex flex-col">
       {/* Navbar */}
       <NavBar></NavBar>
 
+      {/* Introduction Text & Gallery Shuffle */}
       <div className="shuffle-hero ">
-      <ShuffleHero></ShuffleHero>
-
+        <ShuffleHero></ShuffleHero>
       </div>
 
       {/* Form Container */}
@@ -38,14 +37,16 @@ const Hero = observer(() => {
           <MultiStepForm></MultiStepForm>
         </div>
       </div>
-      
+
+      {/* Horizontal Image Gallery On Scroll */}
+      <div>
+        <HorizontalScrollCarousel></HorizontalScrollCarousel>
+      </div>
+
       {/* Footer */}
-      <div className="py-16">
-
-      <Footer></Footer>  
-
-      </div >
-
+      <div className="pt-16">
+        <Footer></Footer>
+      </div>
     </div>
   );
 });

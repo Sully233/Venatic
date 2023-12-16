@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logoImage from "../../images/logo0.png";
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'; // This is for Heroicons v2
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  // Define the variants for the menu animation
+  const menuVariants = {
+    open: { opacity: 1, x: 0 },
+    closed: { opacity: 0, x: "-100%" }
+  };
 
   return (
     <nav className="flex flex-col md:flex-row justify-between items-center p-4 bg-white ">
@@ -17,17 +24,28 @@ const NavBar = () => {
           {isOpen ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
         </button>
       </div>
-      <div className={`nav-links-container ${isOpen ? 'flex' : 'hidden'} md:flex mt-4 md:mt-0 `}>
-        <div className="nav-links flex flex-col md:flex-row gap-4">  
-          <Link to="/" className="hover:text-blue-500 transition duration-300">About Us</Link>
-          <Link to="/" className="hover:text-blue-500 transition duration-300">Services</Link>
-          <Link to="/" className="hover:text-blue-500 transition duration-300">Contact</Link>
-          <Link to="/" className="hover:text-blue-500 transition duration-300">Booking</Link>
-        </div>
-      </div>
+      
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="nav-links-container md:flex mt-4 md:mt-0"
+            initial="closed"
+            animate="open"
+            exit="closed"
+            variants={menuVariants}
+            transition={{ duration: 0.2 }}
+          >
+            <div className="nav-links flex flex-col md:flex-row gap-4">
+              <Link to="/" className="hover:text-blue-500 transition duration-300">About Us</Link>
+              <Link to="/" className="hover:text-blue-500 transition duration-300">Services</Link>
+              <Link to="/" className="hover:text-blue-500 transition duration-300">Contact</Link>
+              <Link to="/" className="hover:text-blue-500 transition duration-300">Booking</Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
 
 export default NavBar;
-
