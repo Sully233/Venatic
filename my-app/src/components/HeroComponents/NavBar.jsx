@@ -19,10 +19,10 @@ const NavBar = () => {
       </div>
       <div className={`nav-links-container ${isOpen ? 'flex' : 'hidden'} md:flex mt-4 md:mt-0 `}>
         <div className="nav-links flex flex-col md:flex-row gap-4">  
-          <Link to="/about" className="hover:text-blue-500 transition duration-300">About</Link>
-          <Link to="/services" className="hover:text-blue-500 transition duration-300">Services</Link>
-          <Link to="/contact" className="hover:text-blue-500 transition duration-300">Contact</Link>
-          <Link to="/booking" className="hover:text-blue-500 transition duration-300">Booking</Link>
+          <Link to="/" className="hover:text-blue-500 transition duration-300">About Us</Link>
+          <Link to="/" className="hover:text-blue-500 transition duration-300">Services</Link>
+          <Link to="/" className="hover:text-blue-500 transition duration-300">Contact</Link>
+          <Link to="/" className="hover:text-blue-500 transition duration-300">Booking</Link>
         </div>
       </div>
     </nav>

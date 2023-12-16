@@ -27,7 +27,7 @@ const Hero = observer(() => {
       {/* Navbar */}
       <NavBar></NavBar>
 
-      <div className="shuffle-hero z-50">
+      <div className="shuffle-hero ">
       <ShuffleHero></ShuffleHero>
 
       </div>

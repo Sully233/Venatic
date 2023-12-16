@@ -4,33 +4,33 @@ import logoImage from "../../images/logo0.png";
 
 const Footer = () => {
     return (
-        <footer class="bg-white">
-            <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
-                <div class="md:flex md:justify-between">
-                    <div class="mb-6 md:mb-0">
-                        <a href="https://venatic.me/" class="flex items-center">
-                            <img src={logoImage} class="h-8 me-3" alt="FlowBite Logo" />
-                            <span class="self-center text-2xl font-semibold whitespace-nowrap text-black">Venatic</span>
+        <footer className="bg-white">
+            <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+                <div className="md:flex md:justify-between">
+                    <div className="mb-6 md:mb-0">
+                        <a href="https://venatic.me/" className="flex items-center">
+                            <img src={logoImage} className="h-8 me-3" alt="FlowBite Logo" />
+                            <span className="self-center text-2xl font-semibold whitespace-nowrap text-black">Venatic</span>
                         </a>
                     </div>
-                    <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
+                    <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                         <div>
-                            <h2 class="mb-6 text-sm font-semibold text-black uppercase">Legal</h2>
-                            <ul class="text-black font-medium">
-                                <li class="mb-4">
-                                    <a href="#" class="hover:underline">Privacy Policy</a>
+                            <h2 className="mb-6 text-sm font-semibold text-black uppercase">Legal</h2>
+                            <ul className="text-black font-medium">
+                                <li className="mb-4">
+                                    <a href="#" className="hover:underline">Privacy Policy</a>
                                 </li>
                                 <li>
-                                    <a href="#" class="hover:underline">Terms &amp; Conditions</a>
+                                    <a href="#" className="hover:underline">Terms &amp; Conditions</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <hr class="my-6 border-black sm:mx-auto lg:my-8" />
-                <div class="sm:flex sm:items-center sm:justify-between">
-                    <span class="text-sm text-black sm:text-center">© 2023 <a href="https://flowbite.com/" class="hover:underline">Venatic</a>. All Rights Reserved.</span>
-                    <div class="flex mt-4 sm:justify-center sm:mt-0">
+                <hr className="my-6 border-black sm:mx-auto lg:my-8" />
+                <div className="sm:flex sm:items-center sm:justify-between">
+                    <span className="text-sm text-black sm:text-center">© 2023 <a href="https://flowbite.com/" className="hover:underline">Venatic</a>. All Rights Reserved.</span>
+                    <div className="flex mt-4 sm:justify-center sm:mt-0">
                         {/* Social icons */}
                     </div>
                 </div>
