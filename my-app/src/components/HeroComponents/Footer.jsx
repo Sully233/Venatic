@@ -25,6 +25,17 @@ const Footer = () => {
                                 </li>
                             </ul>
                         </div>
+                        <div>
+                            <h2 className="mb-6 text-sm font-semibold text-black uppercase">Information</h2>
+                            <ul className="text-black font-medium">
+                                <li className="mb-4">
+                                    <a href="#" className="hover:underline">Contact Us</a>
+                                </li>
+                                <li>
+                                    <a href="#" className="hover:underline">Placeholder</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <hr className="my-6 border-black sm:mx-auto lg:my-8" />
