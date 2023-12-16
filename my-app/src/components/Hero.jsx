@@ -27,14 +27,14 @@ const Hero = observer(() => {
       {/* Navbar */}
       <NavBar></NavBar>
 
-      <div className="shuffle-hero">
+      <div className="shuffle-hero z-50">
       <ShuffleHero></ShuffleHero>
 
       </div>
 
       {/* Form Container */}
-      <div className="flex justify-center w-full p-4  ">
-        <div className="bg-slate-50 rounded-xl w-full md:min-w-[500px] md:w-1/2 mx-auto py-36">
+      <div className="flex justify-center w-full pt-48">
+        <div className="bg-slate-50 rounded-xl w-full md:min-w-[500px] md:w-1/2 mx-auto">
           <MultiStepForm></MultiStepForm>
         </div>
       </div>
