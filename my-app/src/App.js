@@ -8,7 +8,6 @@ import "./index.css";
 import "./images.css";
 import MyPlacesAutocompletePage from "./components/addressSearchComponents/searchOptions";
 import "react-day-picker/dist/style.css";
-import Header from "./components/Header";
 import ReactGA from "react-ga4";
 
 function App() {
@@ -19,7 +18,6 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Hero />} />
-
           <Route path="/success" element={<PaymentSuccess />} />
           <Route path="/unsuccessful" element={<PaymentFailure />} />
           <Route path="/autocomplete" element={<MyPlacesAutocompletePage />} />

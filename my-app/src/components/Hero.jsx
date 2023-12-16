@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
+import { motion } from "framer-motion";
 import { formStore } from "../stores/FormStore";
 import MultiStepForm from "./BookingComponents/MultiStepForm";
 import ReactGA from "react-ga4";
-import {Helmet} from "react-helmet";
-import Header from './Header';
+import { Helmet } from "react-helmet";
+import NavBar from './HeroComponents/NavBar';
+import Footer from './HeroComponents/Footer';
+
 
 const Hero = observer(() => {
 
@@ -18,11 +21,13 @@ const Hero = observer(() => {
 
     return (
       
-    <div className="flex justify-center items-center min-h-screen p-4">
-      <Helmet>
-        <title>Venatic</title>
-      </Helmet>  
->      <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="min-h-screen flex flex-col">
+      <NavBar></NavBar>
+      <div className="flex flex-1 justify-center items-center p-4">
+        <Helmet>
+          <title>Venatic</title>
+        </Helmet>  
+        <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="flex flex-col justify-center text-center md:text-left">
           <h1 className="text-3xl md:text-5xl font-bold leading-tight text-gray-900">
             Perfect Portraits
@@ -45,6 +50,10 @@ const Hero = observer(() => {
           </div>
         </div>
       </div>
+
+    </div>
+    <Footer></Footer>    
+
     </div>
   );
 });
