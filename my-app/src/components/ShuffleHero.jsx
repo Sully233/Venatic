@@ -16,6 +16,7 @@ import shuffle13 from "../images/Shuffle/shuffle13.avif";
 import shuffle14 from "../images/Shuffle/shuffle14.avif";
 import shuffle15 from "../images/Shuffle/shuffle15.avif";
 import shuffle16 from "../images/Shuffle/shuffle16.avif";
+import { Typewriter } from 'react-simple-typewriter'
 
 
 
@@ -27,8 +28,15 @@ const ShuffleHero = () => {
     <section className="w-full px-8 py-12 grid grid-cols-1 md:grid-cols-2 items-center gap-8 max-w-6xl mx-auto">
       <div>
         
-        <h3 className="text-4xl md:text-6xl font-semibold">
-          Let's create an experience worth talking about.
+      <h3 className="text-4xl md:text-6xl font-semibold">
+      <Typewriter
+            words={['Let\'s create an experience worth talking about.']}
+            loop={1}
+            cursor
+            cursorStyle='|'
+            typeSpeed={75}
+
+            />
         </h3>
         <p className="text-base md:text-lg text-slate-700 my-4 md:my-6">
           Capture the Moments That Matter. Whether it’s for a special occasion
