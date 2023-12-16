@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Define the variants for the menu animation
+
   const menuVariants = {
     open: { opacity: 1, x: 0 },
     closed: { opacity: 0, x: "-100%" }
@@ -24,23 +24,30 @@ const NavBar = () => {
           {isOpen ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
         </button>
       </div>
-      
+
+      {/* Desktop links */}
+      <div className="nav-links hidden md:flex flex-col md:flex-row gap-4 mt-4 md:mt-0">
+        <Link to="/" className="hover:text-blue-500 transition duration-300">About Us</Link>
+        <Link to="/" className="hover:text-blue-500 transition duration-300">Services</Link>
+        <Link to="/" className="hover:text-blue-500 transition duration-300">Contact</Link>
+        <Link to="/" className="hover:text-blue-500 transition duration-300">Booking</Link>
+      </div>
+
+      {/* Mobile links */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="nav-links-container md:flex mt-4 md:mt-0"
+            className="nav-links flex flex-col md:hidden gap-4 mt-4"
             initial="closed"
             animate="open"
             exit="closed"
             variants={menuVariants}
             transition={{ duration: 0.2 }}
           >
-            <div className="nav-links flex flex-col md:flex-row gap-4">
-              <Link to="/" className="hover:text-blue-500 transition duration-300">About Us</Link>
-              <Link to="/" className="hover:text-blue-500 transition duration-300">Services</Link>
-              <Link to="/" className="hover:text-blue-500 transition duration-300">Contact</Link>
-              <Link to="/" className="hover:text-blue-500 transition duration-300">Booking</Link>
-            </div>
+            <Link to="/" className="hover:text-blue-500 transition duration-300">About Us</Link>
+            <Link to="/" className="hover:text-blue-500 transition duration-300">Services</Link>
+            <Link to="/" className="hover:text-blue-500 transition duration-300">Contact</Link>
+            <Link to="/" className="hover:text-blue-500 transition duration-300">Booking</Link>
           </motion.div>
         )}
       </AnimatePresence>
