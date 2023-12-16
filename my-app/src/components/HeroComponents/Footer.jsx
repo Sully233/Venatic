@@ -9,7 +9,7 @@ const Footer = () => {
                 <div className="md:flex md:justify-between">
                     <div className="mb-6 md:mb-0">
                         <a href="https://venatic.me/" className="flex items-center">
-                            <img src={logoImage} className="h-8 me-3" alt="FlowBite Logo" />
+                            <img src={logoImage} className="h-8 me-3" alt="Venatic Logo" />
                             <span className="self-center text-2xl font-semibold whitespace-nowrap text-black">Venatic</span>
                         </a>
                     </div>
@@ -40,7 +40,7 @@ const Footer = () => {
                 </div>
                 <hr className="my-6 border-black sm:mx-auto lg:my-8" />
                 <div className="sm:flex sm:items-center sm:justify-between">
-                    <span className="text-sm text-black sm:text-center">© 2023 <a href="https://flowbite.com/" className="hover:underline">Venatic</a>. All Rights Reserved.</span>
+                    <span className="text-sm text-black sm:text-center">© 2023 <a href="https://venatic.me/" className="hover:underline">Venatic</a>. All Rights Reserved.</span>
                     <div className="flex mt-4 sm:justify-center sm:mt-0">
                         {/* Social icons */}
                     </div>
