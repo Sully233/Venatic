@@ -199,6 +199,7 @@ const StepTwo = ({
 
   return (
     <div className="">
+      <div className="flex flex-col items-center justify-center">
       <h2 className="text-lg font-semibold text-gray-700 mb-4">
         Choose a Date
       </h2>
@@ -220,6 +221,7 @@ const StepTwo = ({
         disabled={disabledDays}
         className="mb-4"
       />
+      </div>
       <h2 className="text-lg font-semibold text-gray-700 mb-4">
         {formatDate(clickedDate)}
       </h2>

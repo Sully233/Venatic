@@ -33,7 +33,7 @@ const Hero = observer(() => {
       </div>
 
       {/* Form Container */}
-      <div className="flex justify-center w-full pt-48">
+      <div className="flex justify-center w-full pt-48 md:pt-0">
         <div className="bg-slate-50 rounded-xl w-full md:min-w-[500px] md:w-1/2 mx-auto">
           <MultiStepForm></MultiStepForm>
         </div>
