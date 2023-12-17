@@ -49,37 +49,37 @@ export default HorizontalScrollCarousel;
 
 const cards = [
   {
-    url: "",
+    url: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=3355&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     title: "Title 1",
     id: 1,
   },
   {
-    url: "",
+    url: "https://images.unsplash.com/photo-1619279302118-43033660826a?q=80&w=3687&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     title: "Title 2",
     id: 2,
   },
   {
-    url: "",
+    url: "https://images.unsplash.com/photo-1558975285-193b2c315c2c?q=80&w=3295&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     title: "Title 3",
     id: 3,
   },
   {
-    url: "",
+    url: "https://images.unsplash.com/photo-1595203606092-75ee408205a4?q=80&w=3687&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     title: "Title 4",
     id: 4,
   },
   {
-    url: "/imgs/abstract/5.jpg",
+    url: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?q=80&w=2848&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     title: "Title 5",
     id: 5,
   },
   {
-    url: "/imgs/abstract/6.jpg",
+    url: "https://images.unsplash.com/photo-1601268588577-319223ba7cb3?q=80&w=3648&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     title: "Title 6",
     id: 6,
   },
   {
-    url: "/imgs/abstract/7.jpg",
+    url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=3569&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     title: "Title 7",
     id: 7,
   },
