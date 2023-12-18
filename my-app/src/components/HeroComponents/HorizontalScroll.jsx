@@ -1,13 +1,13 @@
 import { motion, useTransform, useScroll } from "framer-motion";
 import { useRef } from "react";
 
-import horizontal1 from "../../images/HorizontalSlider/horizontal1.jpeg";
-import horizontal2 from "../../images/HorizontalSlider/horizontal2.jpeg";
-import horizontal3 from "../../images/HorizontalSlider/horizontal3.jpeg";
-import horizontal4 from "../../images/HorizontalSlider/horizontal4.jpeg";
-import horizontal5 from "../../images/HorizontalSlider/horizontal5.jpeg";
-import horizontal6 from "../../images/HorizontalSlider/horizontal6.jpeg";
-import horizontal7 from "../../images/HorizontalSlider/horizontal7.jpeg";
+import horizontal1 from "../../images/HorizontalSlider/horizontal1.avif";
+import horizontal2 from "../../images/HorizontalSlider/horizontal2.avif";
+import horizontal3 from "../../images/HorizontalSlider/horizontal3.avif";
+import horizontal4 from "../../images/HorizontalSlider/horizontal4.avif";
+import horizontal5 from "../../images/HorizontalSlider/horizontal5.avif";
+import horizontal6 from "../../images/HorizontalSlider/horizontal6.avif";
+import horizontal7 from "../../images/HorizontalSlider/horizontal7.avif";
 
 
 const HorizontalScrollCarousel = () => {
