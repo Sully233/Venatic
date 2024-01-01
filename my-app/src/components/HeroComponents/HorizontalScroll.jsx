@@ -1,5 +1,5 @@
 import { motion, useTransform, useScroll } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import horizontal1 from "../../images/HorizontalSlider/horizontal1.avif";
 import horizontal2 from "../../images/HorizontalSlider/horizontal2.avif";
@@ -31,15 +31,45 @@ const HorizontalScrollCarousel = () => {
   );
 };
 
+
 const Card = ({ card }) => {
+  const [loadImage, setLoadImage] = useState(false);
+  const cardRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          setLoadImage(true);
+          observer.disconnect();
+        }
+      },
+      {
+        rootMargin: "100px", // Load image 100px before it comes into viewport
+      }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, [cardRef]);
+
   return (
     <div
+      ref={cardRef}
       key={card.id}
       className="group relative h-[450px] w-[450px] overflow-hidden bg-neutral-200"
     >
       <div
         style={{
-          backgroundImage: `url(${card.url})`,
+          backgroundImage: loadImage ? `url(${card.url})` : 'none',
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

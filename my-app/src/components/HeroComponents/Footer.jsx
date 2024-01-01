@@ -40,8 +40,7 @@ const Footer = () => {
                 </div>
                 <hr className="my-6 border-black sm:mx-auto lg:my-8" />
                 <div className="sm:flex sm:items-center sm:justify-between">
-                    <span className="text-sm text-black sm:text-center">© 2023 <a href="https://venatic.me/" className="hover:underline">Venatic</a>. All Rights Reserved.</span>
-                    <div className="flex mt-4 sm:justify-center sm:mt-0">
+                <span className="text-sm text-black sm:text-center">© {new Date().getFullYear()} <a href="https://venatic.me/" className="hover:underline">Venatic</a>. All Rights Reserved.</span>                    <div className="flex mt-4 sm:justify-center sm:mt-0">
                         {/* Social icons */}
                     </div>
                 </div>
