@@ -147,27 +147,55 @@ const generateSquares = () => {
   ));
 };
 
+
 const ShuffleGrid = () => {
+  const gridRef = useRef(null);
   const timeoutRef = useRef(null);
   const [squares, setSquares] = useState(generateSquares());
+  const [isInView, setIsInView] = useState(false);
+
+  const shuffleSquares = () => {
+    if (isInView) {
+      setSquares(generateSquares());
+      timeoutRef.current = setTimeout(shuffleSquares, 3000);
+    }
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.1 } // Trigger when at least 10% of the grid is visible
+    );
+
+    if (gridRef.current) {
+      observer.observe(gridRef.current);
+    }
+
+    return () => {
+      if (gridRef.current) {
+        observer.unobserve(gridRef.current);
+      }
+      clearTimeout(timeoutRef.current);
+    };
+  }, [gridRef]);
 
   useEffect(() => {
     shuffleSquares();
 
     return () => clearTimeout(timeoutRef.current);
-  }, []);
-
-  const shuffleSquares = () => {
-    setSquares(generateSquares());
-
-    timeoutRef.current = setTimeout(shuffleSquares, 3000);
-  };
+  }, [isInView]);
 
   return (
-    <div className="grid grid-cols-4 grid-rows-4 h-[450px] gap-1">
+    <div
+      ref={gridRef}
+      className="grid grid-cols-4 grid-rows-4 h-[450px] gap-1"
+    >
       {squares.map((sq) => sq)}
     </div>
   );
 };
+
 
 export default ShuffleHero;

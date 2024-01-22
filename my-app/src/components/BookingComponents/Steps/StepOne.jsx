@@ -146,11 +146,11 @@ const StepOne = ({
         {Array.from({ length: 6 }, (_, i) => i + 1).map((dur) => (
           <button
             key={dur}
-            className={`px-4 py-2 rounded-lg text-sm font-medium border-2 ${
-              duration === dur
-                ? "border-blue-500 bg-blue-500 text-white"
-                : "border-gray-300 text-gray-700"
-            }`}
+            className={`px-4 py-2 rounded-full text-sm font-medium shadow-md transition-all duration-200 ease-in-out
+              ${duration === dur
+                ? "bg-blue-500 text-white hover:bg-blue-600"
+                : "bg-white text-gray-700 hover:bg-gray-200 border border-gray-300"
+              }`}
             onClick={() => handleSelectDuration(dur)}
           >
             {dur} hr{dur > 1 ? "s" : ""}

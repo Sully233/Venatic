@@ -4,6 +4,7 @@ const Availability = require('../models/availabilityModel');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
 const client = require('twilio')(process.env.TWILLO_ACCOUNTSID, process.env.TWILLO_AUTH_TOKEN);
+const dns = require('node:dns');
 
 const nodemailer = require('nodemailer')
 
@@ -11,13 +12,30 @@ const nodemailer = require('nodemailer')
 const transporter = nodemailer.createTransport({
 
   host: process.env.EMAIL_HOST,
-  port: 587,
-  secure: false,
+  port: 443,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD
   }
 })
+
+const validateEmailDomain = (email) => {
+  return new Promise((resolve, reject) => {
+    const domain = email.split('@')[1];
+    dns.resolveMx(domain, (err, addresses) => {
+      if (err) {
+        reject(err);
+      } else if (addresses && addresses.length > 0) {
+        resolve(true);
+      } else {
+        reject(new Error('No MX records found'));
+      }
+    });
+  });
+};
+
+
 
 const truncateName = (name) => {
   return name.length > 19 ? name.substring(0, 19) + '...' : name;
@@ -108,15 +126,20 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
                 `,
         }
 
-        // transporter.sendMail(mailOptions, (error, info) => {
-        //   if (error) {
-        //     console.log("Error:", error)
-        //   }
-        //   else {
-        //     console.log("Email sent", info.response)
-        //   }
+        try {
+          await validateEmailDomain(booking.customer.email);
+  
+          transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              console.log("Error:", error);
+            } else {
+              console.log("Email sent", info.response);
+            }
+          });
+        } catch (err) {
+          console.log('DNS validation failed:', err.message);
 
-        // });
+        }
 
 
         client.messages.create({

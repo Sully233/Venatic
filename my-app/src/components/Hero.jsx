@@ -11,6 +11,7 @@ import Footer from "./HeroComponents/Footer";
 import ShuffleHero from "./ShuffleHero";
 import "./hero.css";
 import HorizontalScrollCarousel from "./HeroComponents/HorizontalScroll";
+import Features from "./FeatureShowcase/Features";
 
 const Hero = observer(() => {
   useEffect(() => {
@@ -36,6 +37,12 @@ const Hero = observer(() => {
         <div className="bg-slate-50 rounded-xl w-full md:min-w-[500px] md:w-1/2 mx-auto">
           <MultiStepForm></MultiStepForm>
         </div>
+      </div>
+
+
+      {/* Features */}
+      <div>
+        <Features></Features>
       </div>
 
       {/* Horizontal Image Gallery On Scroll */}

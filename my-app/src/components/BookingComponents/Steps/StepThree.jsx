@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react";
 import MyPlacesAutocompletePage from "../../addressSearchComponents/searchOptions";
 import { formStore } from "../../../stores/FormStore";
@@ -13,7 +13,7 @@ import { customerDetailsStore } from "../../../stores/CustomerDetailsStore";
 import { z } from "zod";
 import TextField from "@mui/material/TextField";
 
-const StepThree = observer(({ onNext }) => {
+const StepThree  = observer(({ onNext, topScrollRef }) => {
 
 
   const [isLoading, setIsLoading] = useState(false);
@@ -168,11 +168,15 @@ const StepThree = observer(({ onNext }) => {
     </div>
   );
 
-
+  useEffect(() => {
+    if (topScrollRef.current) {
+      topScrollRef.current.scrollIntoView({ });
+    }
+  }, []);
 
 
   return (
-    <div>
+    <div >
       <div className="text-lg font-semibold text-gray-700 mb-4">
         <p>Please enter your address:</p>
       </div>

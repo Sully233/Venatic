@@ -75,12 +75,14 @@ const MultiStepForm = observer(() => {
   };
 
   const allFields = getValues(); // Retrieve all form field values
+  
+  const topDivRef = useRef(null);
 
   const totalSteps = 4;
   const progressBarWidth = (currentStep / totalSteps) * 100 + "%";
 
   return (
-    <div>
+    <div ref={topDivRef}>  
       <div className="flex items-center space-x-4">
         {currentStep > 1 && (
           <PreviousButton onClick={prevStep}>Previous</PreviousButton>
@@ -115,6 +117,7 @@ const MultiStepForm = observer(() => {
             onPrev={prevStep}
             register={register}
             errors={errors}
+            topScrollRef={topDivRef}
           />
         )}
         {currentStep === 4 && (
