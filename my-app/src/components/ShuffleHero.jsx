@@ -166,7 +166,7 @@ const ShuffleGrid = () => {
       ([entry]) => {
         setIsInView(entry.isIntersecting);
       },
-      { threshold: 0.1 } // Trigger when at least 10% of the grid is visible
+      { threshold: 0.7 } // Trigger when at least 10% of the grid is visible
     );
 
     if (gridRef.current) {

@@ -13,9 +13,7 @@ import { customerDetailsStore } from "../../../stores/CustomerDetailsStore";
 import { z } from "zod";
 import TextField from "@mui/material/TextField";
 
-const StepThree  = observer(({ onNext, topScrollRef }) => {
-
-
+const StepThree = observer(({ onNext, topScrollRef }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -23,6 +21,7 @@ const StepThree  = observer(({ onNext, topScrollRef }) => {
     lastName: customerDetailsStore.lastName,
     email: customerDetailsStore.email,
     phoneNumber: customerDetailsStore.phoneNumber,
+    confirmEmail: customerDetailsStore.email,
   });
   const [formErrors, setFormErrors] = useState({});
 
@@ -36,6 +35,10 @@ const StepThree  = observer(({ onNext, topScrollRef }) => {
         /^04\d{8}$/,
         "Phone Number should start with '04' and be exactly 10 digits long"
       ),
+    confirmEmail: z
+      .string()
+      .email("Invalid email address")
+      .refine((val) => val === formData.email, "Email addresses must match"),
   });
 
   const handleInputChange = (e) => {
@@ -152,6 +155,18 @@ const StepThree  = observer(({ onNext, topScrollRef }) => {
         />
 
         <TextField
+          label="Confirm Email"
+          variant="outlined"
+          type="email"
+          name="confirmEmail"
+          value={formData.confirmEmail}
+          onChange={handleInputChange}
+          error={!!formErrors.confirmEmail}
+          helperText={formErrors.confirmEmail}
+          fullWidth
+        />
+
+        <TextField
           label="Phone Number"
           variant="outlined"
           type="tel"
@@ -162,7 +177,6 @@ const StepThree  = observer(({ onNext, topScrollRef }) => {
           helperText={formErrors.phoneNumber}
           fullWidth
           inputProps={{ maxLength: 10 }}
-          
         />
       </div>
     </div>
@@ -170,13 +184,12 @@ const StepThree  = observer(({ onNext, topScrollRef }) => {
 
   useEffect(() => {
     if (topScrollRef.current) {
-      topScrollRef.current.scrollIntoView({ });
+      topScrollRef.current.scrollIntoView({});
     }
   }, []);
 
-
   return (
-    <div >
+    <div>
       <div className="text-lg font-semibold text-gray-700 mb-4">
         <p>Please enter your address:</p>
       </div>

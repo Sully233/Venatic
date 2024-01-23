@@ -126,20 +126,20 @@ const stripeBookingAllocation = asyncHandler(async (req, res) => {
                 `,
         }
 
-        try {
-          await validateEmailDomain(booking.customer.email);
+        // try {
+        //   await validateEmailDomain(booking.customer.email);
   
-          transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-              console.log("Error:", error);
-            } else {
-              console.log("Email sent", info.response);
-            }
-          });
-        } catch (err) {
-          console.log('DNS validation failed:', err.message);
+        //   transporter.sendMail(mailOptions, (error, info) => {
+        //     if (error) {
+        //       console.log("Error:", error);
+        //     } else {
+        //       console.log("Email sent", info.response);
+        //     }
+        //   });
+        // } catch (err) {
+        //   console.log('DNS validation failed:', err.message);
 
-        }
+        // }
 
 
         client.messages.create({
